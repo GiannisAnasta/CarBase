@@ -4,19 +4,19 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import model.Car;
-import service.CarService;
+import model.Employee;
+import service.EmployeerManage;
 
 @Named
 @SessionScoped
-public class RemoveCarBean implements Serializable {
+public class RemoveEmployeeBean implements Serializable {
 
     @Inject
-    private CarService service;
+    private EmployeerManage service;
 
-    public void remove(Car car) {
+    public void remove(Employee employee) {
         try {
-            service.removeCar(car);
+            service.removeEmployee(employee);
 
         } catch (Exception e) {
             e.printStackTrace();

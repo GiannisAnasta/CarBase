@@ -10,10 +10,10 @@ import org.primefaces.event.RowEditEvent;
 
 @Named
 @SessionScoped
-public class EditCarBean implements Serializable {
+public class EditEmployeeBean implements Serializable {
 
     public void onRowEdit(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Car Edited");
+        FacesMessage msg = new FacesMessage("Employee Edited");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
