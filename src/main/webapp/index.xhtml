@@ -71,20 +71,27 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <ui:remove>
-                        <p:column filterBy="#{car.color}" headerText="Color" footerText="Color" filterMatchMode="in">
-                            <f:facet name="filter">
-
-                                <p:selectCheckboxMenu label="Colors" onchange="PF('carsTable').filter()" panelStyle="width:125px" scrollHeight="150">
-                                    <f:selectItems value="#{trashService.colors}"/>
-                                </p:selectCheckboxMenu>
-
+                    <p:column filterBy="#{car.color}" headerText="Color" footerText="Color" filterMatchMode="in">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu label="Colors" onchange="PF('carsTable').filter()" panelStyle="width:125px" scrollHeight="150">
+                                <f:selectItems value="#{trashService.colors}"/>
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{car.color}" />
                             </f:facet>
-                            <p:cellEditor>
-
-                            </p:cellEditor>
-                            <h:outputText value="#{car.color}"/>
-                        </p:column>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{car.color}" style="width:100%">
+                                    <f:selectItems value="#{trashService.colors}"
+                                                   var="color"
+                                                   itemLabel="#{color}"
+                                                   itemValue="#{color}"/>
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <ui:remove>
                         <p:column filterBy="#{car.price}" headerText="Price" footerText="Price" filterMatchMode="exact">
                             <f:facet name="filter">
                                 <p:inputText onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter currency"/>
