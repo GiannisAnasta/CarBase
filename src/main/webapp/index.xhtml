@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html      xmlns="http://www.w3.org/1999/xhtml"
-           xmlns:h="http://java.sun.com/jsf/html"
-           xmlns:f="http://java.sun.com/jsf/core"
-           xmlns:ui="http://java.sun.com/jsf/facelets"
-           xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-           xmlns:p="http://primefaces.org/ui"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <f:view contentType="text/html">
         <h:head>
@@ -15,76 +15,113 @@
             </f:facet>
         </h:head>
         <h:body>
-            <h:form id="carsTableForm">
-                <p:dataTable var="car" value="#{carService.list}" widgetVar="carsTable"
+            <h:form id="carTableForm">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:dataTable id="entities" var="car" value="#{carService.list}" widgetVar="carsTable" editable="true"
                              emptyMessage="No cars found with given criteria" filteredValue="#{carsTableFilter.filteredCars}">
+
+
+                    <p:ajax event="rowEdit" listener="#{editCarBean.onRowEdit}" update=":carTableForm:msgs"/>
+                    <p:ajax event="rowEditCancel" listener="#{editCarBean.onRowCancel}" update=":carTableForm:msgs"/>
 
                     <f:facet name="header">
                         <p:outputPanel>
-                            <h:outputText value="Search all fields:" />
+                            <h:outputText value="Search all fields:"/>
                             <p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
                         </p:outputPanel>
                     </f:facet>
                     <p:column filterBy="#{car.year}" headerText="Year" footerText="Year" filterMatchMode="exact">
                         <f:facet name="filter">
 
-                            <p:inputText onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter year" >
-                                <f:converter converterId="javax.faces.Integer" />
+                            <p:inputText onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter year">
+                                <f:converter converterId="javax.faces.Integer"/>
                             </p:inputText>
 
                         </f:facet>
-                        <h:outputText value="#{car.year}" />
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{car.year}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{car.year}" style="width:150px" placeholder="Enter year">
+                                    <f:converter converterId="javax.faces.Integer"/>
+                                </p:inputText>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{car.model}" headerText="Brand" footerText="Brand" filterMatchMode="exact">
-                        <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('carsTable').filter()" >
-                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{trashService.brands}" />
-                            </p:selectOneMenu>
-                        </f:facet>
-                        <h:outputText value="#{car.model}" />
-                    </p:column>
-                    <p:column filterBy="#{car.color}" headerText="Color" footerText="Color" filterMatchMode="in">
-                        <f:facet name="filter">
-                            <p:selectCheckboxMenu label="Colors" onchange="PF('carsTable').filter()" panelStyle="width:125px" scrollHeight="150">
-                                <f:selectItems value="#{trashService.colors}" />
-                            </p:selectCheckboxMenu>
+                    <ui:remove>
+                        <p:column filterBy="#{car.model}" headerText="Brand" footerText="Brand" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('carsTable').filter()">
+                                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{trashService.brands}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <p:cellEditor>
 
-                        </f:facet>
-                        <h:outputText value="#{car.color}" />
-                    </p:column>
-                    <p:column filterBy="#{car.price}" headerText="Price" footerText="Price"  filterMatchMode="exact">
-                        <f:facet name="filter">
-                            <p:inputText onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter currency"/>
 
-                        </f:facet>
-                        <h:outputText value="#{car.price}">
-                            <f:convertNumber currencySymbol="€" type="currency"/>
-                        </h:outputText>                     
+                            </p:cellEditor>
+                            <h:outputText value="#{car.model}"/>
+                        </p:column>
+                        <p:column filterBy="#{car.color}" headerText="Color" footerText="Color" filterMatchMode="in">
+                            <f:facet name="filter">
+
+                                <p:selectCheckboxMenu label="Colors" onchange="PF('carsTable').filter()" panelStyle="width:125px" scrollHeight="150">
+                                    <f:selectItems value="#{trashService.colors}"/>
+                                </p:selectCheckboxMenu>
+
+                            </f:facet>
+                            <p:cellEditor>
+
+                            </p:cellEditor>
+                            <h:outputText value="#{car.color}"/>
+                        </p:column>
+                        <p:column filterBy="#{car.price}" headerText="Price" footerText="Price" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:inputText onkeyup="PF('carsTable').filter()" style="width:150px" placeholder="Enter currency"/>
+
+                            </f:facet>
+                            <p:cellEditor>
+
+                            </p:cellEditor>
+                            <h:outputText value="#{car.price}">
+                                <f:convertNumber currencySymbol="€" type="currency"/>
+                            </h:outputText>
+                        </p:column>
+
+                    </ui:remove>
+                    <p:column style="width:32px">
+                        <p:rowEditor/>
                     </p:column>
                 </p:dataTable>
+                <ui:remove>
+                    <p:contextMenu for="cars2" widgetVar="cMenu">
+                        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();return false;"/>
+                        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+                    </p:contextMenu>
+                </ui:remove>
             </h:form>
 
             <h:form id="addCarForm">
                 <p:growl id="messages" showDetail="true"/>
-                <p:panel header="Add Car" style="width: 400px;" rendered="true"> 
+                <p:panel header="Add Car" style="width: 400px;" rendered="true">
                     <p:panelGrid columns="2">
                         <h:outputLabel for="brand" value="Car brand:"/>
-                        <p:selectOneMenu id="brands" value="#{addCarBean.model}" required="true" >
-                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-                            <f:selectItems value="#{trashService.brands}" />
+                        <p:selectOneMenu id="brands" value="#{addCarBean.model}" required="true">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{trashService.brands}"/>
                         </p:selectOneMenu>
                         <h:outputLabel for="year" value="Year:"/>
                         <p:inputText id="year" value="#{addCarBean.year}"/>
                         <h:outputLabel for="color" value="Color: "/>
-                        <p:selectOneMenu id="color" value="#{addCarBean.color}" required="true"> 
-                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-                            <f:selectItems value="#{trashService.colors}" />
+                        <p:selectOneMenu id="color" value="#{addCarBean.color}" required="true">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{trashService.colors}"/>
                         </p:selectOneMenu>
                         <h:outputLabel for="price" value="Price: "/>
                         <p:inputText id="price" value="#{addCarBean.price}"/>
 
-                        <f:facet  name="footer">
+                        <f:facet name="footer">
                             <p:commandButton value="Add Item" action="#{addCarBean.addAction()}" process="@form" update="@all"/>
                         </f:facet>
                     </p:panelGrid>
