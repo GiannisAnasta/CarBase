@@ -16,21 +16,29 @@
         </h:head>
         <h:body>
             <h:form id="employeeTableForm">
+
                 <p:growl id="msgs" showDetail="true"/>
                 <p:dataTable id="entities" var="employee" value="#{employeerManage.list}" widgetVar="employeersTable" editable="true"
                              emptyMessage="No cars found with given criteria" filteredValue="#{employeersTableFilter.filteredEmployeers}">
+
 
 
                     <p:ajax event="rowEdit" listener="#{editEmployeeBean.onRowEdit}" update=":employeeTableForm:msgs"/>
                     <p:ajax event="rowEditCancel" listener="#{editEmployeeBean.onRowCancel}" update=":employeeTableForm:msgs"/>
 
                     <f:facet name="header">
-                        <p:outputPanel>
-                            <h:outputText value="Search all fields:"/>
-                            <p:inputText id="globalFilter" onkeyup="PF('employeersTable').filter()" style="width:150px" placeholder="Enter keyword"/>
-                        </p:outputPanel>
+
+
+                        <h:outputText value="Search all fields:"/>
+                        <p:inputText id="globalFilter" onkeyup="PF('employeersTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+
+                        <p:commandButton id="toggler" type="button" value="Columns"  icon="ui-icon-calculator"/>
+                        <p:columnToggler datasource="entities" trigger="toggler"/>
+
+
                     </f:facet>
-                    <p:column filterBy="#{employee.name}" headerText="Name" footerText="Name" filterMatchMode="exact">
+                    <p:column filterBy="#{employee.name}" headerText="Name" footerText="Name" filterMatchMode="exact" sortBy="#{employee.name}">
+
                         <f:facet name="filter">
 
                             <p:inputText onkeyup="PF('employeersTable').filter()" style="width:150px" placeholder="Enter name">
@@ -46,7 +54,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{employee.surname}" headerText="Surname" footerText="Surname" filterMatchMode="exact">
+                    <p:column filterBy="#{employee.surname}" headerText="Surname" footerText="Surname" filterMatchMode="exact" sortBy="#{employee.surname}">
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('employeersTable').filter()" style="width:150px" placeholder="Enter surname"/>
 
@@ -65,7 +73,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{employee.position}" headerText="Position" footerText="Position" filterMatchMode="in">
+                    <p:column filterBy="#{employee.position}" headerText="Position" footerText="Position" filterMatchMode="in" sortBy="#{employee.position}">
                         <f:facet name="filter">
                             <p:selectCheckboxMenu label="Positions" onchange="PF('employeersTable').filter()" panelStyle="width:250px" scrollHeight="150">
 
@@ -102,7 +110,7 @@
                 <p:panel header="Add employee" style="width: 400px;" rendered="true">
                     <p:panelGrid columns="2">
                         <h:outputLabel for="name" value="Name: "/>
-                        <p:inputText id="name" value="#{addEmployeeBean.name}"/> 
+                        <p:inputText id="name" value="#{addEmployeeBean.name}"/>
                         <h:outputLabel for="surname" value="Surname: "/>
                         <p:inputText id="surname" value="#{addEmployeeBean.surname}"/>
                         <h:outputLabel for="position" value="Position: "/>
@@ -114,7 +122,6 @@
                             <p:commandButton value="Add Employee" action="#{addEmployeeBean.addAction()}" process="@form" update="@all"/>
                         </f:facet>
                     </p:panelGrid>
-
 
                 </p:panel>
             </h:form>

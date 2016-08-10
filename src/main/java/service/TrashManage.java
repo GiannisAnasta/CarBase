@@ -1,6 +1,7 @@
 package service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -30,4 +31,5 @@ public class TrashManage implements Serializable {
     public List<String> getEmployeers() {
         return Arrays.asList(positions);
     }
+
 }

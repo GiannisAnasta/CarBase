@@ -49,9 +49,6 @@ public class AddEmployeeBean implements Serializable {
     public void setPosition(String position) {
         this.position = position;
     }
-   
-
-   
 
     public void addAction() {
         Employee entities = new Employee();
@@ -66,6 +63,6 @@ public class AddEmployeeBean implements Serializable {
         name = "";
         surname = "";
         position = "";
-       
+
     }
 }
