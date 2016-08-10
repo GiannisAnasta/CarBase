@@ -10,7 +10,6 @@ import model.Car;
 @SessionScoped
 public class CarService implements Serializable {
 
-  
     private static final ArrayList<Car> entities = new ArrayList<>();
 
     public ArrayList<Car> getList() {
@@ -21,5 +20,8 @@ public class CarService implements Serializable {
         entities.add(car);
     }
 
-  
+    public void removeCar(Car car) {
+        entities.remove(car);
+    }
+
 }

@@ -106,23 +106,21 @@
                                 <p:inputText value="#{car.price}"
                                              style="width:150px"
                                              placeholder="Enter price">
-
                                 </p:inputText>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column style="width:32px">
+                    <p:column headerText="Edit" footerText="Edit" style="width:60px">
                         <p:rowEditor/>
                     </p:column>
+                    <p:column headerText="Delete" footerText="Delete" style="width:60px">
+                        <p:commandButton icon="ui-icon-trash"
+                                         title="Delete"
+                                         actionListener="#{removeCarBean.remove(car)}"
+                                         ajax="false"/>
+                    </p:column>
                 </p:dataTable>
-                <ui:remove>
-                    <p:contextMenu for="cars2" widgetVar="cMenu">
-                        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();return false;"/>
-                        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
-                    </p:contextMenu>
-                </ui:remove>
             </h:form>
-
             <h:form id="addCarForm">
                 <p:growl id="messages" showDetail="true"/>
                 <p:panel header="Add Car" style="width: 400px;" rendered="true">
