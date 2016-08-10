@@ -49,20 +49,29 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <ui:remove>
-                        <p:column filterBy="#{car.model}" headerText="Brand" footerText="Brand" filterMatchMode="exact">
-                            <f:facet name="filter">
-                                <p:selectOneMenu onchange="PF('carsTable').filter()">
-                                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
-                                    <f:selectItems value="#{trashService.brands}"/>
-                                </p:selectOneMenu>
+
+                    <p:column filterBy="#{car.model}" headerText="Brand" footerText="Brand" filterMatchMode="exact">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('carsTable').filter()">
+                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
+                                <f:selectItems value="#{trashService.brands}"/>
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{car.model}"/>
                             </f:facet>
-                            <p:cellEditor>
-
-
-                            </p:cellEditor>
-                            <h:outputText value="#{car.model}"/>
-                        </p:column>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{car.model}" style="width:100%">
+                                    <f:selectItems value="#{trashService.brands}"
+                                                   var="man"
+                                                   itemLabel="#{man}"
+                                                   itemValue="#{man}"/>
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <ui:remove>
                         <p:column filterBy="#{car.color}" headerText="Color" footerText="Color" filterMatchMode="in">
                             <f:facet name="filter">
 
