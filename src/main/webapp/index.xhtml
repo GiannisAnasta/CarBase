@@ -19,6 +19,8 @@
                 <p:growl id="msgs" showDetail="true"/>
                 <p:dataTable id="entities" var="employee" value="#{employeerManage.list}" widgetVar="employeersTable" editable="true"
                              emptyMessage="No cars found with given criteria" filteredValue="#{employeersTableFilter.filteredEmployeers}">
+
+
                     <p:ajax event="rowEdit" listener="#{editEmployeeBean.onRowEdit}" update=":employeeTableForm:msgs"/>
                     <p:ajax event="rowEditCancel" listener="#{editEmployeeBean.onRowCancel}" update=":employeeTableForm:msgs"/>
 
@@ -26,12 +28,15 @@
                         <h:outputText value="Search all fields:"/>
                         <p:inputText id="globalFilter" onkeyup="PF('employeersTable').filter()" style="width:200px" placeholder="Enter keyword"/>
 
-                        <p:commandButton id="toggler" type="button" value="Columns"  icon="ui-icon-calculator"/>
+                        <p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator"/>
                         <p:columnToggler datasource="entities" trigger="toggler"/>
-
+                        <h:commandLink>
+                            <img src="http://4.bp.blogspot.com/-IgIpwmQfvSs/UoxpFpMZ2QI/AAAAAAAAAB8/QHsNKgYWe6s/s1600/523px-Text-xml.svg.png" alt="Smiley face" height="20" width="20"/>
+                            <p:dataExporter type="xls" target="entities" fileName="filteredEmployeers" pageOnly="true"/>
+                        </h:commandLink>
 
                     </f:facet>
-                    <p:column filterBy="#{employee.name}" headerText="Name" footerText="Name" filterMatchMode="exact" sortBy="#{employee.name}">
+                    <p:column filterBy="#{employee.name}" headerText="Name" filterMatchMode="exact" sortBy="#{employee.name}">
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('employeersTable').filter()" style="width:150px" placeholder="Enter name">
                             </p:inputText>
@@ -46,7 +51,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{employee.surname}" headerText="Surname" footerText="Surname" filterMatchMode="exact" sortBy="#{employee.surname}">
+                    <p:column filterBy="#{employee.surname}" headerText="Surname" filterMatchMode="exact" sortBy="#{employee.surname}">
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('employeersTable').filter()" style="width:150px" placeholder="Enter surname"/>
                         </f:facet>
@@ -64,7 +69,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{employee.position}" headerText="Position" footerText="Position" filterMatchMode="in" sortBy="#{employee.position}">
+                    <p:column filterBy="#{employee.position}" headerText="Position" filterMatchMode="in" sortBy="#{employee.position}">
                         <f:facet name="filter">
                             <p:selectCheckboxMenu label="Positions" onchange="PF('employeersTable').filter()" panelStyle="width:250px" scrollHeight="150">
 
@@ -85,10 +90,10 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column headerText="Edit" footerText="Edit" style="width:60px">
+                    <p:column headerText="Edit" style="width:60px" exportable="false">
                         <p:rowEditor/>
                     </p:column>
-                    <p:column headerText="Delete" footerText="Delete" style="width:60px">
+                    <p:column headerText="Delete" style="width:60px" exportable="false">
                         <p:commandButton icon="ui-icon-trash"
                                          title="Delete"
                                          actionListener="#{removeEmployeeBean.remove(employee)}"
@@ -98,18 +103,18 @@
             </h:form>
             <h:form enctype="multipart/form-data">
                 <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                              update="@all" sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/" />
+                              update="@all" sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/"/>
                 <p:growl id="linkmessages" showDetail="true"/>
             </h:form>
             <h:form id="addEmployeeForm">
                 <p:growl id="messages" showDetail="true"/>
                 <p:panel header="Add employee" style="width: 400px;" rendered="true">
                     <p:panelGrid columns="2">
-                        <h:outputLabel for="name" value="Name: "/>
+                        <h:outputLabel for="name" value="Name:"/>
                         <p:inputText id="name" value="#{addEmployeeBean.name}"/>
-                        <h:outputLabel for="surname" value="Surname: "/>
+                        <h:outputLabel for="surname" value="Surname:"/>
                         <p:inputText id="surname" value="#{addEmployeeBean.surname}"/>
-                        <h:outputLabel for="position" value="Position: "/>
+                        <h:outputLabel for="position" value="Position:"/>
                         <p:selectOneMenu id="position" value="#{addEmployeeBean.position}" required="true">
                             <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
                             <f:selectItems value="#{trashManage.employeers}"/>
