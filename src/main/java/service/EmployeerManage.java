@@ -2,6 +2,7 @@ package service;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import model.Employee;
@@ -10,18 +11,22 @@ import model.Employee;
 @SessionScoped
 public class EmployeerManage implements Serializable {
 
-    private static final ArrayList<Employee> entity = new ArrayList<>();
+    private static final ArrayList<Employee> entities = new ArrayList<>();
 
     public ArrayList<Employee> getList() {
-        return entity;
+        return entities;
     }
 
     public void addEmployee(Employee employee) {
-        entity.add(employee);
+        entities.add(employee);
     }
 
     public void removeEmployee(Employee employee) {
-        entity.remove(employee);
+        entities.remove(employee);
+    }
+
+    public void addEmployees(List<Employee> employees) {
+        entities.addAll(employees);
     }
 
 }

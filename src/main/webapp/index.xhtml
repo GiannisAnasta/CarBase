@@ -98,7 +98,7 @@
             </h:form>
             <h:form enctype="multipart/form-data">
                 <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                              update="linkmessages" sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/" />
+                              update="@all" sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(xlsx)$/" />
                 <p:growl id="linkmessages" showDetail="true"/>
             </h:form>
             <h:form id="addEmployeeForm">
