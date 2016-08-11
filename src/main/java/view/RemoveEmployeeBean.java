@@ -21,5 +21,7 @@ public class RemoveEmployeeBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
+
 }

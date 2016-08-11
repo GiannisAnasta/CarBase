@@ -29,4 +29,8 @@ public class EmployeerManage implements Serializable {
         entities.addAll(employees);
     }
 
+    public void removeEmployees(List<Employee> employees) {
+        entities.removeAll(employees);
+    }
+
 }
