@@ -17,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class EmployeeExcelFileToList implements Serializable {
 
-    public static List<Employee> EmployeeExcelData(String fileName) {
+    public static List<Employee> employeeExcelData(String fileName) {
         List<Employee> employeesList = new ArrayList<>();
 
         try ( //Create the input stream from the xlsx/xls file

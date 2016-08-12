@@ -46,7 +46,7 @@ public class FileUploadView implements Serializable {
         try {
 
             FileUtils.copyInputStreamToFile(inputStr, destFile);
-            List<Employee> EmployeeExcelData = EmployeeExcelFileToList.EmployeeExcelData(destPath + uploadedFile.getFileName());
+            List<Employee> EmployeeExcelData = EmployeeExcelFileToList.employeeExcelData(destPath + uploadedFile.getFileName());
             manager.addEmployees(EmployeeExcelData);
             System.out.println("success");
         } catch (IOException ex) {
