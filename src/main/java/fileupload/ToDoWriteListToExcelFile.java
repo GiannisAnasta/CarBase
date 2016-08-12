@@ -1,11 +1,9 @@
-package view;
+package fileupload;
 
 import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 import model.Employee;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -15,8 +13,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-@Named
-@SessionScoped
 public class ToDoWriteListToExcelFile implements Serializable {
 
     public static void writeEmployeeListToFile(String fileEmployee, List<Employee> employeeList) throws Exception {
@@ -41,7 +37,10 @@ public class ToDoWriteListToExcelFile implements Serializable {
             Cell cell0 = row.createCell(0);
             cell0.setCellValue(employee.getName());
             Cell cell1 = row.createCell(1);
-            cell1.setCellValue(employee.getName());
+            cell1.setCellValue(employee.getSurname());
+            Cell cell2 = row.createCell(2);
+            cell2.setCellValue(employee.getPosition());
+
         }
 
         //lets write the excel data to file now

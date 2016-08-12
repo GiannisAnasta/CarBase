@@ -18,7 +18,7 @@
             <h:form id="employeeTableForm">
                 <p:growl id="msgs" showDetail="true"/>
                 <p:dataTable id="entities" var="employee" value="#{employeerManage.list}" widgetVar="employeersTable" editable="true"
-                             emptyMessage="No cars found with given criteria" filteredValue="#{employeersTableFilter.filteredEmployeers}"
+                             emptyMessage="No employees found with given criteria" filteredValue="#{employeersTableFilter.filteredEmployeers}"
                              selection="#{rowSelection.selected}"
                              rowKey="#{employee.name}" draggableRows="true" draggableColumns="true">
 
@@ -40,6 +40,7 @@
                         </h:commandLink>
 
                         <p:commandButton process="entities" actionListener="#{rowSelection.deleteSelected()}" icon="ui-icon-trash" value="DeleteAll" update="@form"/>
+                        <p:commandButton process="entities" actionListener="#{employeerManage.saveToStorage()}" value="Save" update="@form"/>
                     </f:facet>
 
                     <p:column filterBy="#{employee.name}" headerText="Name" filterMatchMode="exact" sortBy="#{employee.name}">
