@@ -17,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 @Named
 @SessionScoped
-public class WriteListToExcelFile implements Serializable {
+public class ToDoWriteListToExcelFile implements Serializable {
 
     public static void writeEmployeeListToFile(String fileEmployee, List<Employee> employeeList) throws Exception {
         Workbook workbook = null;
@@ -51,8 +51,4 @@ public class WriteListToExcelFile implements Serializable {
         System.out.println(fileEmployee + " written successfully");
     }
 
-    public static void main(String args[]) throws Exception {
-        List<Employee> list = EmployeeExcelFileToList.EmployeeExcelData("Sample.xlsx");
-        WriteListToExcelFile.writeEmployeeListToFile("Countries.xls", list);
-    }
 }

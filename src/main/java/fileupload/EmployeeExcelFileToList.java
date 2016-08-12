@@ -1,4 +1,4 @@
-package view;
+package fileupload;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -6,8 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 import model.Employee;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -86,11 +84,6 @@ public class EmployeeExcelFileToList implements Serializable {
         }
 
         return employeesList;
-    }
-
-    public static void main(String args[]) {
-        List<Employee> list = EmployeeExcelData("Sample.xlsx");
-        System.out.println("Employee List\n" + list);
     }
 
 }

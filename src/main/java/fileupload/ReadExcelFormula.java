@@ -1,4 +1,4 @@
-package view;
+package fileupload;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -42,7 +42,4 @@ public class ReadExcelFormula implements Serializable {
         }
     }
 
-    public static void main(String args[]) throws IOException {
-        readExcelFormula("FormulaMultiply.xlsx");
-    }
 }
