@@ -1,5 +1,6 @@
 package view;
 
+import fileupload.EmployeeBuilder;
 import fileupload.IndefiniteData;
 import fileupload.IndefiniteData.Row;
 import fileupload.UploadedFileDataReader;
@@ -36,16 +37,7 @@ public class FileUploadView implements Serializable {
         } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        List<Employee> fromFile = new ArrayList<>();
-        for (Row row : dataFromUploadedFile.getData()) {
-            Employee employee = new Employee();
-            employee.setName(row.getData().get(0));
-            employee.setSurname(row.getData().get(1));
-            employee.setPosition(row.getData().get(2));
-            fromFile.add(employee);
-        }
-
-        manager.addEmployees(fromFile);
+        manager.addEmployees(EmployeeBuilder.buildEmployees(dataFromUploadedFile));
 
         System.out.println("finish");
     }

@@ -1,5 +1,6 @@
 package service;
 
+import fileupload.EmployeeBuilder;
 import filewrite.WriteListToExcelFile;
 import fileupload.IndefiniteData;
 import fileupload.UploadedFileDataReader;
@@ -34,16 +35,8 @@ public class EmployeerManage implements Serializable {
         } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        List<Employee> fromFile = new ArrayList<>();
-        for (IndefiniteData.Row row : dataFromUploadedFile.getData()) {
-            Employee employee = new Employee();
-            employee.setName(row.getData().get(0));
-            employee.setSurname(row.getData().get(1));
-            employee.setPosition(row.getData().get(2));
-            fromFile.add(employee);
-        }
 
-        addEmployees(fromFile);
+        addEmployees(EmployeeBuilder.buildEmployees(dataFromUploadedFile));
 
     }
 
