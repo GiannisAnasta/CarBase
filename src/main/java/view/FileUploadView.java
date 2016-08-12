@@ -1,10 +1,11 @@
 package view;
 
-import fileupload.EmployeeExcelFileToList;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import fileupload.IndefiniteData;
+import fileupload.IndefiniteData.Row;
+import fileupload.UploadedFileDataReader;
+import fileupload.UploadedFileReadException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +13,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.Employee;
-import org.apache.commons.io.FileUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import service.EmployeerManage;
@@ -30,29 +30,23 @@ public class FileUploadView implements Serializable {
 
         //get uploaded file from the event
         UploadedFile uploadedFile = (UploadedFile) event.getFile();
-
-        //create an InputStream from the uploaded file
-        InputStream inputStr = null;
+        IndefiniteData dataFromUploadedFile = null;
         try {
-            inputStr = uploadedFile.getInputstream();
-        } catch (IOException e) {
-            //log error
-        }
-
-        //create destination File
-        String destPath = "/home/giannis/CarBase/storage/";
-        File destFile = new File(destPath + uploadedFile.getFileName());
-
-        try {
-
-            FileUtils.copyInputStreamToFile(inputStr, destFile);
-            List<Employee> EmployeeExcelData = EmployeeExcelFileToList.employeeExcelData(destPath + uploadedFile.getFileName());
-            manager.addEmployees(EmployeeExcelData);
-            System.out.println("success");
-        } catch (IOException ex) {
-            System.out.println("fail");
+            dataFromUploadedFile = UploadedFileDataReader.getDataFromUploadedFile(uploadedFile, ';');
+        } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        List<Employee> fromFile = new ArrayList<>();
+        for (Row row : dataFromUploadedFile.getData()) {
+            Employee employee = new Employee();
+            employee.setName(row.getData().get(0));
+            employee.setSurname(row.getData().get(1));
+            employee.setPosition(row.getData().get(2));
+            fromFile.add(employee);
+        }
+
+        manager.addEmployees(fromFile);
+
         System.out.println("finish");
     }
 

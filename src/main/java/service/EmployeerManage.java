@@ -1,7 +1,10 @@
 package service;
 
-import fileupload.EmployeeExcelFileToList;
-import fileupload.ToDoWriteListToExcelFile;
+import filewrite.WriteListToExcelFile;
+import fileupload.IndefiniteData;
+import fileupload.UploadedFileDataReader;
+import fileupload.UploadedFileReadException;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +13,9 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Any;
 import javax.inject.Named;
 import model.Employee;
+import view.FileUploadView;
 
 @Named
 @SessionScoped
@@ -24,7 +27,24 @@ public class EmployeerManage implements Serializable {
 
     @PostConstruct
     private void onInit() {
-        addEmployees(EmployeeExcelFileToList.employeeExcelData(STORAGE_FILE));
+
+        IndefiniteData dataFromUploadedFile = null;
+        try {
+            dataFromUploadedFile = UploadedFileDataReader.getDataFromUploadedFile(new File(STORAGE_FILE), ';');
+        } catch (UploadedFileReadException ex) {
+            Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        List<Employee> fromFile = new ArrayList<>();
+        for (IndefiniteData.Row row : dataFromUploadedFile.getData()) {
+            Employee employee = new Employee();
+            employee.setName(row.getData().get(0));
+            employee.setSurname(row.getData().get(1));
+            employee.setPosition(row.getData().get(2));
+            fromFile.add(employee);
+        }
+
+        addEmployees(fromFile);
+
     }
 
     @PreDestroy
@@ -35,7 +55,7 @@ public class EmployeerManage implements Serializable {
     public void saveToStorage() {
         try {
             //Todo backup of original file
-            ToDoWriteListToExcelFile.writeEmployeeListToFile(STORAGE_FILE, entities);
+            WriteListToExcelFile.writeEmployeeListToFile(STORAGE_FILE, entities);
         } catch (Exception ex) {
             Logger.getLogger(EmployeerManage.class.getName()).log(Level.SEVERE, null, ex);
         }
