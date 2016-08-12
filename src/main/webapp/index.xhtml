@@ -15,17 +15,21 @@
             </f:facet>
         </h:head>
         <h:body>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <h:outputText value="Please wait..."/>
+            </p:dialog>
             <h:form id="employeeTableForm">
                 <p:growl id="msgs" showDetail="true"/>
                 <p:dataTable id="entities" var="employee" value="#{employeerManage.list}" widgetVar="employeersTable" editable="true"
                              emptyMessage="No employees found with given criteria" filteredValue="#{employeersTableFilter.filteredEmployeers}"
                              selection="#{rowSelection.selected}"
-                             rowKey="#{employee.name}" draggableRows="true" draggableColumns="true">
+                             rowKey="#{employee}">
 
-                    <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false"/>
+                    <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
 
-                    <p:ajax event="rowEdit" listener="#{editEmployeeBean.onRowEdit}" update=":employeeTableForm:msgs"/>
-                    <p:ajax event="rowEditCancel" listener="#{editEmployeeBean.onRowCancel}" update=":employeeTableForm:msgs"/>
+                    <p:ajax event="rowEdit" listener="#{editEmployeeBean.onRowEdit}" update="@this :employeeTableForm:msgs"/>
+                    <p:ajax event="rowEditCancel" listener="#{editEmployeeBean.onRowCancel}" update="@this :employeeTableForm:msgs"/>
 
                     <f:facet name="header">
                         <h:outputText value="Search all fields:"/>
@@ -40,7 +44,7 @@
                         </h:commandLink>
 
                         <p:commandButton process="entities" actionListener="#{rowSelection.deleteSelected()}" icon="ui-icon-trash" value="DeleteAll" update="@form"/>
-                        <p:commandButton process="entities" actionListener="#{employeerManage.saveToStorage()}" value="Save" update="@form"/>
+                        <p:commandButton process="entities" actionListener="#{employeerManage.saveToStorage()}" value="Save" update="@this" icon="ui-icon-disk"/>
                     </f:facet>
 
                     <p:column filterBy="#{employee.name}" headerText="Name" filterMatchMode="exact" sortBy="#{employee.name}">
