@@ -68,7 +68,7 @@
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
-                                <p:dataList value="#{company.site}" var="sitee" >
+                                <p:dataList value="#{company.site}" id="site" var="sitee" >
                                     <h:outputText value="#{sitee}"/>
                                 </p:dataList>
                             </f:facet>
@@ -92,51 +92,36 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-
-
-                    <ui:remove>
-                        <p:column filterBy="#{company.surname}" headerText="Surname" filterMatchMode="exact" sortBy="#{company.surname}">
-                            <f:facet name="filter">
-                                <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter surname"/>
+                    <p:column filterBy="#{company.telephones}" headerText="Telephones" filterMatchMode="exact" sortBy="#{company.telephones}">
+                        <f:facet name="filter">
+                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter email"/>
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:dataList value="#{company.telephones}" var="tels" >
+                                    <h:outputText value="#{tels}"/>
+                                </p:dataList>
                             </f:facet>
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{company.surname}">
-
-                                    </h:outputText>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{company.surname}"
-                                                 style="width:150px"
-                                                 placeholder="Enter surname">
-                                    </p:inputText>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        <p:column filterBy="#{company.position}" headerText="Position" filterMatchMode="in" sortBy="#{company.position}">
-                            <f:facet name="filter">
-                                <p:selectCheckboxMenu label="Positions" onchange="PF('companiesTable').filter()" panelStyle="width:250px" scrollHeight="150">
-
-                                    <f:selectItems value="#{trashManage.companies}"/>
-                                </p:selectCheckboxMenu>
+                            <f:facet name="input">
+                                <p:inputText value="#{company.telephones}" style="width:150px" placeholder="Enter telephone"/>
                             </f:facet>
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{company.position}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <h:selectOneMenu value="#{company.position}" style="width:100%">
-                                        <f:selectItems value="#{trashManage.companies}"
-                                                       var="position"
-                                                       itemLabel="#{position}"
-                                                       itemValue="#{position}"/>
-                                    </h:selectOneMenu>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                    </ui:remove>
-
-
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column filterBy="#{company.details}" headerText="Details" filterMatchMode="exact" sortBy="#{company.details}">
+                        <f:facet name="filter">
+                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter details"/>
+                        </f:facet>
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:dataList value="#{company.details}" var="detail" >
+                                    <h:outputText value="#{detail}"/>
+                                </p:dataList>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{company.details}" style="width:150px" placeholder="Enter detail"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
                     <p:column headerText="Edit" style="width:60px" exportable="false">
                         <p:rowEditor/>
                     </p:column>

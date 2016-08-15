@@ -30,23 +30,22 @@ public class WriteListToExcelFile implements Serializable {
 
         Iterator<Company> iterator = companiesList.iterator();
 
-        int rowIndex = 0;
+//        int rowIndex = 0;
 //        while (iterator.hasNext()) {
-//            Company company = iterator.next();
-//            Row row = sheet.createRow(rowIndex++);
-//            Cell cell0 = row.createCell(0);
-//            cell0.setCellValue(company.getName());
+//           Company company = iterator.next();
+//          Row row = sheet.createRow(rowIndex++);
+//          Cell cell0 = row.createCell(0);
+//          cell0.setCellValue(company.getName());
 //            Cell cell1 = row.createCell(1);
-//            cell1.setCellValue(company.getSite());
-//            Cell cell2 = row.createCell(2);
-//            cell2.setCellValue(company.getEmail());
-//            Cell cell3 = row.createCell(3);
-//            cell3.setCellValue(company.getTelephones());
+//           cell1.setCellValue(company.getSite());
+//           Cell cell2 = row.createCell(2);
+//           cell2.setCellValue(company.getEmail());
+//           Cell cell3 = row.createCell(3);
+//           cell3.setCellValue(company.getTelephones());
 //            Cell cell4 = row.createCell(4);
-//            cell4.setCellValue(company.getDetails());
+//           cell4.setCellValue(company.getDetails());
 //
 //        }
-
         //lets write the excel data to file now
         FileOutputStream fos = new FileOutputStream(fileCompany);
         workbook.write(fos);
