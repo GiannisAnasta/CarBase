@@ -5,31 +5,6 @@ import java.util.List;
 
 public class Company {
 
-    private String surname;
-    private String position;
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-    
-    
-    
-    
-    
-    
-    
     private String name;
     private List<String> site = new ArrayList<>();
     private List<String> email = new ArrayList<>();

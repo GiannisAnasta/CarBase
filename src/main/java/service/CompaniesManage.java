@@ -35,7 +35,6 @@ public class CompaniesManage implements Serializable {
         } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
 
         addcompanies(CompanyBuilder.buildCompanies(dataFromUploadedFile));
 

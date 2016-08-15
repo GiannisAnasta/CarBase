@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -65,32 +66,44 @@ public class XlsxStreamingReader {
     private static List<List<String>> extractData(Sheet sheet) {
         List<List<String>> data = new ArrayList<>();
         for (Row row : sheet) {
-            List<String> cellsInRow = new ArrayList<>();
+            int lastIndex = -1;
+            for (Cell cell1 : row) {
+                lastIndex = Math.max(lastIndex, cell1.getColumnIndex());
+            }
+            String[] cellsInRow = new String[lastIndex + 1];
+            for (int i = 0; i < lastIndex + 1; i++) {
+                cellsInRow[i] = "";
+            }
+
             for (Cell cell1 : row) {
                 StreamingCell cell = (StreamingCell) cell1;
                 if (cell == null) {
-                    cellsInRow.add("");
+                    cellsInRow[cell1.getColumnIndex()] = "";
                     continue;
                 }
                 switch (cell.getCellType()) {
                     case HSSFCell.CELL_TYPE_STRING:
                         String cellToAdd = cell.getStringCellValue();
                         cellToAdd = cellToAdd.replaceFirst("^\'", "");
-                        cellsInRow.add(cellToAdd);
+                        try {
+                            cellsInRow[cell1.getColumnIndex()] = cellToAdd;
+                        } catch (IndexOutOfBoundsException e) {
+
+                        }
                         break;
                     case HSSFCell.CELL_TYPE_NUMERIC:
                         if (DateUtil.isCellDateFormatted(cell)) {
-                            cellsInRow.add(cell.getDateCellValue().toString());
+                            cellsInRow[cell1.getColumnIndex()] = cell.getDateCellValue().toString();
                         } else {
                             double numericValue = cell.getNumericCellValue();
-                            if (cellsInRow.isEmpty()) {
-                                cellsInRow.add(String.valueOf(Math.round(numericValue)));
+                            if (cellsInRow.length == 0) {
+                                cellsInRow[cell1.getColumnIndex()] = String.valueOf(Math.round(numericValue));
                             } else {
                                 Double asDouble = numericValue;
                                 if (asDouble.floatValue() - asDouble.intValue() > 0) {
-                                    cellsInRow.add((new BigDecimal(asDouble)).setScale(5, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString());
+                                    cellsInRow[cell1.getColumnIndex()] = (new BigDecimal(asDouble)).setScale(5, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString();
                                 } else {
-                                    cellsInRow.add(Integer.toString(asDouble.intValue()));
+                                    cellsInRow[cell1.getColumnIndex()] = Integer.toString(asDouble.intValue());
                                 }
                             }
                         }
@@ -98,19 +111,20 @@ public class XlsxStreamingReader {
                     case HSSFCell.CELL_TYPE_BOOLEAN:
                     case HSSFCell.CELL_TYPE_FORMULA:
                         final String trueAsString = "1";
-                        cellsInRow.add(
-                                Boolean.toString(
+                        cellsInRow[cell1.getColumnIndex()]
+                                = Boolean.toString(
                                         Boolean.parseBoolean(cell.getStringCellValue())
                                         || cell.getContents() != null
                                         && trueAsString.equals(cell.getStringCellValue())
-                                ));
+                                );
                         break;
                     default:
-                        cellsInRow.add(cell.getStringCellValue());
+                        cellsInRow[cell1.getColumnIndex()] = cell.getStringCellValue();
                         break;
                 }
             }
-            data.add(cellsInRow);
+            data.add(Arrays.asList(cellsInRow)
+            );
         }
         return data;
     }

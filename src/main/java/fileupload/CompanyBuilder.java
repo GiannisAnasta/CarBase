@@ -11,15 +11,6 @@ public class CompanyBuilder {
     public static List<Company> buildCompanies(IndefiniteData indefiniteData) {
         List<Company> companies = new ArrayList<>();
         Company company = new Company();
-//        System.out.println("start");
-//        for (Row row : indefiniteData.getData()) {
-//            System.out.println(row.getData().size());
-//            for (String cell : row.getData()) {
-//                System.out.print(cell+" ");                
-//            }
-//            System.out.println("");
-//        }
-//        System.out.println("finish");
 
         for (Row row : indefiniteData.getData()) {
             if (IndefiniteDataUtil.isRowEmpty(row)) {
@@ -81,6 +72,7 @@ public class CompanyBuilder {
             }
 
         }
+
         return companies;
     }
 
