@@ -4,7 +4,7 @@ import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
-import model.Employee;
+import model.Company;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,39 +15,43 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class WriteListToExcelFile implements Serializable {
 
-    public static void writeEmployeeListToFile(String fileEmployee, List<Employee> employeeList) throws Exception {
+    public static void writeCompanyListToFile(String fileCompany, List<Company> companiesList) throws Exception {
         Workbook workbook = null;
 
-        if (fileEmployee.endsWith("xlsx")) {
+        if (fileCompany.endsWith("xlsx")) {
             workbook = new XSSFWorkbook();
-        } else if (fileEmployee.endsWith("xls")) {
+        } else if (fileCompany.endsWith("xls")) {
             workbook = new HSSFWorkbook();
         } else {
             throw new Exception("invalid file name, should be xls or xlsx");
         }
 
-        Sheet sheet = workbook.createSheet("Employee");
+        Sheet sheet = workbook.createSheet("Company");
 
-        Iterator<Employee> iterator = employeeList.iterator();
+        Iterator<Company> iterator = companiesList.iterator();
 
         int rowIndex = 0;
-        while (iterator.hasNext()) {
-            Employee employee = iterator.next();
-            Row row = sheet.createRow(rowIndex++);
-            Cell cell0 = row.createCell(0);
-            cell0.setCellValue(employee.getName());
-            Cell cell1 = row.createCell(1);
-            cell1.setCellValue(employee.getSurname());
-            Cell cell2 = row.createCell(2);
-            cell2.setCellValue(employee.getPosition());
-
-        }
+//        while (iterator.hasNext()) {
+//            Company company = iterator.next();
+//            Row row = sheet.createRow(rowIndex++);
+//            Cell cell0 = row.createCell(0);
+//            cell0.setCellValue(company.getName());
+//            Cell cell1 = row.createCell(1);
+//            cell1.setCellValue(company.getSite());
+//            Cell cell2 = row.createCell(2);
+//            cell2.setCellValue(company.getEmail());
+//            Cell cell3 = row.createCell(3);
+//            cell3.setCellValue(company.getTelephones());
+//            Cell cell4 = row.createCell(4);
+//            cell4.setCellValue(company.getDetails());
+//
+//        }
 
         //lets write the excel data to file now
-        FileOutputStream fos = new FileOutputStream(fileEmployee);
+        FileOutputStream fos = new FileOutputStream(fileCompany);
         workbook.write(fos);
         fos.close();
-        System.out.println(fileEmployee + " written successfully");
+        System.out.println(fileCompany + " written successfully");
     }
 
 }

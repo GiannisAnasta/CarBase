@@ -1,6 +1,6 @@
 package service;
 
-import fileupload.EmployeeBuilder;
+import fileupload.CompanyBuilder;
 import filewrite.WriteListToExcelFile;
 import fileupload.IndefiniteData;
 import fileupload.UploadedFileDataReader;
@@ -15,16 +15,16 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import model.Employee;
+import model.Company;
 import view.FileUploadView;
 
 @Named
 @SessionScoped
-public class EmployeerManage implements Serializable {
+public class CompaniesManage implements Serializable {
 
-    private static final ArrayList<Employee> entities = new ArrayList<>();
+    private static final ArrayList<Company> entities = new ArrayList<>();
 
-    private static final String STORAGE_FILE = "/home/giannis/CarBase/storage/storageDB.xlsx";
+    private static final String STORAGE_FILE = "/home/giannis/Companies/storage/storageDB.xlsx";
 
     @PostConstruct
     private void onInit() {
@@ -35,8 +35,9 @@ public class EmployeerManage implements Serializable {
         } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
 
-        addEmployees(EmployeeBuilder.buildEmployees(dataFromUploadedFile));
+        addcompanies(CompanyBuilder.buildCompanies(dataFromUploadedFile));
 
     }
 
@@ -46,32 +47,32 @@ public class EmployeerManage implements Serializable {
     }
 
     public void saveToStorage() {
-        try {
-            //Todo backup of original file
-            WriteListToExcelFile.writeEmployeeListToFile(STORAGE_FILE, entities);
-        } catch (Exception ex) {
-            Logger.getLogger(EmployeerManage.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            //Todo backup of original file
+//            WriteListToExcelFile.writeCompanyListToFile(STORAGE_FILE, entities);
+//        } catch (Exception ex) {
+//            Logger.getLogger(CompaniesManage.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
-    public ArrayList<Employee> getList() {
+    public ArrayList<Company> getList() {
         return entities;
     }
 
-    public void addEmployee(Employee employee) {
-        entities.add(employee);
+    public void addCompany(Company company) {
+        entities.add(company);
     }
 
-    public void removeEmployee(Employee employee) {
-        entities.remove(employee);
+    public void removeCompany(Company company) {
+        entities.remove(company);
     }
 
-    public void addEmployees(List<Employee> employees) {
-        entities.addAll(employees);
+    public void addcompanies(List<Company> companies) {
+        entities.addAll(companies);
     }
 
-    public void removeEmployees(List<Employee> employees) {
-        entities.removeAll(employees);
+    public void removeCompanies(List<Company> companies) {
+        entities.removeAll(companies);
     }
 
 }

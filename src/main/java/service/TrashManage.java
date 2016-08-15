@@ -27,7 +27,7 @@ public class TrashManage implements Serializable {
 
     }
 
-    public List<String> getEmployeers() {
+    public List<String> getCompanies() {
         return Arrays.asList(positions);
     }
 

@@ -36,9 +36,9 @@ public abstract class UploadedFileDataReader {
         try {
             switch (extension(file.getName())) {
                 case "xls":
+
                     throw new UnsupportedOperationException("xls not supported yet");
                 case "xlsx":
-
                     return new IndefiniteData(XlsxStreamingReader.readFile(file));
 
                 case "csv":

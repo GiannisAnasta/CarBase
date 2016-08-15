@@ -1,14 +1,11 @@
 package fileupload.xls;
 
-
 import fileupload.UploadedFileReadException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -61,7 +58,7 @@ public abstract class XlsReader {
                         break;
                     case HSSFCell.CELL_TYPE_NUMERIC:
                         if (DateUtil.isCellDateFormatted(cell)) {
-                            cell.getDateCellValue();                           
+                            cell.getDateCellValue();
                         } else {
                             double dVal = cell.getNumericCellValue();
 

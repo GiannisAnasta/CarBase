@@ -11,7 +11,7 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>EmployeeBase</title>
+                <title>Company</title>
             </f:facet>
         </h:head>
         <h:body>
@@ -19,21 +19,21 @@
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <h:outputText value="Please wait..."/>
             </p:dialog>
-            <h:form id="employeeTableForm">
+            <h:form id="companiesTableForm">
                 <p:growl id="msgs" showDetail="true"/>
-                <p:dataTable id="entities" var="employee" value="#{employeerManage.list}" widgetVar="employeersTable" editable="true"
-                             emptyMessage="No employees found with given criteria" filteredValue="#{employeersTableFilter.filteredEmployeers}"
+                <p:dataTable id="entities" var="company" value="#{companiesManage.list}" widgetVar="companiesTable" editable="true"
+                             emptyMessage="No companies found with given criteria" filteredValue="#{companyTableFilter.filteredCompanies}"
                              selection="#{rowSelection.selected}"
-                             rowKey="#{employee}">
+                             rowKey="#{company}">
 
                     <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
 
-                    <p:ajax event="rowEdit" listener="#{editEmployeeBean.onRowEdit}" update="@this :employeeTableForm:msgs"/>
-                    <p:ajax event="rowEditCancel" listener="#{editEmployeeBean.onRowCancel}" update="@this :employeeTableForm:msgs"/>
+                    <p:ajax event="rowEdit" listener="#{editCompanyBean.onRowEdit}" update="@this :companiesTableForm:msgs"/>
+                    <p:ajax event="rowEditCancel" listener="#{editCompanyBean.onRowCancel}" update="@this :companiesTableForm:msgs"/>
 
                     <f:facet name="header">
                         <h:outputText value="Search all fields:"/>
-                        <p:inputText id="globalFilter" onkeyup="PF('employeersTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+                        <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="Enter keyword"/>
 
                         <p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator"/>
                         <p:columnToggler datasource="entities" trigger="toggler"/>
@@ -44,56 +44,56 @@
                         </h:commandLink>
 
                         <p:commandButton process="entities" actionListener="#{rowSelection.deleteSelected()}" icon="ui-icon-trash" value="DeleteAll" update="@form"/>
-                        <p:commandButton process="entities" actionListener="#{employeerManage.saveToStorage()}" value="Save" update="@this" icon="ui-icon-disk"/>
+                        <p:commandButton process="entities" actionListener="#{companiesManage.saveToStorage()}" value="Save" update="@this" icon="ui-icon-disk"/>
                     </f:facet>
 
-                    <p:column filterBy="#{employee.name}" headerText="Name" filterMatchMode="exact" sortBy="#{employee.name}">
+                    <p:column filterBy="#{company.name}" headerText="Name" filterMatchMode="exact" sortBy="#{company.name}">
                         <f:facet name="filter">
-                            <p:inputText onkeyup="PF('employeersTable').filter()" style="width:150px" placeholder="Enter name">
+                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter name">
                             </p:inputText>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:outputText value="#{employee.name}"/>
+                                <h:outputText value="#{company.name}"/>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{employee.name}" style="width:150px" placeholder="Enter name">
+                                <p:inputText value="#{company.name}" style="width:150px" placeholder="Enter name">
                                 </p:inputText>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{employee.surname}" headerText="Surname" filterMatchMode="exact" sortBy="#{employee.surname}">
+                    <p:column filterBy="#{company.surname}" headerText="Surname" filterMatchMode="exact" sortBy="#{company.surname}">
                         <f:facet name="filter">
-                            <p:inputText onkeyup="PF('employeersTable').filter()" style="width:150px" placeholder="Enter surname"/>
+                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter surname"/>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:outputText value="#{employee.surname}">
+                                <h:outputText value="#{company.surname}">
 
                                 </h:outputText>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{employee.surname}"
+                                <p:inputText value="#{company.surname}"
                                              style="width:150px"
                                              placeholder="Enter surname">
                                 </p:inputText>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{employee.position}" headerText="Position" filterMatchMode="in" sortBy="#{employee.position}">
+                    <p:column filterBy="#{company.position}" headerText="Position" filterMatchMode="in" sortBy="#{company.position}">
                         <f:facet name="filter">
-                            <p:selectCheckboxMenu label="Positions" onchange="PF('employeersTable').filter()" panelStyle="width:250px" scrollHeight="150">
+                            <p:selectCheckboxMenu label="Positions" onchange="PF('companiesTable').filter()" panelStyle="width:250px" scrollHeight="150">
 
-                                <f:selectItems value="#{trashManage.employeers}"/>
+                                <f:selectItems value="#{trashManage.companies}"/>
                             </p:selectCheckboxMenu>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:outputText value="#{employee.position}"/>
+                                <h:outputText value="#{company.position}"/>
                             </f:facet>
                             <f:facet name="input">
-                                <h:selectOneMenu value="#{employee.position}" style="width:100%">
-                                    <f:selectItems value="#{trashManage.employeers}"
+                                <h:selectOneMenu value="#{company.position}" style="width:100%">
+                                    <f:selectItems value="#{trashManage.companies}"
                                                    var="position"
                                                    itemLabel="#{position}"
                                                    itemValue="#{position}"/>
@@ -107,7 +107,7 @@
                     <p:column headerText="Delete" style="width:60px" exportable="false"  >
                         <p:commandButton icon="ui-icon-trash"
                                          title="Delete"
-                                         actionListener="#{removeEmployeeBean.remove(employee)}"
+                                         actionListener="#{removeCompanyBean.remove(company)}"
                                          ajax="false"/>
                     </p:column>
                 </p:dataTable>
@@ -118,21 +118,21 @@
                               update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
                 <p:growl id="linkmessages" showDetail="true"/>
             </h:form>
-            <h:form id="addEmployeeForm">
+            <h:form id="addCompanyForm">
                 <p:growl id="messages" showDetail="true"/>
-                <p:panel header="Add employee" style="width: 400px;" rendered="true">
+                <p:panel header="Add company" style="width: 400px;" rendered="true">
                     <p:panelGrid columns="2">
                         <h:outputLabel for="name" value="Name:"/>
-                        <p:inputText id="name" value="#{addEmployeeBean.name}"/>
+                        <p:inputText id="name" value="#{addCompanyBean.name}"/>
                         <h:outputLabel for="surname" value="Surname:"/>
-                        <p:inputText id="surname" value="#{addEmployeeBean.surname}"/>
+                        <p:inputText id="surname" value="#{addCompanyBean.surname}"/>
                         <h:outputLabel for="position" value="Position:"/>
-                        <p:selectOneMenu id="position" value="#{addEmployeeBean.position}" required="true">
+                        <p:selectOneMenu id="position" value="#{addCompanyBean.position}" required="true">
                             <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{trashManage.employeers}"/>
+                            <f:selectItems value="#{trashManage.companies}"/>
                         </p:selectOneMenu>
                         <f:facet name="footer">
-                            <p:commandButton value="Add Employee" action="#{addEmployeeBean.addAction()}" process="@form" update="@all"/>
+                            <p:commandButton value="Add Company" action="#{addCompanyBean.addAction()}" process="@form" update="@all"/>
                         </f:facet>
                     </p:panelGrid>
                 </p:panel>

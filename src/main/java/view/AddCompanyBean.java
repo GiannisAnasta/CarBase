@@ -4,25 +4,25 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import model.Employee;
-import service.EmployeerManage;
+import model.Company;
+import service.CompaniesManage;
 
 @Named
 @SessionScoped
-public class AddEmployeeBean implements Serializable {
+public class AddCompanyBean implements Serializable {
 
     @Inject
-    private EmployeerManage entity;
+    private CompaniesManage entity;
 
     private String name;
     private String surname;
     private String position;
 
-    public EmployeerManage getEntity() {
+    public CompaniesManage getEntity() {
         return entity;
     }
 
-    public void setEntity(EmployeerManage entity) {
+    public void setEntity(CompaniesManage entity) {
         this.entity = entity;
     }
 
@@ -51,11 +51,12 @@ public class AddEmployeeBean implements Serializable {
     }
 
     public void addAction() {
-        Employee entities = new Employee();
+        Company entities = new Company();
         entities.setName(name);
-        entities.setPosition(position);
-        entities.setSurname(surname);
-        this.entity.addEmployee(entities);
+        //todo
+//        entities.(position);
+//        entities.setSurname(surname);
+        this.entity.addCompany(entities);
         flush();
     }
 

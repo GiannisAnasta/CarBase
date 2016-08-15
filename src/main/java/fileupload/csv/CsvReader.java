@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class CsvReader {
 
     public static List<List<String>> readFile(InputStream inputStream, char separator) throws IOException {
-        
+
         List<List<String>> data = new ArrayList<>();
 
         try (au.com.bytecode.opencsv.CSVReader csvReader = new au.com.bytecode.opencsv.CSVReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8), separator)) {

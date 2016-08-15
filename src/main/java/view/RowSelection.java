@@ -6,28 +6,28 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import model.Employee;
-import service.EmployeerManage;
+import model.Company;
+import service.CompaniesManage;
 
 @Named
 @SessionScoped
 public class RowSelection implements Serializable {
 
     @Inject
-    private EmployeerManage service;
+    private CompaniesManage service;
 
-    private List<Employee> selected = new ArrayList<>();
+    private List<Company> selected = new ArrayList<>();
 
-    public List<Employee> getSelected() {
+    public List<Company> getSelected() {
         return selected;
     }
 
-    public void setSelected(List<Employee> selectedCars) {
-        this.selected = selectedCars;
+    public void setSelected(List<Company> selectedCompanies) {
+        this.selected = selectedCompanies;
     }
 
     public void deleteSelected() {
-        service.removeEmployees(selected);
+        service.removeCompanies(selected);
     }
 
 }
