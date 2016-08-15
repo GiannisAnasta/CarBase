@@ -27,13 +27,22 @@
                              rowKey="#{company}">
 
                     <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
+                    <f:facet name="header">
+                        <h:form enctype="multipart/form-data" style="width:600px;" >
+                            <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                          update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
+                            <p:growl id="linkmessages" showDetail="true"/>
+                        </h:form>
 
+                    </f:facet>
                     <p:ajax event="rowEdit" listener="#{editCompanyBean.onRowEdit}" update="@this :companiesTableForm:msgs"/>
                     <p:ajax event="rowEditCancel" listener="#{editCompanyBean.onRowCancel}" update="@this :companiesTableForm:msgs"/>
 
                     <f:facet name="header">
                         <h:outputText value="Search all fields:"/>
                         <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+
+
 
                         <p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator"/>
                         <p:columnToggler datasource="entities" trigger="toggler"/>
@@ -68,7 +77,7 @@
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
-                                <p:dataList value="#{company.site}" id="site" var="sitee" >
+                                <p:dataList value="#{company.site}" var="sitee" >
                                     <h:outputText value="#{sitee}"/>
                                 </p:dataList>
                             </f:facet>
@@ -132,26 +141,27 @@
                                          ajax="false"/>
                     </p:column>
                 </p:dataTable>
+            </h:form>
 
-            </h:form>
-            <h:form enctype="multipart/form-data">
-                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                              update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
-                <p:growl id="linkmessages" showDetail="true"/>
-            </h:form>
             <h:form id="addCompanyForm">
                 <p:growl id="messages" showDetail="true"/>
-                <p:panel header="Add company" style="width: 400px;" rendered="true">
-                    <p:panelGrid columns="2">
+                <p:panel header="Add company" style="width:700px;" rendered="true">
+                    <p:panelGrid columns="4">
                         <h:outputLabel for="name" value="Name:"/>
                         <p:inputText id="name" value="#{addCompanyBean.name}"/>
-                        <h:outputLabel for="surname" value="Surname:"/>
-                        <p:inputText id="surname" value="#{addCompanyBean.surname}"/>
-                        <h:outputLabel for="position" value="Position:"/>
-                        <p:selectOneMenu id="position" value="#{addCompanyBean.position}" required="true">
-                            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{trashManage.companies}"/>
-                        </p:selectOneMenu>
+
+                        <h:outputLabel for="site" value="Site:"/>
+                        <p:inputText id="site" value="#{addCompanyBean.site}"/>
+
+                        <h:outputLabel for="email" value="Email:"/>
+                        <p:inputText id="email" value="#{addCompanyBean.email}"/>
+
+                        <h:outputLabel for="telephone" value="Telephone:"/>
+                        <p:inputText id="telephone" value="#{addCompanyBean.telephones}"/>
+
+                        <h:outputLabel for="details" value="Detail:"/>
+                        <p:inputText id="detail" value="#{addCompanyBean.details}"/>
+
                         <f:facet name="footer">
                             <p:commandButton value="Add Company" action="#{addCompanyBean.addAction()}" process="@form" update="@all"/>
                         </f:facet>

@@ -1,6 +1,8 @@
 package view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,8 +17,10 @@ public class AddCompanyBean implements Serializable {
     private CompaniesManage entity;
 
     private String name;
-    private String surname;
-    private String position;
+    private List<String> site = new ArrayList<>();
+    private List<String> email = new ArrayList<>();
+    private List<String> telephones = new ArrayList<>();
+    private List<String> details = new ArrayList<>();
 
     public CompaniesManage getEntity() {
         return entity;
@@ -34,36 +38,55 @@ public class AddCompanyBean implements Serializable {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public List<String> getSite() {
+        return site;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSite(List<String> site) {
+        this.site = site;
     }
 
-    public String getPosition() {
-        return position;
+    public List<String> getEmail() {
+        return email;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setEmail(List<String> email) {
+        this.email = email;
+    }
+
+    public List<String> getTelephones() {
+        return telephones;
+    }
+
+    public void setTelephones(List<String> telephones) {
+        this.telephones = telephones;
+    }
+
+    public List<String> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<String> details) {
+        this.details = details;
     }
 
     public void addAction() {
         Company entities = new Company();
         entities.setName(name);
-        //todo
-//        entities.(position);
-//        entities.setSurname(surname);
+        entities.setSite(site);
+        entities.setEmail(email);
+        entities.setTelephones(telephones);
+        entities.setDetails(details);
         this.entity.addCompany(entities);
         flush();
     }
 
     private void flush() {
         name = "";
-        surname = "";
-        position = "";
+        site = null;
+        email = null;
+        telephones = null;
+        details = null;
 
     }
 }
