@@ -16,8 +16,8 @@
         </h:head>
         <h:body>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                <h:outputText value="Please wait..."/>
+            <p:dialog widgetVar="statusDialog"  draggable="false" closable="false" resizable="false" showHeader="false" position="right top" style=" border-color: lime ">
+                <h:outputText value="Loading..."/>
             </p:dialog>
             <h:form id="companiesTableForm">
                 <p:growl id="msgs" showDetail="true"/>
@@ -27,14 +27,8 @@
                              rowKey="#{company}">
 
                     <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
-                    <f:facet name="header">
-                        <h:form enctype="multipart/form-data" style="width:600px;" >
-                            <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                                          update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
-                            <p:growl id="linkmessages" showDetail="true"/>
-                        </h:form>
 
-                    </f:facet>
+
                     <p:ajax event="rowEdit" listener="#{editCompanyBean.onRowEdit}" update="@this :companiesTableForm:msgs"/>
                     <p:ajax event="rowEditCancel" listener="#{editCompanyBean.onRowCancel}" update="@this :companiesTableForm:msgs"/>
 
@@ -48,7 +42,7 @@
                         <p:columnToggler datasource="entities" trigger="toggler"/>
 
                         <h:commandLink>
-                            <img src="http://4.bp.blogspot.com/-IgIpwmQfvSs/UoxpFpMZ2QI/AAAAAAAAAB8/QHsNKgYWe6s/s1600/523px-Text-xml.svg.png" alt="Smiley face" height="20" width="20"/>
+                            <img src="http://4.bp.blogspot.com/-IgIpwmQfvSs/UoxpFpMZ2QI/AAAAAAAAAB8/QHsNKgYWe6s/s1600/523px-Text-xml.svg.png" alt="Smiley face" height="30" width="30"/>
                             <p:dataExporter type="xls" target="entities" fileName="filteredEmployeers" pageOnly="true"/>
                         </h:commandLink>
 
@@ -71,9 +65,9 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.site}" headerText="Sites" filterMatchMode="exact" sortBy="#{company.site}">
+                    <p:column filterBy="#{company.site}" headerText="Sites" filterMatchMode="contains">
                         <f:facet name="filter">
-                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter site"/>
+                            <p:inputText id="filter" onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter site"/>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
@@ -86,7 +80,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.email}" headerText="Emails" filterMatchMode="exact" sortBy="#{company.email}">
+                    <p:column filterBy="#{company.email}" headerText="Emails" filterMatchMode="contains">
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter email"/>
                         </f:facet>
@@ -97,13 +91,13 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{company.email}" style="width:150px" placeholder="Enter name"/>
+                                <p:inputText value="#{company.email}" style="width:150px" placeholder="Enter email"/>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.telephones}" headerText="Telephones" filterMatchMode="exact" sortBy="#{company.telephones}">
+                    <p:column filterBy="#{company.telephones}" headerText="Telephones" filterMatchMode="contains">
                         <f:facet name="filter">
-                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter email"/>
+                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter telephone"/>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
@@ -116,7 +110,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.details}" headerText="Details" filterMatchMode="exact" sortBy="#{company.details}">
+                    <p:column filterBy="#{company.details}" headerText="Details" filterMatchMode="contains">
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter details"/>
                         </f:facet>
@@ -142,7 +136,11 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
-
+            <h:form enctype="multipart/form-data">
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                              update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
+                <p:growl id="linkmessages" showDetail="true"/>
+            </h:form>
             <h:form id="addCompanyForm">
                 <p:growl id="messages" showDetail="true"/>
                 <p:panel header="Add company" style="width:700px;" rendered="true">
