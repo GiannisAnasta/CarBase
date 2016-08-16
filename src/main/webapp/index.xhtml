@@ -65,7 +65,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.site}" headerText="Sites" filterMatchMode="contains">
+                    <p:column filterBy="#{company.site}" headerText="Sites" filterMatchMode="contains" >
                         <f:facet name="filter">
                             <p:inputText id="filter" onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter site"/>
                         </f:facet>
@@ -76,11 +76,13 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{company.site}" style="width:150px" placeholder="Enter site"/>
+                                <p:inputTextarea value="#{company.site}" style="width: 97%" placeholder="Enter site" >
+                                    <f:converter converterId="ListStringConverter" />
+                                </p:inputTextarea>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.email}" headerText="Emails" filterMatchMode="contains">
+                    <p:column filterBy="#{company.email}" headerText="Emails" filterMatchMode="contains" >
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter email"/>
                         </f:facet>
@@ -91,11 +93,13 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{company.email}" style="width:150px" placeholder="Enter email"/>
+                                <p:inputTextarea value="#{company.email}" style="width: 97%" placeholder="Enter email" >
+                                    <f:converter converterId="ListStringConverter" />
+                                </p:inputTextarea>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.telephones}" headerText="Telephones" filterMatchMode="contains">
+                    <p:column filterBy="#{company.telephones}" headerText="Telephones" filterMatchMode="contains" >
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter telephone"/>
                         </f:facet>
@@ -106,7 +110,9 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{company.telephones}" style="width:150px" placeholder="Enter telephone"/>
+                                <p:inputTextarea value="#{company.telephones}" style="width: 97%" placeholder="Enter telephone" >
+                                    <f:converter converterId="ListStringConverter" />
+                                </p:inputTextarea>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
@@ -121,7 +127,9 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{company.details}" style="width:150px" placeholder="Enter detail"/>
+                                <p:inputTextarea value="#{company.details}" style="width: 97%" placeholder="Enter detail" >
+                                    <f:converter converterId="ListStringConverter" />
+                                </p:inputTextarea>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
