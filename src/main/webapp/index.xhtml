@@ -26,7 +26,7 @@
                              selection="#{rowSelection.selected}"
                              rowKey="#{company}">
 
-                    <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
+                    <p:column selectionMode="multiple"  style="width:16px;text-align:center" exportable="false" toggleable="false"/>
 
 
                     <p:ajax event="rowEdit" listener="#{editCompanyBean.onRowEdit}" update="@this :companiesTableForm:msgs"/>
@@ -156,17 +156,25 @@
                         <h:outputLabel for="name" value="Name:"/>
                         <p:inputText id="name" value="#{addCompanyBean.name}"/>
 
-                        <h:outputLabel for="site" value="Site:"/>
-                        <p:inputText id="site" value="#{addCompanyBean.site}"/>
-
-                        <h:outputLabel for="email" value="Email:"/>
-                        <p:inputText id="email" value="#{addCompanyBean.email}"/>
-
                         <h:outputLabel for="telephone" value="Telephone:"/>
-                        <p:inputText id="telephone" value="#{addCompanyBean.telephones}"/>
+                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%" placeholder="Add telephone">
+                            <f:converter converterId="ListStringConverter" />
+                        </p:inputTextarea>
+
+                        <h:outputLabel for="site" value="Site:"/>
+                        <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%" placeholder="Add site">
+                            <f:converter converterId="ListStringConverter" />
+                        </p:inputTextarea>
 
                         <h:outputLabel for="details" value="Detail:"/>
-                        <p:inputText id="detail" value="#{addCompanyBean.details}"/>
+                        <p:inputTextarea id="detail" value="#{addCompanyBean.details}" style="width: 95%" placeholder="Add detail">
+                            <f:converter converterId="ListStringConverter" />
+                        </p:inputTextarea>
+
+                        <h:outputLabel for="email" value="Email:"/>
+                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%" placeholder="Add email">
+                            <f:converter converterId="ListStringConverter" />
+                        </p:inputTextarea>
 
                         <f:facet name="footer">
                             <p:commandButton value="Add Company" action="#{addCompanyBean.addAction()}" process="@form" update="@all"/>
