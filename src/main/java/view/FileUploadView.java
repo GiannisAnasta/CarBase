@@ -2,18 +2,14 @@ package view;
 
 import fileupload.CompanyBuilder;
 import fileupload.IndefiniteData;
-import fileupload.IndefiniteData.Row;
 import fileupload.UploadedFileDataReader;
 import fileupload.UploadedFileReadException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import model.Company;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import service.CompaniesManage;
@@ -34,6 +30,7 @@ public class FileUploadView implements Serializable {
         IndefiniteData dataFromUploadedFile = null;
         try {
             dataFromUploadedFile = UploadedFileDataReader.getDataFromUploadedFile(uploadedFile, ';');
+            dataFromUploadedFile.removeFirstLine();
         } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }

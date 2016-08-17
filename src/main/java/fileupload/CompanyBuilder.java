@@ -11,9 +11,11 @@ public class CompanyBuilder {
     public static List<Company> buildCompanies(IndefiniteData indefiniteData) {
         List<Company> companies = new ArrayList<>();
         Company company = new Company();
-        Row lastRow = indefiniteData.getData().get(indefiniteData.getData().size() - 1);
-        if (!IndefiniteDataUtil.isRowEmpty(lastRow)) {
-            indefiniteData.getData().add(new Row(new ArrayList<String>(), 666));
+        if (!indefiniteData.getData().isEmpty()) {
+            Row lastRow = indefiniteData.getData().get(indefiniteData.getData().size() - 1);
+            if (!IndefiniteDataUtil.isRowEmpty(lastRow)) {
+                indefiniteData.getData().add(new Row(new ArrayList<String>(), 666));
+            }
         }
 
         for (Row row : indefiniteData.getData()) {

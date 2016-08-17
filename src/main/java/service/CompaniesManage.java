@@ -32,6 +32,7 @@ public class CompaniesManage implements Serializable {
         IndefiniteData dataFromUploadedFile = null;
         try {
             dataFromUploadedFile = UploadedFileDataReader.getDataFromUploadedFile(new File(STORAGE_FILE), ';');
+            dataFromUploadedFile.removeFirstLine();
         } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -46,12 +47,12 @@ public class CompaniesManage implements Serializable {
     }
 
     public void saveToStorage() {
-//        try {
-//            //Todo backup of original file
-//            WriteListToExcelFile.writeCompanyListToFile(STORAGE_FILE, entities);
-//        } catch (Exception ex) {
-//            Logger.getLogger(CompaniesManage.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            //Todo backup of original file
+            WriteListToExcelFile.writeCompanyListToFile(STORAGE_FILE, entities);
+        } catch (Exception ex) {
+            Logger.getLogger(CompaniesManage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public ArrayList<Company> getList() {
