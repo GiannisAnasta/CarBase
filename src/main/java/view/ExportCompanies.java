@@ -84,7 +84,7 @@ public class ExportCompanies implements Serializable {
 
         for (int i = 0; i < maxRows; i++) {
             Company company = companies.get(i);
-
+            List<String> multiRow;
             int returnRowsNum = 0;
             currentRowNumber++;
             int startRowNum = currentRowNumber;
@@ -94,52 +94,56 @@ public class ExportCompanies implements Serializable {
             row.createCell(currentCellNumber).setCellValue(company.getName() + "r" + currentRowNumber + "c" + currentCellNumber);
 ///site
             currentCellNumber++;
-            for (String site : company.getSite()) {
+            multiRow = company.getSite();
+            for (String item : multiRow) {
                 row = sheet.getRow(currentRowNumber);
                 if (row == null) {
                     row = sheet.createRow(currentRowNumber);
                 }
-                row.createCell(currentCellNumber).setCellValue(site + "r" + currentRowNumber + "c" + currentCellNumber);
+                row.createCell(currentCellNumber).setCellValue(item + "r" + currentRowNumber + "c" + currentCellNumber);
                 currentRowNumber++;
             }
             currentRowNumber = startRowNum;
-            returnRowsNum = Math.max(returnRowsNum, company.getSite().size());
+            returnRowsNum = Math.max(returnRowsNum, multiRow.size());
 ///email
             currentCellNumber++;
-            for (String email : company.getEmail()) {
+            multiRow = company.getEmail();
+            for (String item : multiRow) {
                 row = sheet.getRow(currentRowNumber);
                 if (row == null) {
                     row = sheet.createRow(currentRowNumber);
                 }
-                row.createCell(currentCellNumber).setCellValue(email + "r" + currentRowNumber + "c" + currentCellNumber);
+                row.createCell(currentCellNumber).setCellValue(item);
                 currentRowNumber++;
             }
             currentRowNumber = startRowNum;
-            returnRowsNum = Math.max(returnRowsNum, company.getEmail().size());
+            returnRowsNum = Math.max(returnRowsNum, multiRow.size());
 ///telephone
             currentCellNumber++;
-            for (String telephone : company.getTelephones()) {
+            multiRow = company.getTelephones();
+            for (String item : multiRow) {
                 row = sheet.getRow(currentRowNumber);
                 if (row == null) {
                     row = sheet.createRow(currentRowNumber);
                 }
-                row.createCell(currentCellNumber).setCellValue(telephone + "r" + currentRowNumber + "c" + currentCellNumber);
+                row.createCell(currentCellNumber).setCellValue(item);
                 currentRowNumber++;
             }
             currentRowNumber = startRowNum;
-            returnRowsNum = Math.max(returnRowsNum, company.getTelephones().size());
+            returnRowsNum = Math.max(returnRowsNum, multiRow.size());
 //details            
             currentCellNumber++;
-            for (String detail : company.getDetails()) {
+             multiRow = company.getDetails();
+            for (String item : multiRow) {
                 row = sheet.getRow(currentRowNumber);
                 if (row == null) {
                     row = sheet.createRow(currentRowNumber);
                 }
-                row.createCell(currentCellNumber).setCellValue(detail + "r" + currentRowNumber + "c" + currentCellNumber);
+                row.createCell(currentCellNumber).setCellValue(item);
                 currentRowNumber++;
             }
             currentRowNumber = startRowNum;
-            returnRowsNum = Math.max(returnRowsNum, company.getDetails().size());
+            returnRowsNum = Math.max(returnRowsNum, multiRow.size());
 //new company
             currentRowNumber = currentRowNumber + returnRowsNum;
         }
