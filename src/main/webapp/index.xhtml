@@ -16,8 +16,8 @@
         </h:head>
         <h:body>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog"  draggable="false" closable="false" resizable="false" showHeader="false" position="right top" style=" border-color: lime ">
-                <h:outputText value="Loading..."/>
+            <p:dialog widgetVar="statusDialog" draggable="false" closable="false" resizable="false" showHeader="false" position="right top" style=" border-color: lime ">
+                <h:outputText value="Loading..." />
             </p:dialog>
             <h:form id="companiesTableForm">
                 <p:growl id="msgs" showDetail="true"/>
@@ -26,17 +26,19 @@
                              selection="#{rowSelection.selected}"
                              rowKey="#{company}">
 
-                    <p:column selectionMode="multiple"  style="width:16px;text-align:center" exportable="false" toggleable="false"/>
+
+
+                    <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
 
 
                     <p:ajax event="rowEdit" listener="#{editCompanyBean.onRowEdit}" update="@this :companiesTableForm:msgs"/>
                     <p:ajax event="rowEditCancel" listener="#{editCompanyBean.onRowCancel}" update="@this :companiesTableForm:msgs"/>
 
                     <f:facet name="header">
-                        <h:outputText value="Search all fields:"/>
+                        <h:outputText value="Search all fields: "/>
                         <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="Enter keyword"/>
 
-
+                        <p:spacer height="10"/>
 
                         <p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator"/>
                         <p:columnToggler datasource="entities" trigger="toggler"/>
@@ -46,7 +48,15 @@
                             <p:dataExporter type="xls" target="entities" fileName="filteredEmployeers" pageOnly="true"/>
                         </h:commandLink>
 
+                        <p:commandButton value="export"
+                                         process="@this" ajax="false">
+                            <p:fileDownload value="#{exportCompanies.exportXlsx(companiesManage.list)}" />
+                        </p:commandButton>
+
+
+                        <p:spacer height="10"/>
                         <p:commandButton process="entities" actionListener="#{rowSelection.deleteSelected()}" icon="ui-icon-trash" value="DeleteAll" update="@form"/>
+                        <p:spacer height="10"/>
                         <p:commandButton process="entities" actionListener="#{companiesManage.saveToStorage()}" value="Save" update="@this" icon="ui-icon-disk"/>
                     </f:facet>
 
@@ -60,8 +70,7 @@
                                 <h:outputText value="#{company.name}"/>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{company.name}" style="width:150px" placeholder="Enter name">
-                                </p:inputText>
+                                <p:inputText value="#{company.name}" style="width:150px" placeholder="Enter name"/>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
@@ -76,7 +85,7 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputTextarea value="#{company.site}" style="width: 97%" placeholder="Enter site" >
+                                <p:inputTextarea value="#{company.site}" style="width: 97%; height:97%" placeholder="Enter site" >
                                     <f:converter converterId="ListStringConverter" />
                                 </p:inputTextarea>
                             </f:facet>
@@ -93,7 +102,7 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputTextarea value="#{company.email}" style="width: 97%" placeholder="Enter email" >
+                                <p:inputTextarea value="#{company.email}" style="width: 97%; height:97%" placeholder="Enter email" >
                                     <f:converter converterId="ListStringConverter" />
                                 </p:inputTextarea>
                             </f:facet>
@@ -110,7 +119,7 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputTextarea value="#{company.telephones}" style="width: 97%" placeholder="Enter telephone" >
+                                <p:inputTextarea value="#{company.telephones}" style="width: 97%; height:97%" placeholder="Enter telephone" >
                                     <f:converter converterId="ListStringConverter" />
                                 </p:inputTextarea>
                             </f:facet>
@@ -127,7 +136,7 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputTextarea value="#{company.details}" style="width: 97%" placeholder="Enter detail" >
+                                <p:inputTextarea value="#{company.details}" style="width: 97%; height:97%" placeholder="Enter detail" >
                                     <f:converter converterId="ListStringConverter" />
                                 </p:inputTextarea>
                             </f:facet>
@@ -136,7 +145,7 @@
                     <p:column headerText="Edit" style="width:60px" exportable="false">
                         <p:rowEditor/>
                     </p:column>
-                    <p:column headerText="Delete" style="width:60px" exportable="false"  >
+                    <p:column headerText="Delete" style="width:60px" exportable="false" >
                         <p:commandButton icon="ui-icon-trash"
                                          title="Delete"
                                          actionListener="#{removeCompanyBean.remove(company)}"
@@ -157,22 +166,22 @@
                         <p:inputText id="name" value="#{addCompanyBean.name}"/>
 
                         <h:outputLabel for="telephone" value="Telephone:"/>
-                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%" placeholder="Add telephone">
+                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%; height:93%" placeholder="Add telephone">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
                         <h:outputLabel for="site" value="Site:"/>
-                        <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%" placeholder="Add site">
+                        <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%; height:93%" placeholder="Add site">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
                         <h:outputLabel for="details" value="Detail:"/>
-                        <p:inputTextarea id="detail" value="#{addCompanyBean.details}" style="width: 95%" placeholder="Add detail">
+                        <p:inputTextarea id="details" value="#{addCompanyBean.details}" style="width: 95%; height:93%" placeholder="Add detail">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
                         <h:outputLabel for="email" value="Email:"/>
-                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%" placeholder="Add email">
+                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%; height:93%" placeholder="Add email">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
