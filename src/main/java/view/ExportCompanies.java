@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -11,6 +14,7 @@ import model.Company;
 
 import org.primefaces.model.StreamedContent;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadFactory;
 import javax.naming.spi.DirStateFactory.Result;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -21,11 +25,33 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.Visibility;
 
 @Named
 @SessionScoped
 public class ExportCompanies implements Serializable {
+
+    /*
+    Name
+    Sites
+    Emails
+    Telephones
+    +
+    Edit
+    Delete
+     */
+    private final List<Boolean> list = Arrays.asList(true, true, true, true, true, true, true);
+
+    public void onToggle(ToggleEvent e) {
+        list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
+        for (Boolean b : list) {
+            System.out.println(b);
+        }
+
+        System.out.println("+++++++++++++");
+    }
 
     class SimpleThreadFactory implements ThreadFactory {
 
@@ -91,7 +117,7 @@ public class ExportCompanies implements Serializable {
 ///name
             row = sheet.createRow(currentRowNumber);
             currentCellNumber = 0;
-            row.createCell(currentCellNumber).setCellValue(company.getName() + "r" + currentRowNumber + "c" + currentCellNumber);
+            row.createCell(currentCellNumber).setCellValue(company.getName());
 ///site
             currentCellNumber++;
             multiRow = company.getSite();
@@ -100,7 +126,7 @@ public class ExportCompanies implements Serializable {
                 if (row == null) {
                     row = sheet.createRow(currentRowNumber);
                 }
-                row.createCell(currentCellNumber).setCellValue(item + "r" + currentRowNumber + "c" + currentCellNumber);
+                row.createCell(currentCellNumber).setCellValue(item);
                 currentRowNumber++;
             }
             currentRowNumber = startRowNum;
@@ -133,7 +159,7 @@ public class ExportCompanies implements Serializable {
             returnRowsNum = Math.max(returnRowsNum, multiRow.size());
 //details            
             currentCellNumber++;
-             multiRow = company.getDetails();
+            multiRow = company.getDetails();
             for (String item : multiRow) {
                 row = sheet.getRow(currentRowNumber);
                 if (row == null) {

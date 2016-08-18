@@ -1,5 +1,6 @@
 package view.converter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -17,8 +18,13 @@ public class ListStringConverter implements Converter {
             String value) {
 
         String[] split = value.split("\n");
+        List<String> asList = new ArrayList<>();
+        for (String item : split) {
+            if (!item.trim().isEmpty()) {
+                asList.add(item);
+            }
+        }
 
-//           
 //            if (!urlValidator.isValid(url.toString())) {
 //
 //                FacesMessage msg
@@ -27,7 +33,7 @@ public class ListStringConverter implements Converter {
 //                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 //                throw new ConverterException(msg);
 //            }
-        return Arrays.asList(split);
+        return asList;
     }
 
     @Override
