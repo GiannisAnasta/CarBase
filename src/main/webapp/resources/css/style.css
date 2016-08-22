@@ -5,3 +5,12 @@ ul
 ol {
     list-style-type: none;
 }
+li {
+    padding-right: 10px;
+}
+li{
+    font-style: italic;
+}
+li{
+    position:static;
+}

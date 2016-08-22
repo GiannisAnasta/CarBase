@@ -5,14 +5,17 @@ import fileupload.IndefiniteData;
 import fileupload.UploadedFileDataReader;
 import fileupload.UploadedFileReadException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import model.Company;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import service.CompaniesManage;
+import service.CompaniesUtil;
 
 @Named
 @SessionScoped
@@ -34,8 +37,9 @@ public class FileUploadView implements Serializable {
         } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        manager.addcompanies(CompanyBuilder.buildCompanies(dataFromUploadedFile));
-
+        List<Company> buildedCompanies = CompanyBuilder.buildCompanies(dataFromUploadedFile);
+        List<Company> uniqueCompaniesFromFile = CompaniesUtil.getUniqueCompanies(buildedCompanies);
+        manager.addcompanies(uniqueCompaniesFromFile);
         System.out.println("finish");
     }
 
