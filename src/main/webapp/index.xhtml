@@ -44,6 +44,7 @@
                             <p:ajax event="toggle" listener="#{exportCompanies.onToggle}"/>
                         </p:columnToggler>
                         <p:commandButton value="Export Selected"  icon="ui-icon-extlink"
+                                         actionListener="#{exportCompanies.setFiltered(true)}"
                                          process="@this" ajax="false">
                             <p:fileDownload value="#{exportCompanies.exportXlsx(rowSelection.selected)}"/>
                         </p:commandButton>
@@ -51,6 +52,7 @@
                         <p:spacer height="10"/>
 
                         <p:commandButton value="Export All"  icon="ui-icon-extlink"
+                                         actionListener="#{exportCompanies.setFiltered(false)}"
                                          process="@this" ajax="false">
                             <p:fileDownload value="#{exportCompanies.exportXlsx(companiesManage.list)}"/>
                         </p:commandButton>

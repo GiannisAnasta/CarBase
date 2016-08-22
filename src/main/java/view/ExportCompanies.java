@@ -4,21 +4,15 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import model.Company;
 
 import org.primefaces.model.StreamedContent;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ThreadFactory;
-import javax.naming.spi.DirStateFactory.Result;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
@@ -33,23 +27,18 @@ import org.primefaces.model.Visibility;
 @SessionScoped
 public class ExportCompanies implements Serializable {
 
-    /*
-    Name
-    Sites
-    Emails
-    Telephones
-    +
-    Edit
-    Delete
-     */
-    private final List<Boolean> list = Arrays.asList(true, true, true, true, true, true, true);
+    private final List<Boolean> list = Arrays.asList(true, true, true, true, true, true, true, true);
+    private boolean filtered;
+
+    public void setFiltered(boolean filtered) {
+        this.filtered = filtered;
+    }
 
     public void onToggle(ToggleEvent e) {
         list.set((Integer) e.getData(), e.getVisibility() == Visibility.VISIBLE);
         for (Boolean b : list) {
             System.out.println(b);
         }
-
         System.out.println("+++++++++++++");
     }
 
@@ -62,7 +51,6 @@ public class ExportCompanies implements Serializable {
     }
 
     public StreamedContent exportXlsx(List<Company> companies) {
-
         final Workbook wb = buildWorkbook(companies);
         final PipedInputStream in = new PipedInputStream();
         try {
@@ -89,18 +77,28 @@ public class ExportCompanies implements Serializable {
 
     public static final int ROWS_IN_XLSX_LIMIT = 500000;
 
-    public static Workbook buildWorkbook(List<Company> companies) {
+    public Workbook buildWorkbook(List<Company> companies) {
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Companies");
         int currentRowNumber = 0;
         int currentCellNumber = 0;
 
         Row row = sheet.createRow(currentRowNumber);
-        row.createCell(currentCellNumber++).setCellValue("Name");
-        row.createCell(currentCellNumber++).setCellValue("Site");
-        row.createCell(currentCellNumber++).setCellValue("Email");
-        row.createCell(currentCellNumber++).setCellValue("Telephone");
-        row.createCell(currentCellNumber++).setCellValue("Details");
+        if (!filtered || list.get(1)) {
+            row.createCell(currentCellNumber++).setCellValue("Name");
+        }
+        if (!filtered || list.get(2)) {
+            row.createCell(currentCellNumber++).setCellValue("Site");
+        }
+        if (!filtered || list.get(3)) {
+            row.createCell(currentCellNumber++).setCellValue("Email");
+        }
+        if (!filtered || list.get(4)) {
+            row.createCell(currentCellNumber++).setCellValue("Telephone");
+        }
+        if (!filtered || list.get(5)) {
+            row.createCell(currentCellNumber++).setCellValue("Details");
+        }
 
         CellStyle style = wb.createCellStyle();
         Font font = wb.createFont();
@@ -115,61 +113,71 @@ public class ExportCompanies implements Serializable {
             currentRowNumber++;
             int startRowNum = currentRowNumber;
 ///name
-            row = sheet.createRow(currentRowNumber);
-            currentCellNumber = 0;
-            row.createCell(currentCellNumber).setCellValue(company.getName());
+            if (!filtered || list.get(1)) {
+                row = sheet.createRow(currentRowNumber);
+                currentCellNumber = 0;
+                row.createCell(currentCellNumber).setCellValue(company.getName());
+            }
 ///site
-            currentCellNumber++;
-            multiRow = company.getSite();
-            for (String item : multiRow) {
-                row = sheet.getRow(currentRowNumber);
-                if (row == null) {
-                    row = sheet.createRow(currentRowNumber);
+            if (!filtered || list.get(2)) {
+                currentCellNumber++;
+                multiRow = company.getSite();
+                for (String item : multiRow) {
+                    row = sheet.getRow(currentRowNumber);
+                    if (row == null) {
+                        row = sheet.createRow(currentRowNumber);
+                    }
+                    row.createCell(currentCellNumber).setCellValue(item);
+                    currentRowNumber++;
                 }
-                row.createCell(currentCellNumber).setCellValue(item);
-                currentRowNumber++;
+                currentRowNumber = startRowNum;
+                returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
-            currentRowNumber = startRowNum;
-            returnRowsNum = Math.max(returnRowsNum, multiRow.size());
 ///email
-            currentCellNumber++;
-            multiRow = company.getEmail();
-            for (String item : multiRow) {
-                row = sheet.getRow(currentRowNumber);
-                if (row == null) {
-                    row = sheet.createRow(currentRowNumber);
+            if (!filtered || list.get(3)) {
+                currentCellNumber++;
+                multiRow = company.getEmail();
+                for (String item : multiRow) {
+                    row = sheet.getRow(currentRowNumber);
+                    if (row == null) {
+                        row = sheet.createRow(currentRowNumber);
+                    }
+                    row.createCell(currentCellNumber).setCellValue(item);
+                    currentRowNumber++;
                 }
-                row.createCell(currentCellNumber).setCellValue(item);
-                currentRowNumber++;
+                currentRowNumber = startRowNum;
+                returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
-            currentRowNumber = startRowNum;
-            returnRowsNum = Math.max(returnRowsNum, multiRow.size());
 ///telephone
-            currentCellNumber++;
-            multiRow = company.getTelephones();
-            for (String item : multiRow) {
-                row = sheet.getRow(currentRowNumber);
-                if (row == null) {
-                    row = sheet.createRow(currentRowNumber);
+            if (!filtered || list.get(4)) {
+                currentCellNumber++;
+                multiRow = company.getTelephones();
+                for (String item : multiRow) {
+                    row = sheet.getRow(currentRowNumber);
+                    if (row == null) {
+                        row = sheet.createRow(currentRowNumber);
+                    }
+                    row.createCell(currentCellNumber).setCellValue(item);
+                    currentRowNumber++;
                 }
-                row.createCell(currentCellNumber).setCellValue(item);
-                currentRowNumber++;
+                currentRowNumber = startRowNum;
+                returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
-            currentRowNumber = startRowNum;
-            returnRowsNum = Math.max(returnRowsNum, multiRow.size());
-//details            
-            currentCellNumber++;
-            multiRow = company.getDetails();
-            for (String item : multiRow) {
-                row = sheet.getRow(currentRowNumber);
-                if (row == null) {
-                    row = sheet.createRow(currentRowNumber);
+//details
+            if (!filtered || list.get(5)) {
+                currentCellNumber++;
+                multiRow = company.getDetails();
+                for (String item : multiRow) {
+                    row = sheet.getRow(currentRowNumber);
+                    if (row == null) {
+                        row = sheet.createRow(currentRowNumber);
+                    }
+                    row.createCell(currentCellNumber).setCellValue(item);
+                    currentRowNumber++;
                 }
-                row.createCell(currentCellNumber).setCellValue(item);
-                currentRowNumber++;
+                currentRowNumber = startRowNum;
+                returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
-            currentRowNumber = startRowNum;
-            returnRowsNum = Math.max(returnRowsNum, multiRow.size());
 //new company
             currentRowNumber = currentRowNumber + returnRowsNum;
         }

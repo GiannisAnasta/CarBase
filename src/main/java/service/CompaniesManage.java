@@ -6,6 +6,7 @@ import fileupload.IndefiniteData;
 import fileupload.UploadedFileDataReader;
 import fileupload.UploadedFileReadException;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,19 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import model.Company;
+import org.apache.poi.ss.usermodel.Workbook;
+import view.ExportCompanies;
 import view.FileUploadView;
 
 @Named
 @SessionScoped
 public class CompaniesManage implements Serializable {
+
+    @Inject
+    private ExportCompanies exportCompanies;
 
     private static final ArrayList<Company> entities = new ArrayList<>();
 
@@ -48,8 +55,13 @@ public class CompaniesManage implements Serializable {
 
     public void saveToStorage() {
         try {
-            //Todo backup of original file
-            WriteListToExcelFile.writeCompanyListToFile(STORAGE_FILE, entities);
+            exportCompanies.setFiltered(false);
+            Workbook workbook = exportCompanies.buildWorkbook(entities);
+            FileOutputStream fos = new FileOutputStream(STORAGE_FILE);
+            workbook.write(fos);
+            fos.close();
+            System.out.println(STORAGE_FILE + " written successfully");
+
         } catch (Exception ex) {
             Logger.getLogger(CompaniesManage.class.getName()).log(Level.SEVERE, null, ex);
         }
