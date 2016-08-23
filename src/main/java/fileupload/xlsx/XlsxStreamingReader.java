@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -20,6 +21,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 public class XlsxStreamingReader {
+
+    private static final List<String> EMPTY_ROW = Collections.emptyList();
 
     public static List<List<String>> readFile(InputStream inputStream) throws IOException, InvalidFormatException, UploadedFileReadException {
         Workbook workbook = null;
@@ -74,7 +77,6 @@ public class XlsxStreamingReader {
             for (int i = 0; i < lastIndex + 1; i++) {
                 cellsInRow[i] = "";
             }
-
             for (Cell cell1 : row) {
                 StreamingCell cell = (StreamingCell) cell1;
                 if (cell == null) {
@@ -123,8 +125,10 @@ public class XlsxStreamingReader {
                         break;
                 }
             }
-            data.add(Arrays.asList(cellsInRow)
-            );
+            while (row.getRowNum() > data.size()) {
+                data.add(EMPTY_ROW);
+            }
+            data.add(Arrays.asList(cellsInRow));
         }
         return data;
     }
