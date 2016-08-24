@@ -261,14 +261,13 @@ public class CompaniesUtilTest {
         second.setEmail(Arrays.asList("iiiii@ko", "koko@ko"));
         third.setEmail(Arrays.asList("k333@@", "i@@@"));
 
-        first.setTelephones(Arrays.asList("000222", "000222","222"));
-        second.setTelephones(Arrays.asList("000222", "000222","222"));
+        first.setTelephones(Arrays.asList("000222", "000222", "222"));
+        second.setTelephones(Arrays.asList("000222", "222", "000222"));
         third.setTelephones(Arrays.asList("io", "k"));
 
-        first.setDetails(Arrays.asList("111", "111"));
-        second.setDetails(Arrays.asList("111", "111"));
+        first.setDetails(Arrays.asList("112", "111"));
+        second.setDetails(Arrays.asList("111", "112"));
         third.setDetails(Arrays.asList("2334", "2334"));
-
         List<Company> notUnique = Arrays.asList(first, second, third);
         List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
 

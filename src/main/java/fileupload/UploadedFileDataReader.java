@@ -1,5 +1,6 @@
 package fileupload;
 
+import fileupload.validation.exceptions.UploadedFileReadException;
 import fileupload.xls.XlsReader;
 import fileupload.xlsx.XlsxStreamingReader;
 import fileupload.csv.CsvReader;

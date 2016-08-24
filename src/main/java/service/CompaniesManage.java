@@ -4,7 +4,7 @@ import fileupload.CompanyBuilder;
 import filewrite.WriteListToExcelFile;
 import fileupload.IndefiniteData;
 import fileupload.UploadedFileDataReader;
-import fileupload.UploadedFileReadException;
+import fileupload.validation.exceptions.UploadedFileReadException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.Serializable;

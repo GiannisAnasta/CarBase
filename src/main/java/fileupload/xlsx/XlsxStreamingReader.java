@@ -2,7 +2,7 @@ package fileupload.xlsx;
 
 import com.monitorjbl.xlsx.StreamingReader;
 import com.monitorjbl.xlsx.impl.StreamingCell;
-import fileupload.UploadedFileReadException;
+import fileupload.validation.exceptions.UploadedFileReadException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,6 +1,6 @@
 package fileupload.xls;
 
-import fileupload.UploadedFileReadException;
+import fileupload.validation.exceptions.UploadedFileReadException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;

@@ -3,7 +3,7 @@ package view;
 import fileupload.CompanyBuilder;
 import fileupload.IndefiniteData;
 import fileupload.UploadedFileDataReader;
-import fileupload.UploadedFileReadException;
+import fileupload.validation.exceptions.UploadedFileReadException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
