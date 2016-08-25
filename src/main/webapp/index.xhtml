@@ -21,7 +21,7 @@
                 <h:outputText value="Loading..."/>
             </p:dialog>
             <h:form id="companiesTableForm">
-                <p:growl id="msgs" showDetail="true"/>
+                <p:growl id="msgs" showDetail="false"/>
                 <p:dataTable id="entities" var="company" value="#{companiesManage.list}" widgetVar="companiesTable" editable="true"
                              emptyMessage="No companies found with given criteria" filteredValue="#{companyTableFilter.filteredCompanies}"
                              selection="#{rowSelection.selected}"
@@ -166,10 +166,10 @@
             <h:form enctype="multipart/form-data">
                 <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
                               update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
-                <p:growl id="linkmessages" showDetail="true" showSummary="true"/>
+                <p:growl id="linkmessages" showDetail="false" showSummary="true" sticky="true" />
             </h:form>
             <h:form id="addCompanyForm">
-                <p:growl id="messages" showDetail="true"/>
+                <p:growl id="messages" showDetail="false"/>
                 <p:panel header="Add company" style="width:700px;" rendered="true">
                     <p:panelGrid columns="4">
                         <h:outputLabel for="name" value="Name:"/>

@@ -46,13 +46,16 @@ public class FileUploadView implements Serializable {
         List<Company> uniqueCompaniesFromFile = CompaniesUtil.getUniqueCompanies(buildedCompanies);
         if (buildedCompanies.size() != uniqueCompaniesFromFile.size()) {
             List<Company> dublicates = new ArrayList<>(buildedCompanies);
-            dublicates.removeAll(uniqueCompaniesFromFile);
+            for (Company c : uniqueCompaniesFromFile) {
+                dublicates.remove(c);
+            }
             FacesMessage msg = new FacesMessage(buildedCompanies.size() - uniqueCompaniesFromFile.size() + " dublicates detected inside the file and removed");
             FacesContext.getCurrentInstance().addMessage(null, msg);
+            String message = "";
             for (Company c : dublicates) {
-                FacesMessage msg1 = new FacesMessage("ignored <" + c.getName() + "> company");
-                FacesContext.getCurrentInstance().addMessage(null, msg1);
+                message = message + c.getName() + "\n";
             }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
         }
 
         ArrayList<Company> DBlist = manager.getList();
@@ -65,11 +68,14 @@ public class FileUploadView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
             List<Company> fileDBDublicates = new ArrayList<>(uniqueCompaniesFromFile);
-            fileDBDublicates.removeAll(fileNewItemsForDB);
-            for (Company c : fileDBDublicates) {
-                FacesMessage msg1 = new FacesMessage("ignored <" + c.getName() + "> company");
-                FacesContext.getCurrentInstance().addMessage(null, msg1);
+            for (Company c : fileNewItemsForDB) {
+                fileDBDublicates.remove(c);
             }
+            String message = "";
+            for (Company c : fileDBDublicates) {
+                message = message + c.getName() + "\n";
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
         }
 
         manager.addcompanies(fileNewItemsForDB);

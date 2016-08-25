@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.Company;
@@ -71,14 +73,21 @@ public class AddCompanyBean implements Serializable {
     }
 
     public void addAction() {
-        Company entities = new Company();
-        entities.setName(name);
-        entities.setSite(site);
-        entities.setEmail(email);
-        entities.setTelephones(telephones);
-        entities.setDetails(details);
-        this.entity.addCompany(entities);
-        flush();
+        Company newCompany = new Company();
+        newCompany.setName(name);
+        newCompany.setSite(site);
+        newCompany.setEmail(email);
+        newCompany.setTelephones(telephones);
+        newCompany.setDetails(details);
+
+        if (entity.getList().contains(newCompany)) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Such company exist: " + newCompany.getName()));
+        } else {
+            entity.addCompany(newCompany);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("New company added: " + newCompany.getName()));
+            flush();
+        }
+
     }
 
     private void flush() {
@@ -89,4 +98,5 @@ public class AddCompanyBean implements Serializable {
         details = null;
 
     }
+
 }
