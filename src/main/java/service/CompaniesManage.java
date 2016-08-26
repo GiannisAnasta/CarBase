@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,65 +27,90 @@ import view.FileUploadView;
 @SessionScoped
 public class CompaniesManage implements Serializable {
 
+    ////
+    private CompaniesService companyService;
+
+    @EJB
+    public void setUserService(CompaniesService userService) {
+        this.companyService = userService;
+    }
+
+//     @PostConstruct
+//
+//    public void init() {
+//        User user1 = new User();
+//        user1.setUserName("111");
+//        userService.save(user1);
+//        user = userService.returnUserById(2);
+//        list = userService.returnAllUsers();
+//    }
+    ////
     @Inject
     private ExportCompanies exportCompanies;
 
-    private static final ArrayList<Company> entities = new ArrayList<>();
-
-    private static final String STORAGE_FILE = "/home/giannis/Companies/storage/storageDB.xlsx";
-
-    @PostConstruct
-    private void onInit() {
-
-        IndefiniteData dataFromUploadedFile = null;
-        try {
-            dataFromUploadedFile = UploadedFileDataReader.getDataFromUploadedFile(new File(STORAGE_FILE), ';');
-            dataFromUploadedFile.removeFirstLine();
-        } catch (UploadedFileReadException ex) {
-            Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        addcompanies(CompanyBuilder.buildCompanies(dataFromUploadedFile));
-
+//    private static final ArrayList<Company> entities = new ArrayList<>();
+    //  private static final String STORAGE_FILE = "/home/giannis/Companies/storage/storageDB.xlsx";
+//    @PostConstruct
+//    private void onInit() {
+//
+//        IndefiniteData dataFromUploadedFile = null;
+//        try {
+//            dataFromUploadedFile = UploadedFileDataReader.getDataFromUploadedFile(new File(STORAGE_FILE), ';');
+//            dataFromUploadedFile.removeFirstLine();
+//        } catch (UploadedFileReadException ex) {
+//            Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        List<Company> buildCompanies = CompanyBuilder.buildCompanies(dataFromUploadedFile);
+//        addcompanies(buildCompanies);
+//        ////
+////        for(Company c: buildCompanies)
+////        companyService.save(c);
+//    }
+//    @PreDestroy
+//    private void onDestroy() {
+//        saveToStorage();
+//    }
+//
+//    public void saveToStorage() {
+//        try {
+//            exportCompanies.setFiltered(false);
+//            Workbook workbook = exportCompanies.buildWorkbook(entities);
+//            FileOutputStream fos = new FileOutputStream(STORAGE_FILE);
+//            workbook.write(fos);
+//            fos.close();
+//            System.out.println(STORAGE_FILE + " written successfully");
+//
+//        } catch (Exception ex) {
+//            Logger.getLogger(CompaniesManage.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+    public List<Company> getList() {
+        return companyService.returnAllCompanies();
+//        return entities;
     }
-
-    @PreDestroy
-    private void onDestroy() {
-        saveToStorage();
-    }
-
-    public void saveToStorage() {
-        try {
-            exportCompanies.setFiltered(false);
-            Workbook workbook = exportCompanies.buildWorkbook(entities);
-            FileOutputStream fos = new FileOutputStream(STORAGE_FILE);
-            workbook.write(fos);
-            fos.close();
-            System.out.println(STORAGE_FILE + " written successfully");
-
-        } catch (Exception ex) {
-            Logger.getLogger(CompaniesManage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public ArrayList<Company> getList() {
-        return entities;
-    }
-
+    
     public void addCompany(Company company) {
-        entities.add(company);
+        companyService.save(company);
+//        entities.add(company);
     }
 
     public void removeCompany(Company company) {
-        entities.remove(company);
+        companyService.delete(company);
+//        entities.remove(company);
     }
 
     public void addcompanies(List<Company> companies) {
-        entities.addAll(companies);
+        for (Company c : companies) {
+            companyService.save(c);
+        }
+//        entities.addAll(companies);
     }
 
     public void removeCompanies(List<Company> companies) {
-        entities.removeAll(companies);
+        for (Company c : companies) {
+            companyService.delete(c);
+        }
+//        entities.removeAll(companies);
     }
 
 }

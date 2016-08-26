@@ -1,10 +1,17 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 
-public class Company {
+@Entity
+@Table(name = "tbl_company")
+public class Company implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String name;
     private List<String> site = new ArrayList<>();
     private List<String> email = new ArrayList<>();

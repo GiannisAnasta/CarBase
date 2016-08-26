@@ -58,7 +58,7 @@ public class FileUploadView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
         }
 
-        ArrayList<Company> DBlist = manager.getList();
+       List<Company> DBlist = manager.getList();
         int size = uniqueCompaniesFromFile.size();
         List<Company> fileNewItemsForDB = new ArrayList<>(uniqueCompaniesFromFile);
         fileNewItemsForDB.removeAll(DBlist);
