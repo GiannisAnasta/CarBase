@@ -22,7 +22,7 @@
             </p:dialog>
             <h:form id="companiesTableForm">
                 <p:growl id="msgs" showDetail="false"/>
-                <p:dataTable id="entities" var="company" value="#{companiesManage.list}" widgetVar="companiesTable" editable="true"
+                <p:dataTable id="entities" var="company"  value="#{companiesManage.list}" widgetVar="companiesTable" editable="true"
                              emptyMessage="No companies found with given criteria" filteredValue="#{companyTableFilter.filteredCompanies}"
                              selection="#{rowSelection.selected}"
                              rowKey="#{company}">

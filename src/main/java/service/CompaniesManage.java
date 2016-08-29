@@ -35,8 +35,8 @@ public class CompaniesManage implements Serializable {
         this.companyService = userService;
     }
 
+// Old Method initializing---
 //     @PostConstruct
-//
 //    public void init() {
 //        User user1 = new User();
 //        user1.setUserName("111");
@@ -44,15 +44,14 @@ public class CompaniesManage implements Serializable {
 //        user = userService.returnUserById(2);
 //        list = userService.returnAllUsers();
 //    }
-    ////
-    @Inject
-    private ExportCompanies exportCompanies;
 
+//    @Inject
+//    private ExportCompanies exportCompanies;
 //    private static final ArrayList<Company> entities = new ArrayList<>();
-    //  private static final String STORAGE_FILE = "/home/giannis/Companies/storage/storageDB.xlsx";
+//      private static final String STORAGE_FILE = "/home/giannis/Companies/storage/storageDB.xlsx";
 //    @PostConstruct
 //    private void onInit() {
-//
+
 //        IndefiniteData dataFromUploadedFile = null;
 //        try {
 //            dataFromUploadedFile = UploadedFileDataReader.getDataFromUploadedFile(new File(STORAGE_FILE), ';');
@@ -62,15 +61,15 @@ public class CompaniesManage implements Serializable {
 //        }
 //        List<Company> buildCompanies = CompanyBuilder.buildCompanies(dataFromUploadedFile);
 //        addcompanies(buildCompanies);
-//        ////
-////        for(Company c: buildCompanies)
-////        companyService.save(c);
+
+//      for(Company c: buildCompanies)
+//       companyService.save(c);
 //    }
 //    @PreDestroy
 //    private void onDestroy() {
 //        saveToStorage();
 //    }
-//
+
 //    public void saveToStorage() {
 //        try {
 //            exportCompanies.setFiltered(false);
@@ -79,38 +78,47 @@ public class CompaniesManage implements Serializable {
 //            workbook.write(fos);
 //            fos.close();
 //            System.out.println(STORAGE_FILE + " written successfully");
-//
+
 //        } catch (Exception ex) {
 //            Logger.getLogger(CompaniesManage.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+// old method of initializing---
+
+    List<Company> cache;
+
     public List<Company> getList() {
-        return companyService.returnAllCompanies();
-//        return entities;
+        if (cache == null) {
+            cache = companyService.returnAllCompanies();
+        }
+        return cache;
     }
-    
+
     public void addCompany(Company company) {
         companyService.save(company);
-//        entities.add(company);
+        flush();
     }
 
     public void removeCompany(Company company) {
         companyService.delete(company);
-//        entities.remove(company);
+        flush();
     }
 
     public void addcompanies(List<Company> companies) {
         for (Company c : companies) {
             companyService.save(c);
         }
-//        entities.addAll(companies);
+        flush();
     }
 
     public void removeCompanies(List<Company> companies) {
         for (Company c : companies) {
             companyService.delete(c);
         }
-//        entities.removeAll(companies);
+        flush();
     }
 
+    public void flush() {
+        cache = null;
+    }
 }

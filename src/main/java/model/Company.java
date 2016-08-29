@@ -12,11 +12,16 @@ public class Company implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+// TODO   @Unicblablabla
     private String name;
     private List<String> site = new ArrayList<>();
     private List<String> email = new ArrayList<>();
     private List<String> telephones = new ArrayList<>();
     private List<String> details = new ArrayList<>();
+
+    public Integer getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -74,8 +79,8 @@ public class Company implements Serializable {
             return false;
         }
         if (this.getName() != null && other.getName() != null) {
-            if (!this.getName().equals(other.getName())) {
-                return false;
+        if (!this.getName().equals(other.getName())) {
+             return false;
             }
         }
         if (this.getSite().size() != other.getSite().size()) {
