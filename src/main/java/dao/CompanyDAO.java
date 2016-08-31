@@ -19,6 +19,5 @@ public interface CompanyDAO {
     Company update(Company entity);
 
     Company find(int entityID);
-    //TODO all the methods throws exveption about JPA error
 
 }

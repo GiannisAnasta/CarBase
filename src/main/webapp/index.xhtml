@@ -67,7 +67,7 @@
                     <!-- End of the datatable head -->
 
                     <!-- Start of the datatable body -->
-                    <p:column filterBy="#{company.name}" headerText="Name" filterFunction="#{companyTableFilter.filterExact}" sortBy="#{company.name}">
+                    <p:column filterBy="#{company.name}" headerText="Name" footerText="Name" filterFunction="#{companyTableFilter.filterExact}" sortBy="#{company.name}">
                         <f:facet name="filter">
                             <p:inputText  onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter name" onkeypress="return event.keyCode !== 13"/>
 
@@ -81,7 +81,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.site}" headerText="Sites" filterMatchMode="contains" >
+                    <p:column filterBy="#{company.site}" headerText="Sites" footerText="Sites" filterMatchMode="contains" >
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter site" onkeypress="return event.keyCode !== 13"/>
                         </f:facet>
@@ -98,7 +98,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.email}" headerText="Emails" filterMatchMode="contains" >
+                    <p:column filterBy="#{company.email}" headerText="Emails" footerText="Emails" filterMatchMode="contains" >
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter email" onkeypress="return event.keyCode !== 13"/>
                         </f:facet>
@@ -115,7 +115,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.telephones}" headerText="Telephones" filterMatchMode="contains" >
+                    <p:column filterBy="#{company.telephones}" headerText="Telephones" footerText="Telephones" filterMatchMode="contains" >
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter telephone" onkeypress="return event.keyCode !== 13"/>
                         </f:facet>
@@ -132,7 +132,7 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.details}" headerText="+" filterMatchMode="contains">
+                    <p:column filterBy="#{company.details}" headerText="+" footerText="+" filterMatchMode="contains">
                         <f:facet name="filter">
                             <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter details" onkeypress="return event.keyCode !== 13"/>
                         </f:facet>

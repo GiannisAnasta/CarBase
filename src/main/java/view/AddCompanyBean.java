@@ -94,7 +94,7 @@ public class AddCompanyBean implements Serializable {
                             null, new FacesMessage(
                                     "Such company exist: " + newCompany.getName()
                             ));
-        }//ex.getCausedByException().getMessage()
+        }
 
         flush();
     }
