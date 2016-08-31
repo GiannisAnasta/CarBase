@@ -6,13 +6,13 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tbl_company")
+@Table(name = "tbl_company2")
 public class Company implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-// TODO   @Unicblablabla
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
     private List<String> site = new ArrayList<>();
     private List<String> email = new ArrayList<>();
@@ -79,8 +79,8 @@ public class Company implements Serializable {
             return false;
         }
         if (this.getName() != null && other.getName() != null) {
-        if (!this.getName().equals(other.getName())) {
-             return false;
+            if (!this.getName().equals(other.getName())) {
+                return false;
             }
         }
         if (this.getSite().size() != other.getSite().size()) {

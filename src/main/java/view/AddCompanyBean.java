@@ -80,14 +80,23 @@ public class AddCompanyBean implements Serializable {
         newCompany.setTelephones(telephones);
         newCompany.setDetails(details);
 
-        if (entity.getList().contains(newCompany)) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Such company exist: " + newCompany.getName()));
-        } else {
+        try {
             entity.addCompany(newCompany);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("New company added: " + newCompany.getName()));
-            flush();
-        }
+            FacesContext.getCurrentInstance()
+                    .addMessage(
+                            null, new FacesMessage(
+                                    "New company added: " + newCompany.getName()
+                            ));
+        } catch (javax.ejb.EJBException ex) {
+            System.out.println("such company exist");
+            FacesContext.getCurrentInstance()
+                    .addMessage(
+                            null, new FacesMessage(
+                                    "Such company exist: " + newCompany.getName()
+                            ));
+        }//ex.getCausedByException().getMessage()
 
+        flush();
     }
 
     private void flush() {

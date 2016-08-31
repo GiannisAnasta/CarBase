@@ -51,5 +51,4 @@ public class CompaniesImpl implements CompaniesService {
     public Company find(int entityID) {
         return getCompanyDAO().find(entityID);
     }
-
 }

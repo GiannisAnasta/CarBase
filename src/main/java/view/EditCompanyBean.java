@@ -26,13 +26,14 @@ public class EditCompanyBean implements Serializable {
 
         if (edited.getName().equals(fromDBSameId.getName())) {
             companyService.update(edited);
-            FacesMessage msg = new FacesMessage("Company Edited start");
+            FacesMessage msg = new FacesMessage("Company Edited");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             companyManager.flush();
         } else {
             for (Company c : companyService.returnAllCompanies()) {
                 if (c.getName().equals(edited.getName())) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Such company exist: " + edited.getName()));
+                    FacesContext.getCurrentInstance()
+                            .addMessage(null, new FacesMessage("Such company exist: " + edited.getName()));
                     FacesContext.getCurrentInstance().validationFailed();
                     return;
                 }

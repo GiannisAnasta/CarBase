@@ -43,13 +43,13 @@ public class FileUploadView implements Serializable {
         }
         List<Company> buildedCompanies = CompanyBuilder.buildCompanies(dataFromUploadedFile);
 
-        List<Company> uniqueCompaniesFromFile = CompaniesUtil.getUniqueCompanies(buildedCompanies);
-        if (buildedCompanies.size() != uniqueCompaniesFromFile.size()) {
+        List<Company> uniqueEqualBasedCompaniesFromFile = CompaniesUtil.getUniqueCompanies(buildedCompanies);
+        if (buildedCompanies.size() != uniqueEqualBasedCompaniesFromFile.size()) {
             List<Company> dublicates = new ArrayList<>(buildedCompanies);
-            for (Company c : uniqueCompaniesFromFile) {
+            for (Company c : uniqueEqualBasedCompaniesFromFile) {
                 dublicates.remove(c);
             }
-            FacesMessage msg = new FacesMessage(buildedCompanies.size() - uniqueCompaniesFromFile.size() + " dublicates detected inside the file and removed");
+            FacesMessage msg = new FacesMessage(buildedCompanies.size() - uniqueEqualBasedCompaniesFromFile.size() + " dublicates detected inside the file and removed");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             String message = "";
             for (Company c : dublicates) {
@@ -59,15 +59,15 @@ public class FileUploadView implements Serializable {
         }
 
        List<Company> DBlist = manager.getList();
-        int size = uniqueCompaniesFromFile.size();
-        List<Company> fileNewItemsForDB = new ArrayList<>(uniqueCompaniesFromFile);
+        int size = uniqueEqualBasedCompaniesFromFile.size();
+        List<Company> fileNewItemsForDB = new ArrayList<>(uniqueEqualBasedCompaniesFromFile);
         fileNewItemsForDB.removeAll(DBlist);
 
         if (size != fileNewItemsForDB.size()) {
             FacesMessage msg = new FacesMessage(size - fileNewItemsForDB.size() + " companies already exists! Dublicates removed.");
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
-            List<Company> fileDBDublicates = new ArrayList<>(uniqueCompaniesFromFile);
+            List<Company> fileDBDublicates = new ArrayList<>(uniqueEqualBasedCompaniesFromFile);
             for (Company c : fileNewItemsForDB) {
                 fileDBDublicates.remove(c);
             }
