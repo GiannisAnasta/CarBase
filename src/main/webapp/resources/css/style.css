@@ -14,3 +14,10 @@ li{
 li{
     position:static;
 }
+::-moz-placeholder {
+   font-size: 14px;
+ color: royalblue;
+ text-transform: uppercase;
+ text-align: center;
+ font-weight: bold;
+}

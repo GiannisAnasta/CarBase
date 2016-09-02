@@ -16,21 +16,72 @@
             <h:outputStylesheet library="css" name="style.css"/>
         </h:head>
         <h:body>
+
+            <!-- Start of the adding company form -->
+
+            <h:form id="addCompanyFormss">
+                <p:growl id="messages" showDetail="false" life="5000"/>
+                <p:panel header="Add company"  rendered="true">
+                    <p:panelGrid columns="10">
+                        <h:outputLabel for="name" value="Name:"/>
+                        <p:inputText id="name" value="#{addCompanyBean.name}"/>
+
+                        <h:outputLabel for="telephone" value="Telephone:"/>
+                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%; height:93%" placeholder="Add telephone">
+                            <f:converter converterId="ListStringConverter" />
+                        </p:inputTextarea>
+
+                        <h:outputLabel for="site" value="Site:"/>
+                        <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%; height:93%" placeholder="Add site">
+                            <f:converter converterId="ListStringConverter" />
+                        </p:inputTextarea>
+
+                        <h:outputLabel for="details" value="Details (+):"/>
+                        <p:inputTextarea id="details" value="#{addCompanyBean.details}" style="width: 95%; height:93%" placeholder="Add detail">
+                            <f:converter converterId="ListStringConverter" />
+                        </p:inputTextarea>
+
+                        <h:outputLabel for="email" value="Email:"/>
+                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%; height:93%" placeholder="Add email">
+                            <f:converter converterId="ListStringConverter" />
+                        </p:inputTextarea>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Add"  icon="ui-icon-arrowreturnthick-1-n" action="#{addCompanyBean.addAction()}" process="@form" update="@all"/>
+                        </f:facet>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+            <!-- End of the adding company form -->
+
+            <!-- Start of the datatable head -->
+            <!--  Start of upload form -->
+            <h:form enctype="multipart/form-data">
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                              update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
+                <p:growl id="linkmessages" showDetail="false" showSummary="true" life="5000" />
+            </h:form>
+            <!--  End of upload form -->
+
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" draggable="false" closable="false" resizable="false" showHeader="false" position="right top" style=" border-color: lime " >
                 <h:outputText value="Loading..."/>
             </p:dialog>
             <h:form id="companiesTableForm">
-                <p:growl id="msgs" showDetail="false"/>
-                <p:dataTable id="entities" var="company"  value="#{companiesManage.list}" widgetVar="companiesTable" editable="true"
-                             emptyMessage="No companies found with given criteria" filteredValue="#{companyTableFilter.filteredCompanies}"
+                <p:growl id="msgs" showDetail="false" life="5000"/>
+                <p:dataTable id="entities" var="company"
+                             value="#{companiesManage.list}"
+                             widgetVar="companiesTable" editable="true"
+                             emptyMessage="No companies found with given criteria"
+                             filteredValue="#{companyTableFilter.filteredCompanies}"
                              selection="#{rowSelection.selected}"
-                             rowKey="#{company}">
+                             rowKey="#{company}"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
                     <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
                     <p:ajax event="rowEdit" listener="#{editCompanyBean.onRowEdit}" update="@this :companiesTableForm:msgs"/>
                     <p:ajax event="rowEditCancel" listener="#{editCompanyBean.onRowCancel}" update="@this :companiesTableForm:msgs"/>
-
-                    <!-- Start of the datatable head -->
 
                     <f:facet name="header">
 
@@ -62,7 +113,6 @@
                         <p:spacer height="10"/>
                         <p:commandButton process="entities" actionListener="#{rowSelection.deleteSelected()}" icon="ui-icon-trash" value="Delete Selected" update="@form"/>
                         <p:spacer height="30"/>
-                        <p:commandButton process="entities" actionListener="#{companiesManage.saveToStorage()}" value="Save" update="@this" icon="ui-icon-disk" style=" float: right"/>
                     </f:facet>
                     <!-- End of the datatable head -->
 
@@ -158,50 +208,17 @@
                                          actionListener="#{removeCompanyBean.remove(company)}"
                                          ajax="false"/>
                     </p:column>
+                    <f:facet name="footer">
+                        <p:column>
+                            <p style="text-align: left; color:royalblue">Feedback:  AIoannis@speedflow.com</p>
+                            <p style="text-align: right; color:royalblue"> Companies,Copyright © 2016</p>
+                            <p style="text-align: right;  font-style: italic ; color:royalblue">Ioannis Anastasiadis - Yuriy Mikhaylenko</p>
+                        </p:column>
+                    </f:facet>
                 </p:dataTable>
             </h:form>
             <!-- End of the datatable body -->
 
-            <!-- Start of the adding company form -->
-            <h:form enctype="multipart/form-data">
-                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                              update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
-                <p:growl id="linkmessages" showDetail="false" showSummary="true" sticky="true" />
-            </h:form>
-            <h:form id="addCompanyForm">
-                <p:growl id="messages" showDetail="false"/>
-                <p:panel header="Add company" style="width:700px;" rendered="true">
-                    <p:panelGrid columns="4">
-                        <h:outputLabel for="name" value="Name:"/>
-                        <p:inputText id="name" value="#{addCompanyBean.name}"/>
-
-                        <h:outputLabel for="telephone" value="Telephone:"/>
-                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%; height:93%" placeholder="Add telephone">
-                            <f:converter converterId="ListStringConverter" />
-                        </p:inputTextarea>
-
-                        <h:outputLabel for="site" value="Site:"/>
-                        <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%; height:93%" placeholder="Add site">
-                            <f:converter converterId="ListStringConverter" />
-                        </p:inputTextarea>
-
-                        <h:outputLabel for="details" value="Details (+):"/>
-                        <p:inputTextarea id="details" value="#{addCompanyBean.details}" style="width: 95%; height:93%" placeholder="Add detail">
-                            <f:converter converterId="ListStringConverter" />
-                        </p:inputTextarea>
-
-                        <h:outputLabel for="email" value="Email:"/>
-                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%; height:93%" placeholder="Add email">
-                            <f:converter converterId="ListStringConverter" />
-                        </p:inputTextarea>
-
-                        <f:facet name="footer">
-                            <p:commandButton value="Add Company"  icon="ui-icon-arrowreturnthick-1-n" action="#{addCompanyBean.addAction()}" process="@form" update="@all"/>
-                        </f:facet>
-                    </p:panelGrid>
-                </p:panel>
-            </h:form>
-            <!-- End of the adding company form -->
         </h:body>
     </f:view>
 </html>
