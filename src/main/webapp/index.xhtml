@@ -57,8 +57,8 @@
             <!-- Start of the datatable head -->
             <!--  Start of upload form -->
             <h:form enctype="multipart/form-data">
-                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                              update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" skinSimple="true" dragDropSupport="false" auto="true"
+                              update="@all" sizeLimit="100000" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
                 <p:growl id="linkmessages" showDetail="false" showSummary="true" sticky="true" />
             </h:form>
             <!--  End of upload form -->
