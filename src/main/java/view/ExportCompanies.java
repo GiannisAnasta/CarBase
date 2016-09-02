@@ -112,10 +112,11 @@ public class ExportCompanies implements Serializable {
             int returnRowsNum = 0;
             currentRowNumber++;
             int startRowNum = currentRowNumber;
+            currentCellNumber = -1;//TODO start from zero and fix logic according to 0
 ///name
             if (!filtered || list.get(1)) {
+                currentCellNumber++;
                 row = sheet.createRow(currentRowNumber);
-                currentCellNumber = 0;
                 row.createCell(currentCellNumber).setCellValue(company.getName());
             }
 ///site
@@ -180,6 +181,9 @@ public class ExportCompanies implements Serializable {
             }
 //new company
             currentRowNumber = currentRowNumber + returnRowsNum;
+            if(returnRowsNum==0){
+                currentRowNumber++;
+            }
         }
         return wb;
     }
