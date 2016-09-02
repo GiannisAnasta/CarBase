@@ -1,12 +1,10 @@
 ul
 {
     list-style-type: none;
+    padding-left: 2px;
 }
 ol {
     list-style-type: none;
-}
-li {
-    padding-right: 10px;
 }
 li{
     font-style: italic;
@@ -15,9 +13,9 @@ li{
     position:static;
 }
 ::-moz-placeholder {
-   font-size: 14px;
- color: royalblue;
- text-transform: uppercase;
- text-align: center;
- font-weight: bold;
+    font-size: 14px;
+    color: royalblue;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
 }
