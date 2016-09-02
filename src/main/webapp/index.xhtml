@@ -20,7 +20,7 @@
             <!-- Start of the adding company form -->
 
             <h:form id="addCompanyFormss">
-                <p:growl id="messages" showDetail="false" life="5000"/>
+                <p:growl id="messages" showDetail="false" sticky="true"/>
                 <p:panel header="Add company"  rendered="true">
                     <p:panelGrid columns="10">
                         <h:outputLabel for="name" value="Name:"/>
@@ -59,7 +59,7 @@
             <h:form enctype="multipart/form-data">
                 <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
                               update="@all" sizeLimit="100000" fileLimit="2" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
-                <p:growl id="linkmessages" showDetail="false" showSummary="true" life="5000" />
+                <p:growl id="linkmessages" showDetail="false" showSummary="true" sticky="true" />
             </h:form>
             <!--  End of upload form -->
 
@@ -68,7 +68,7 @@
                 <h:outputText value="Loading..."/>
             </p:dialog>
             <h:form id="companiesTableForm">
-                <p:growl id="msgs" showDetail="false" life="5000"/>
+                <p:growl id="msgs" showDetail="false" sticky="true"/>
                 <p:dataTable id="entities" var="company"
                              value="#{companiesManage.list}"
                              widgetVar="companiesTable" editable="true"
@@ -110,7 +110,7 @@
                             <p:fileDownload value="#{exportCompanies.exportXlsx(companiesManage.list)}"/>
                         </p:commandButton>
 
- 
+
                         <p:spacer height="10"/>
                         <p:commandButton process="entities" actionListener="#{rowSelection.deleteSelected()}" icon="ui-icon-trash" value="Delete Selected" update="@form"/>
                         <p:spacer height="30"/>
