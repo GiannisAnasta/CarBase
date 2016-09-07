@@ -26,23 +26,23 @@
                         <h:outputLabel for="name" value="Name:"/>
                         <p:inputText id="name" value="#{addCompanyBean.name}"/>
 
-                        <h:outputLabel for="telephone" value="Telephone:"/>
-                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%; height:93%" placeholder="Add telephone">
-                            <f:converter converterId="ListStringConverter" />
-                        </p:inputTextarea>
-
                         <h:outputLabel for="site" value="Site:"/>
                         <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%; height:93%" placeholder="Add site">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
-                        <h:outputLabel for="details" value="Details (+):"/>
-                        <p:inputTextarea id="details" value="#{addCompanyBean.details}" style="width: 95%; height:93%" placeholder="Add detail">
+                        <h:outputLabel for="email" value="Email:"/>
+                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%; height:93%" placeholder="Add email">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
-                        <h:outputLabel for="email" value="Email:"/>
-                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%; height:93%" placeholder="Add email">
+                        <h:outputLabel for="telephone" value="Telephone:"/>
+                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%; height:93%" placeholder="Add telephone">
+                            <f:converter converterId="ListStringConverter" />
+                        </p:inputTextarea>
+
+                        <h:outputLabel for="details" value="Details (+):"/>
+                        <p:inputTextarea id="details" value="#{addCompanyBean.details}" style="width: 95%; height:93%" placeholder="Add detail">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
@@ -54,7 +54,7 @@
             </h:form>
             <!-- End of the adding company form -->
 
-            <!-- Start of the datatable head -->
+            <!-- Start of the data table head -->
             <!--  Start of upload form -->
             <h:form enctype="multipart/form-data">
                 <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" skinSimple="true" dragDropSupport="false" auto="true"
@@ -92,7 +92,7 @@
 
                         <p:spacer height="10"/>
 
-                        <p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator" update="@this"/>
+                        <p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator" update="@this" style="float:right; " />
                         <p:columnToggler datasource="entities" trigger="toggler">
                             <p:ajax event="toggle" listener="#{exportCompanies.onToggle}"/>
                         </p:columnToggler>
@@ -139,7 +139,7 @@
                         <p:cellEditor>
                             <f:facet name="output">
                                 <p:dataList value="#{company.site}" var="sitee" rendered="#{not empty company.site}">
-                                     <a href="#{sitee}">#{sitee}</a>
+                                    <a href="#{sitee}">#{sitee}</a>
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">

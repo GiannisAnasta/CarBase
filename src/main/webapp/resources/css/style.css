@@ -19,3 +19,7 @@ li{
     text-align: center;
     font-weight: bold;
 }
+.ui-widget {
+    font-family: Arial,sans-serif;
+    font-size: 1em;
+}
