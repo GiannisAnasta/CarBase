@@ -16,38 +16,46 @@
             <h:outputStylesheet library="css" name="style.css"/>
         </h:head>
         <h:body>
-
+            <h:form id="languageForm">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="lan" value="#{msg.language} :"/>
+                    <p:selectOneMenu id="lan" value="#{language.localeCode}" >
+                        <f:selectItems value="#{language.countriesInMap}" />
+                        <p:ajax process="@this" update="@all" listener="#{language.countryLocaleCodeChanged()}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+            </h:form>
             <!-- Start of the adding company form -->
 
             <h:form id="addCompanyFormss">
                 <p:growl id="messages" showDetail="false" sticky="true"/>
-                <p:panel header="Add company"  rendered="true">
+                <p:panel header="#{msg.addcompany}"  rendered="true" >
                     <p:panelGrid columns="10">
-                        <h:outputLabel for="name" value="Name:"/>
+                        <h:outputLabel for="name" value="#{msg.name}:"/>
                         <p:inputText id="name" value="#{addCompanyBean.name}"/>
 
-                        <h:outputLabel for="site" value="Site:"/>
-                        <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%; height:93%" placeholder="Add site">
+                        <h:outputLabel for="site" value="#{msg.site}:"/>
+                        <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%; height:93%" placeholder="#{msg.addsite}:">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
-                        <h:outputLabel for="email" value="Email:"/>
-                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%; height:93%" placeholder="Add email">
+                        <h:outputLabel for="email" value="#{msg.email}:"/>
+                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%; height:93%" placeholder="#{msg.addemail}:">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
-                        <h:outputLabel for="telephone" value="Telephone:"/>
-                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%; height:93%" placeholder="Add telephone">
+                        <h:outputLabel for="telephone" value="#{msg.telephone}:"/>
+                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%; height:93%" placeholder="#{msg.addtelephone}:">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
-                        <h:outputLabel for="details" value="Details (+):"/>
-                        <p:inputTextarea id="details" value="#{addCompanyBean.details}" style="width: 95%; height:93%" placeholder="Add detail">
+                        <h:outputLabel for="details" value="#{msg.details}:"/>
+                        <p:inputTextarea id="details" value="#{addCompanyBean.details}" style="width: 95%; height:93%" placeholder="#{msg.adddetail}:">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
                         <f:facet name="footer">
-                            <p:commandButton value="Add"  icon="ui-icon-arrowreturnthick-1-n" action="#{addCompanyBean.addAction()}" process="@form" update="@all"/>
+                            <p:commandButton value="#{msg.add}" icon="ui-icon-arrowreturnthick-1-n" action="#{addCompanyBean.addAction()}" process="@form" update="@all"/>
                         </f:facet>
                     </p:panelGrid>
                 </p:panel>
@@ -85,7 +93,6 @@
                     <p:ajax event="rowEditCancel" listener="#{editCompanyBean.onRowCancel}" update="@this :companiesTableForm:msgs"/>
 
                     <f:facet name="header">
-
                         <h:outputText value="Search all fields: "/>
                         <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="Enter keyword" onkeypress="return event.keyCode !== 13"/>
 
@@ -110,7 +117,6 @@
                             <p:fileDownload value="#{exportCompanies.exportXlsx(companiesManage.list)}"/>
                         </p:commandButton>
 
-
                         <p:spacer height="10"/>
                         <p:commandButton process="entities" actionListener="#{rowSelection.deleteSelected()}" icon="ui-icon-trash" value="Delete Selected" update="@form"/>
                         <p:spacer height="30"/>
@@ -121,7 +127,6 @@
                     <p:column filterBy="#{company.name}" headerText="Name" footerText="Name" filterMatchMode="contains" sortBy="#{company.name}">
                         <f:facet name="filter">
                             <p:inputText  onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter name" onkeypress="return event.keyCode !== 13"/>
-
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
