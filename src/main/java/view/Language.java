@@ -20,14 +20,16 @@ public class Language implements Serializable {
 
     private String localeCode;
 
-    private static Map<String, Object> countries;
+    private static final Map<String, Object> countries;
 
     static {
         countries = new LinkedHashMap<String, Object>();
-        Locale en = Locale.ENGLISH;
-        countries.put(en.getLanguage(), en);
+        Locale eng = Locale.ENGLISH;
+        countries.put(eng.getLanguage(), eng);
         Locale russ = new Locale("ru");
         countries.put(russ.getLanguage(), russ);
+        Locale bul = new Locale("bg");
+        countries.put(bul.getLanguage(), bul);
     }
 
     @PostConstruct

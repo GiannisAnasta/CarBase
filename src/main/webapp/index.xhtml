@@ -18,7 +18,7 @@
         <h:body>
             <h:form id="languageForm">
                 <h:panelGrid columns="2">
-                    <p:outputLabel for="lan" value="#{msg.language} :"/>
+                    <p:outputLabel for="lan" value="#{msg.language} :" style="font-style: italic; font-weight: bold;"/>
                     <p:selectOneMenu id="lan" value="#{language.localeCode}" >
                         <f:selectItems value="#{language.countriesInMap}" />
                         <p:ajax process="@this" update="@all" listener="#{language.countryLocaleCodeChanged()}"/>
@@ -29,28 +29,28 @@
 
             <h:form id="addCompanyFormss">
                 <p:growl id="messages" showDetail="false" sticky="true"/>
-                <p:panel header="#{msg.addcompany}"  rendered="true" >
+                <p:panel header="#{msg.addCompany}"  rendered="true" >
                     <p:panelGrid columns="10">
                         <h:outputLabel for="name" value="#{msg.name}:"/>
                         <p:inputText id="name" value="#{addCompanyBean.name}"/>
 
                         <h:outputLabel for="site" value="#{msg.site}:"/>
-                        <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%; height:93%" placeholder="#{msg.addsite}:">
+                        <p:inputTextarea id='site' value="#{addCompanyBean.site}" style="width: 95%; height:93%" placeholder="#{msg.addSite}:">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
                         <h:outputLabel for="email" value="#{msg.email}:"/>
-                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%; height:93%" placeholder="#{msg.addemail}:">
+                        <p:inputTextarea id="email" value="#{addCompanyBean.email}" style="width: 95%; height:93%" placeholder="#{msg.addEmail}:">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
                         <h:outputLabel for="telephone" value="#{msg.telephone}:"/>
-                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%; height:93%" placeholder="#{msg.addtelephone}:">
+                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}" style="width: 95%; height:93%" placeholder="#{msg.addTelephone}:">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
                         <h:outputLabel for="details" value="#{msg.details}:"/>
-                        <p:inputTextarea id="details" value="#{addCompanyBean.details}" style="width: 95%; height:93%" placeholder="#{msg.adddetail}:">
+                        <p:inputTextarea id="details" value="#{addCompanyBean.details}" style="width: 95%; height:93%" placeholder="#{msg.addDetail}:">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
 
@@ -64,23 +64,23 @@
 
             <!-- Start of the data table head -->
             <!--  Start of upload form -->
-            <h:form enctype="multipart/form-data">
+            <h:form enctype="multipart/form-data" >
                 <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" skinSimple="true" dragDropSupport="false" auto="true"
-                              update="@all" sizeLimit="100000" allowTypes="/(\.|\/)(xlsx|xls)$/"/>
+                              update="@all" sizeLimit="100000" allowTypes="/(\.|\/)(xlsx|xls)$/" label="#{msg.upload}"/>
                 <p:growl id="linkmessages" showDetail="false" showSummary="true" sticky="true" />
             </h:form>
             <!--  End of upload form -->
 
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" draggable="false" closable="false" resizable="false" showHeader="false" position="right top" style=" border-color: lime " >
-                <h:outputText value="Loading..."/>
+                <h:outputText value="#{msg.loading}"/>
             </p:dialog>
             <h:form id="companiesTableForm">
                 <p:growl id="msgs" showDetail="false" sticky="true"/>
                 <p:dataTable id="entities" var="company"
                              value="#{companiesManage.list}"
                              widgetVar="companiesTable" editable="true"
-                             emptyMessage="No companies found with given criteria"
+                             emptyMessage="#{msg.noCriteria}"
                              filteredValue="#{companyTableFilter.filteredCompanies}"
                              selection="#{rowSelection.selected}"
                              rowKey="#{company}"
@@ -93,17 +93,17 @@
                     <p:ajax event="rowEditCancel" listener="#{editCompanyBean.onRowCancel}" update="@this :companiesTableForm:msgs"/>
 
                     <f:facet name="header">
-                        <h:outputText value="Search all fields: "/>
-                        <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="Enter keyword" onkeypress="return event.keyCode !== 13"/>
+                        <h:outputText value="#{msg.searchAllFields} "/>
+                        <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="#{msg.enterKey}" onkeypress="return event.keyCode !== 13"/>
 
 
                         <p:spacer height="10"/>
 
-                        <p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator" update="@this" style="float:right; " />
+                        <p:commandButton id="toggler" type="button" value="#{msg.columns}" icon="ui-icon-calculator" update="@this" style="float:right; " />
                         <p:columnToggler datasource="entities" trigger="toggler">
                             <p:ajax event="toggle" listener="#{exportCompanies.onToggle}"/>
                         </p:columnToggler>
-                        <p:commandButton value="Export Selected"  icon="ui-icon-extlink"
+                        <p:commandButton value="#{msg.exportSel}"  icon="ui-icon-extlink"
                                          actionListener="#{exportCompanies.setFiltered(true)}"
                                          process="@this" ajax="false">
                             <p:fileDownload value="#{exportCompanies.exportXlsx(rowSelection.selected)}"/>
@@ -111,35 +111,35 @@
 
                         <p:spacer height="10"/>
 
-                        <p:commandButton value="Export All"  icon="ui-icon-extlink"
+                        <p:commandButton value="#{msg.exportAll}"  icon="ui-icon-extlink"
                                          actionListener="#{exportCompanies.setFiltered(false)}"
                                          process="@this" ajax="false">
                             <p:fileDownload value="#{exportCompanies.exportXlsx(companiesManage.list)}"/>
                         </p:commandButton>
 
                         <p:spacer height="10"/>
-                        <p:commandButton process="entities" actionListener="#{rowSelection.deleteSelected()}" icon="ui-icon-trash" value="Delete Selected" update="@form"/>
+                        <p:commandButton process="entities" actionListener="#{rowSelection.deleteSelected()}" icon="ui-icon-trash" value="#{msg.DeleteSel}" update="@form"/>
                         <p:spacer height="30"/>
                     </f:facet>
                     <!-- End of the datatable head -->
 
                     <!-- Start of the datatable body -->
-                    <p:column filterBy="#{company.name}" headerText="Name" footerText="Name" filterMatchMode="contains" sortBy="#{company.name}">
+                    <p:column filterBy="#{company.name}" headerText="#{msg.name}" footerText="#{msg.name}" filterMatchMode="contains" sortBy="#{company.name}">
                         <f:facet name="filter">
-                            <p:inputText  onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter name" onkeypress="return event.keyCode !== 13"/>
+                            <p:inputText  onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="#{msg.enterName}" onkeypress="return event.keyCode !== 13"/>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{company.name}"/>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{company.name}" style="width:150px" placeholder="Enter name"/>
+                                <p:inputText value="#{company.name}" style="width:150px" placeholder="#{msg.enterName}"/>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.site}" headerText="Sites" footerText="Sites" filterMatchMode="contains" >
+                    <p:column filterBy="#{company.site}" headerText="#{msg.site}" footerText="#{msg.site}" filterMatchMode="contains" >
                         <f:facet name="filter">
-                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter site" onkeypress="return event.keyCode !== 13"/>
+                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="#{msg.enterSite}" onkeypress="return event.keyCode !== 13"/>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
@@ -148,15 +148,15 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputTextarea value="#{company.site}" style="width: 97%; height:97%" placeholder="Enter site">
+                                <p:inputTextarea value="#{company.site}" style="width: 97%; height:97%" placeholder="#{msg.enterSite}">
                                     <f:converter converterId="ListStringConverter" />
                                 </p:inputTextarea>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.email}" headerText="Emails" footerText="Emails" filterMatchMode="contains" >
+                    <p:column filterBy="#{company.email}" headerText="#{msg.email}" footerText="#{msg.email}" filterMatchMode="contains" >
                         <f:facet name="filter">
-                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter email" onkeypress="return event.keyCode !== 13"/>
+                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="#{msg.enterEmail}" onkeypress="return event.keyCode !== 13"/>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
@@ -165,15 +165,15 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputTextarea value="#{company.email}" style="width: 97%; height:97%" placeholder="Enter email" >
+                                <p:inputTextarea value="#{company.email}" style="width: 97%; height:97%" placeholder="#{msg.enterEmail}">
                                     <f:converter converterId="ListStringConverter" />
                                 </p:inputTextarea>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.telephones}" headerText="Telephones" footerText="Telephones" filterMatchMode="contains" >
+                    <p:column filterBy="#{company.telephones}" headerText="#{msg.telephone}" footerText="#{msg.telephone}" filterMatchMode="contains" >
                         <f:facet name="filter">
-                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter telephone" onkeypress="return event.keyCode !== 13"/>
+                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="#{msg.enterTelephone}" onkeypress="return event.keyCode !== 13"/>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
@@ -182,15 +182,15 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputTextarea value="#{company.telephones}" style="width: 97%; height:97%" placeholder="Enter telephone" >
+                                <p:inputTextarea value="#{company.telephones}" style="width: 97%; height:97%" placeholder="#{msg.enterTelephone}" >
                                     <f:converter converterId="ListStringConverter" />
                                 </p:inputTextarea>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column filterBy="#{company.details}" headerText="+" footerText="+" filterMatchMode="contains">
+                    <p:column filterBy="#{company.details}" headerText="#{msg.details}" footerText="#{msg.details}" filterMatchMode="contains">
                         <f:facet name="filter">
-                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="Enter details" onkeypress="return event.keyCode !== 13"/>
+                            <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="#{msg.enterDetail}" onkeypress="return event.keyCode !== 13"/>
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
@@ -199,16 +199,16 @@
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputTextarea value="#{company.details}" style="width: 97%; height:97%" placeholder="Enter detail" >
+                                <p:inputTextarea value="#{company.details}" style="width: 97%; height:97%" placeholder="#{msg.enterDetail}" >
                                     <f:converter converterId="ListStringConverter" />
                                 </p:inputTextarea>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column headerText="Edit" style="width:60px" exportable="false">
+                    <p:column headerText="#{msg.edit}" style="width:60px" exportable="false">
                         <p:rowEditor/>
                     </p:column>
-                    <p:column headerText="Delete" style="width:60px" exportable="false" >
+                    <p:column headerText="#{msg.delete}" style="width:60px" exportable="false" >
                         <p:commandButton icon="ui-icon-trash"
                                          title="Delete"
                                          actionListener="#{removeCompanyBean.remove(company)}"
@@ -216,9 +216,10 @@
                     </p:column>
                     <f:facet name="footer">
                         <p:column>
-                            <p style="text-align: left; color:royalblue">Feedback:  AIoannis@speedflow.com</p>
-                            <p style="text-align: right; color:royalblue"> Companies,Copyright © 2016</p>
-                            <p style="text-align: right;  font-style: italic ; color:royalblue">Ioannis Anastasiadis - Yuriy Mikhaylenko</p>
+                            <p style="text-align: left; color:royalblue">#{msg.Feedback}:</p>
+                            <p style="text-align: left; color:royalblue">AIoannis@speedflow.com </p>
+                            <p style="text-align: right; color:royalblue"> Companies, Copyright © 2016</p>
+                            <p style="text-align: right;  font-style: italic ; color:royalblue">#{msg.ia} - #{msg.ym}</p>
                         </p:column>
                     </f:facet>
                 </p:dataTable>
