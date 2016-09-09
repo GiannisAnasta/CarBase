@@ -65,8 +65,16 @@
             <!-- Start of the data table head -->
             <!--  Start of upload form -->
             <h:form enctype="multipart/form-data" >
+                <p:importEnum type="view.FormatOfData" var="formatsOfData" allSuffix="ALL_ENUM_VALUES" />
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                    <p:outputLabel for="formatOfData" value="#{msg.formatOfData}:" />
+                    <p:selectOneRadio id="formatOfData" value="#{fileUploadView.formatOfData}">
+                        <f:selectItems value="#{formatsOfData.ALL_ENUM_VALUES}" var="item"  itemLabel="#{item}" itemValue="#{item}" />
+                        <p:ajax/>
+                    </p:selectOneRadio>
+                </h:panelGrid>
                 <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" skinSimple="true" dragDropSupport="false" auto="true"
-                              update="@all" sizeLimit="100000" allowTypes="/(\.|\/)(xlsx|xls)$/" label="#{msg.upload}"/>
+                              update="@all" allowTypes="/(\.|\/)(xlsx|xls)$/" label="#{msg.upload}"/>
                 <p:growl id="linkmessages" showDetail="false" showSummary="true" sticky="true" />
             </h:form>
             <!--  End of upload form -->
@@ -87,7 +95,7 @@
                              paginator="true"
                              rows="10"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15">
+                             rowsPerPageTemplate="5,10,15,50,100">
                     <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
                     <p:ajax event="rowEdit" listener="#{editCompanyBean.onRowEdit}" update="@this :companiesTableForm:msgs"/>
                     <p:ajax event="rowEditCancel" listener="#{editCompanyBean.onRowCancel}" update="@this :companiesTableForm:msgs"/>

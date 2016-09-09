@@ -1,5 +1,6 @@
 package view;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import fileupload.CompanyBuilder;
 import fileupload.IndefiniteData;
 import fileupload.UploadedFileDataReader;
@@ -12,7 +13,6 @@ import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.facelets.FaceletContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.Company;
@@ -28,6 +28,15 @@ public class FileUploadView implements Serializable {
 
     @Inject
     private CompaniesManage manager;
+    private FormatOfData formatOfData = FormatOfData.NEW_LINE_SEPARATED;
+
+    public FormatOfData getFormatOfData() {
+        return formatOfData;
+    }
+
+    public void setFormatOfData(FormatOfData formatOfData) {
+        this.formatOfData = formatOfData;
+    }
 
     public void handleFileUpload(FileUploadEvent event) {
         System.out.println("start");
@@ -41,7 +50,15 @@ public class FileUploadView implements Serializable {
         } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        List<Company> buildedCompanies = CompanyBuilder.buildCompanies(dataFromUploadedFile);
+        List<Company> buildedCompanies = null;
+        if (FormatOfData.EMPTY_LINE_SEPARATED.equals(formatOfData)) {
+            buildedCompanies = CompanyBuilder.buildCompaniesEmptyLinesSeparated(dataFromUploadedFile);
+        } else if (FormatOfData.NEW_LINE_SEPARATED.equals(formatOfData)) {
+            buildedCompanies = CompanyBuilder.buildCompaniesNewLinesSeparated(dataFromUploadedFile);
+        } else {
+            System.out.println("Found unknown type !!!!!!!! " + formatOfData);
+            return;
+        }
 
         List<Company> uniqueEqualBasedCompaniesFromFile = CompaniesUtil.getUniqueCompanies(buildedCompanies);
         if (buildedCompanies.size() != uniqueEqualBasedCompaniesFromFile.size()) {
@@ -58,7 +75,7 @@ public class FileUploadView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
         }
 
-       List<Company> DBlist = manager.getList();
+        List<Company> DBlist = manager.getList();
         int size = uniqueEqualBasedCompaniesFromFile.size();
         List<Company> fileNewItemsForDB = new ArrayList<>(uniqueEqualBasedCompaniesFromFile);
         fileNewItemsForDB.removeAll(DBlist);
@@ -77,10 +94,25 @@ public class FileUploadView implements Serializable {
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
         }
+        List<String> names = new ArrayList<>();
+        for (Company company : fileNewItemsForDB) {
+            try {
+                manager.addCompany(company);
+            } catch (javax.ejb.EJBException ex) {
+                names.add(company.getName());
+            }
+        }
+        if (!names.isEmpty()) {
+            String message = "Errors with such items:\n";
+            for (String name : names) {
+                message += name + "\n";
+            }
+            FacesMessage msg = new FacesMessage(message);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
 
-        manager.addcompanies(fileNewItemsForDB);
         if (!fileNewItemsForDB.isEmpty()) {
-            FacesMessage msg = new FacesMessage(fileNewItemsForDB.size() + " companies uploaded.");
+            FacesMessage msg = new FacesMessage(fileNewItemsForDB.size() - names.size() + " companies uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }

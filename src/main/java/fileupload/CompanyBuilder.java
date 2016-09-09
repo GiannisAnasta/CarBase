@@ -2,13 +2,69 @@ package fileupload;
 
 import fileupload.IndefiniteData.Row;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import model.Company;
 import org.apache.commons.lang3.StringUtils;
 
 public class CompanyBuilder {
 
-    public static List<Company> buildCompanies(IndefiniteData indefiniteData) {
+    public static List<Company> buildCompaniesNewLinesSeparated(IndefiniteData indefiniteData) {
+        List<Company> companies = new ArrayList<>();
+
+        for (Row row : indefiniteData.getData()) {
+            List<String> rowData = row.getData();
+            if (rowData.isEmpty()) {
+                continue;
+            }
+            Company company = new Company();
+            String cell = null;
+            int index = 0;
+            /// name
+            if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                continue;
+            }
+            cell = rowData.get(index);
+            if (StringUtils.isNotBlank(cell)) {
+                company.setName(cell);
+            }
+            //// site
+            index++;
+            if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                continue;
+            }
+            cell = rowData.get(index);
+            if (StringUtils.isNotBlank(cell)) {
+                company.getSite().addAll(Arrays.asList(cell.split(";")));
+            }
+            ////email
+            index++;
+            if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                continue;
+            }
+            cell = rowData.get(index);
+            if (StringUtils.isNotBlank(cell)) {
+                company.getEmail().addAll(Arrays.asList(cell.split(";")));
+            }
+            //telephones
+            index++;
+            if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                continue;
+            }
+            cell = rowData.get(index);
+            if (StringUtils.isNotBlank(cell)) {
+                company.getTelephones().addAll(Arrays.asList(cell.split(";")));
+            }
+            if (company.equals(new Company())) {
+                continue;
+            }
+            companies.add(company);
+        }
+
+        return companies;
+    }
+
+    public static List<Company> buildCompaniesEmptyLinesSeparated(IndefiniteData indefiniteData) {
         List<Company> companies = new ArrayList<>();
         Company company = new Company();
         if (!indefiniteData.getData().isEmpty()) {
@@ -31,7 +87,7 @@ public class CompanyBuilder {
                 int index = 0;
 
                 /// name
-                if (data.size() == index) {
+                if (data.size() == index) {//To prevend index of bound if the lenghts of rows are different.
                     continue;
                 }
                 cell = data.get(index);
