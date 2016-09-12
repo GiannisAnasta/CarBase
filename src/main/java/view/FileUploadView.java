@@ -8,6 +8,8 @@ import fileupload.validation.exceptions.UploadedFileReadException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
@@ -20,6 +22,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import service.CompaniesManage;
 import service.CompaniesUtil;
+import util.LocalizationUtil;
 
 @Named
 @SessionScoped
@@ -66,13 +69,14 @@ public class FileUploadView implements Serializable {
             for (Company c : uniqueEqualBasedCompaniesFromFile) {
                 dublicates.remove(c);
             }
-            FacesMessage msg = new FacesMessage(buildedCompanies.size() - uniqueEqualBasedCompaniesFromFile.size() + " dublicates detected inside the file and removed");
+            String message = LocalizationUtil.getMessage("dublicates_detected_inside_the_file_and_removed");
+            FacesMessage msg = new FacesMessage(buildedCompanies.size() - uniqueEqualBasedCompaniesFromFile.size() + message);
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            String message = "";
+            String msg1 = "";
             for (Company c : dublicates) {
-                message = message + c.getName() + "\n";
+                msg1 = msg1 + c.getName() + "\n";
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(msg1));
         }
 
         List<Company> DBlist = manager.getList();
@@ -81,18 +85,19 @@ public class FileUploadView implements Serializable {
         fileNewItemsForDB.removeAll(DBlist);
 
         if (size != fileNewItemsForDB.size()) {
-            FacesMessage msg = new FacesMessage(size - fileNewItemsForDB.size() + " companies already exists! Dublicates removed.");
+            String message = LocalizationUtil.getMessage("companies_already_exists_dublicates_removed");
+            FacesMessage msg = new FacesMessage(size - fileNewItemsForDB.size() + " " + message);
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
             List<Company> fileDBDublicates = new ArrayList<>(uniqueEqualBasedCompaniesFromFile);
             for (Company c : fileNewItemsForDB) {
                 fileDBDublicates.remove(c);
             }
-            String message = "";
+            String msg1 = "";
             for (Company c : fileDBDublicates) {
-                message = message + c.getName() + "\n";
+                msg1 = msg1 + c.getName() + "\n";
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(msg1));
         }
         List<String> names = new ArrayList<>();
         for (Company company : fileNewItemsForDB) {
@@ -103,16 +108,17 @@ public class FileUploadView implements Serializable {
             }
         }
         if (!names.isEmpty()) {
-            String message = "Errors with such items:\n";
+            String message = LocalizationUtil.getMessage("еrrors_with_those_items");
             for (String name : names) {
                 message += name + "\n";
             }
-            FacesMessage msg = new FacesMessage(message);
+            FacesMessage msg = new FacesMessage(fileNewItemsForDB.size() - names.size() + " " + message);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
 
         if (!fileNewItemsForDB.isEmpty()) {
-            FacesMessage msg = new FacesMessage(fileNewItemsForDB.size() - names.size() + " companies uploaded.");
+            String message = LocalizationUtil.getMessage("messages_companies_uploaded");
+            FacesMessage msg = new FacesMessage(fileNewItemsForDB.size() - names.size() + " " + message);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import model.Company;
 import service.CompaniesManage;
+import util.LocalizationUtil;
 
 @Named
 @SessionScoped
@@ -82,17 +83,19 @@ public class AddCompanyBean implements Serializable {
 
         try {
             entity.addCompany(newCompany);
+            String message = LocalizationUtil.getMessage("new_company_added");
             FacesContext.getCurrentInstance()
                     .addMessage(
                             null, new FacesMessage(
-                                    "New company added: " + newCompany.getName()
+                                    message + ": " + newCompany.getName()
                             ));
         } catch (javax.ejb.EJBException ex) {
+            String message = LocalizationUtil.getMessage("such_company_exist");
             System.out.println("such company exist");
             FacesContext.getCurrentInstance()
                     .addMessage(
                             null, new FacesMessage(
-                                    "Such company exist: " + newCompany.getName()
+                                    message + ": " + newCompany.getName()
                             ));
         }
 

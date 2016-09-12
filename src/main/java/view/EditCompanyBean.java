@@ -10,6 +10,7 @@ import model.Company;
 import org.primefaces.event.RowEditEvent;
 import service.CompaniesManage;
 import service.CompaniesService;
+import util.LocalizationUtil;
 
 @Named
 @SessionScoped
@@ -26,27 +27,29 @@ public class EditCompanyBean implements Serializable {
 
         if (edited.getName().equals(fromDBSameId.getName())) {
             companyService.update(edited);
-            FacesMessage msg = new FacesMessage("Company Edited");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            String message = LocalizationUtil.getMessage("company_edited");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
             companyManager.flush();
         } else {
             for (Company c : companyService.returnAllCompanies()) {
                 if (c.getName().equals(edited.getName())) {
+                     String message = LocalizationUtil.getMessage("such_company_exist");
                     FacesContext.getCurrentInstance()
-                            .addMessage(null, new FacesMessage("Such company exist: " + edited.getName()));
+                            .addMessage(null, new FacesMessage(message +": "+ edited.getName()));
                     FacesContext.getCurrentInstance().validationFailed();
                     return;
                 }
             }
             companyService.update(edited);
-            FacesMessage msg = new FacesMessage("Company Edited");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            String message = LocalizationUtil.getMessage("company_edited");
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(message));
             companyManager.flush();
         }
     }
 
     public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edit Cancelled");
+        String message = LocalizationUtil.getMessage("edit_cancelled");
+        FacesMessage msg = new FacesMessage(message);
         FacesContext.getCurrentInstance().addMessage(null, msg);
         companyManager.flush();
     }

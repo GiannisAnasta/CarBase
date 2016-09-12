@@ -7,9 +7,6 @@ ol {
     list-style-type: none;
 }
 li{
-    font-style: italic;
-}
-li{
     position:static;
 }
 ::-moz-placeholder {

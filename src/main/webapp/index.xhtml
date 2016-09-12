@@ -28,7 +28,6 @@
             <!-- Start of the adding company form -->
 
             <h:form id="addCompanyFormss">
-                <p:growl id="messages" showDetail="false" sticky="true"/>
                 <p:panel header="#{msg.addCompany}"  rendered="true" >
                     <p:panelGrid columns="10">
                         <h:outputLabel for="name" value="#{msg.name}:"/>
@@ -75,7 +74,6 @@
                 </h:panelGrid>
                 <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" skinSimple="true" dragDropSupport="false" auto="true"
                               update="@all" allowTypes="/(\.|\/)(xlsx|xls)$/" label="#{msg.upload}"/>
-                <p:growl id="linkmessages" showDetail="false" showSummary="true" sticky="true" />
             </h:form>
             <!--  End of upload form -->
 
