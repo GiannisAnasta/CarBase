@@ -1,12 +1,6 @@
 package fileupload;
 
-
-import fileupload.validation.exceptions.FileContentException;
-import fileupload.validation.exceptions.WrongFieldNumberException;
-import fileupload.IndefiniteDataUtil;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class IndefiniteData {
@@ -89,7 +83,6 @@ public class IndefiniteData {
 //            throw new FileContentException(messageKey);
 //        }
 //    }
-
 //    public void checkEachRowLength() throws WrongFieldNumberException {
 //        int etalonRowLength = getFirstLine().getData().size();
 //        for (Row row : data) {
@@ -98,14 +91,12 @@ public class IndefiniteData {
 //            }
 //        }
 //    }
-
 //    public void preProcess() {
 //        trimDuplicatedRows();
 //        trimQuotes(true);
 //        trimSpaces();
 //        trimEmptyRows();
 //    }
-
 //    private void trimDuplicatedRows() {
 //        data = new ArrayList<>(new LinkedHashSet<>(data));
 //    }
@@ -119,7 +110,6 @@ public class IndefiniteData {
 //            }
 //        }
 //    }
-
     /**
      * This method trim quotes in indefiniteData object data.
      *
@@ -148,5 +138,4 @@ public class IndefiniteData {
 //            }
 //        }
 //    }
-
 }
