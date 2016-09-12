@@ -69,7 +69,7 @@
                 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
                     <p:outputLabel for="formatOfData" value="#{msg.formatOfData}:" />
                     <p:selectOneRadio id="formatOfData" value="#{fileUploadView.formatOfData}">
-                        <f:selectItems value="#{formatsOfData.ALL_ENUM_VALUES}" var="item"  itemLabel="#{item}" itemValue="#{item}" />
+                        <f:selectItems value="#{formatsOfData.ALL_ENUM_VALUES}" var="item"  itemLabel="#{msg[localizationKeyConvrtor.toLocalizationKey(item)]}" itemValue="#{item}" />
                         <p:ajax/>
                     </p:selectOneRadio>
                 </h:panelGrid>
