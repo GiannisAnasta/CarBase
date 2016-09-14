@@ -159,9 +159,9 @@
                         <p:cellEditor>
                             <f:facet name="output">
                                 <p:dataList value="#{company.site}" var="sitee" rendered="#{not empty company.site}">
-                                    --  #{urlConverterUtil.normalize(sitee)} --
-                                    ++ #{urlConverterUtil.isCorrect(sitee)} ++
-                                    <a href="#{urlConverterUtil.normalize(sitee)}" style="#{urlConverterUtil.isCorrect(sitee) ? '' : 'color: red'}">#{sitee}</a>
+                                    <a href="#{urlConverterUtil.normalize(sitee)}"
+                                       target="_blank"
+                                       style="#{urlConverterUtil.isValidScheme(scheme)? '' : 'color: red'}">#{sitee}</a>
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
@@ -177,8 +177,17 @@
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
-                                <p:dataList value="#{company.email}" var="emaill" rendered="#{not empty company.email}">
-                                    <h:outputText value="#{emaill}"/>
+                                <h:panelGrid rendered="#{not empty company.email}">
+                                    <a target="_top"
+                                       href="mailto:#{emailConverterUtil.getAsCommaSeparated(company.email)}?subject=Some%20subject&amp;">#{msg.mail_to_all}</a>
+                                </h:panelGrid>
+                                <p:dataList value="#{company.email}"
+                                            var="emaill" rendered="#{not empty company.email}">
+                                    <h:outputLink value="mailto:#{company.email}">
+                                        <f:param name="subject" value="Some subject" />
+                                    </h:outputLink>
+                                    <a target="_top"
+                                       href="mailto:#{emaill}?subject=Some%20subject&amp;">#{emaill} </a>
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">

@@ -1,10 +1,9 @@
 package util;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.UrlValidator;
 
 @Named
 @ApplicationScoped
@@ -25,32 +24,16 @@ public class UrlConverterUtil {
             }
         }
         url.append(value);
-
         return url.toString();
     }
 
-    public boolean isCorrect(String value) {
-
-        if (StringUtils.isBlank(value)) {
-            return false;
-        }
-//        StringBuilder url = new StringBuilder();
-//
-//        if (!value.startsWith("https://", 0)) {
-//            if (!value.startsWith("http://", 0)) {
-//                url.append("http://");
-//                if (!value.startsWith("www.", 0)) {
-//                    url.append("www.");
-//                }
-//            }
-//        }
-//        url.append(value);
-        String url = normalize(value);
-
-        try {
-            new URI(url.toString());
-        } catch (URISyntaxException e) {
-            return false;
+    public boolean isValidScheme(String scheme) {
+        String[] schemes = {"http", "https"};
+        UrlValidator urlValidator = new UrlValidator(schemes);
+        if (urlValidator.isValid("ftp://foo.bar.com/")) {
+            System.out.println("url is valid");
+        } else {
+            System.out.println("url is invalid");
         }
         return true;
     }
