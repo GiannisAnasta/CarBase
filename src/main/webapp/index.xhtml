@@ -159,7 +159,9 @@
                         <p:cellEditor>
                             <f:facet name="output">
                                 <p:dataList value="#{company.site}" var="sitee" rendered="#{not empty company.site}">
-                                    <a href="#{sitee}">#{sitee}</a>
+                                    --  #{urlConverterUtil.normalize(sitee)} --
+                                    ++ #{urlConverterUtil.isCorrect(sitee)} ++
+                                    <a href="#{urlConverterUtil.normalize(sitee)}" style="#{urlConverterUtil.isCorrect(sitee) ? '' : 'color: red'}">#{sitee}</a>
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
