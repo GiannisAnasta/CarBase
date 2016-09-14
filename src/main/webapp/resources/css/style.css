@@ -25,15 +25,5 @@ li{
 }
 table .ui-widget-content{
     border: none;
-    background :rgba(255, 255, 255, 0);
-    color: #4f4f4f;
+    background: none;
 }
-
-/*.ui-state-highlight .ui-widget-content .ui-state-highlight{
-    color: #fff;
-    text-shadow: 1px 1px 1px #0592B9;
-}
-table .ui-cell-editor-input{
-    width: 250px;
-}*/
-
