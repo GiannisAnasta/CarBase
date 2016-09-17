@@ -6,8 +6,12 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
+
         <p style="text-align: left; color:royalblue">#{msg.support_feedback}:</p>
-        <p style="text-align: left; color:royalblue">AIoannis@speedflow.com </p>
+        <h:outputLink target="_top" style="text-align: left; color:royalblue"
+                      value="mailto:AIoannis@speedflow.com">
+            <h:outputText value="AIoannis@speedflow.com"/>
+        </h:outputLink>
         <p style="text-align: right; color:royalblue"> Companies, Copyright © 2016</p>
         <p style="text-align: right;  font-style: italic ; color:royalblue">#{msg.developer_who_created_ia} - #{msg.developer_who_created_ym}</p>
     </ui:composition>
