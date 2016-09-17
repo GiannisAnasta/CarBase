@@ -177,17 +177,16 @@
                         </f:facet>
                         <p:cellEditor>
                             <f:facet name="output">
-                                <h:panelGrid rendered="#{not empty company.email}">
-                                    <a target="_top"
-                                       href="mailto:#{emailConverterUtil.getAsCommaSeparated(company.email)}?subject=Some%20subject&amp;">#{msg.mail_to_all}</a>
-                                </h:panelGrid>
+                                <h:outputLink target="_top"
+                                              value="mailto:#{emailConverterUtil.getAsCommaSeparated(company.email)}"
+                                              rendered="#{not empty company.email}">
+                                    <h:outputText value="&#x2709;#{msg.mail_to_all}"/>
+                                </h:outputLink>
                                 <p:dataList value="#{company.email}"
                                             var="emaill" rendered="#{not empty company.email}">
-                                    <h:outputLink value="mailto:#{company.email}">
-                                        <f:param name="subject" value="Some subject" />
+                                    <h:outputLink target="_top" value="mailto:#{emaill}" >
+                                        <h:outputText value="#{emaill}" />
                                     </h:outputLink>
-                                    <a target="_top"
-                                       href="mailto:#{emaill}?subject=Some%20subject&amp;">#{emaill} </a>
                                 </p:dataList>
                             </f:facet>
                             <f:facet name="input">
