@@ -16,15 +16,7 @@
             <h:outputStylesheet library="css" name="style.css"/>
         </h:head>
         <h:body>
-            <h:form id="languageForm">
-                <h:panelGrid columns="2">
-                    <p:outputLabel for="lan" value="#{msg.localization_for_language} :" style="font-style: italic; font-weight: bold;"/>
-                    <p:selectOneMenu id="lan" value="#{language.localeCode}" >
-                        <f:selectItems value="#{language.countriesInMap}" />
-                        <p:ajax process="@this" update="@all" listener="#{language.countryLocaleCodeChanged()}"/>
-                    </p:selectOneMenu>
-                </h:panelGrid>
-            </h:form>
+            <ui:include src="language.xhtml"/>
             <!-- Start of the adding company form -->
 
             <h:form id="addCompanyFormss">
