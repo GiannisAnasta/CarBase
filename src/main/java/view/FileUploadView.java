@@ -20,7 +20,7 @@ import javax.inject.Named;
 import model.Company;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
-import service.CompaniesManage;
+import service.CompaniesService;
 import service.CompaniesUtil;
 import util.LocalizationUtil;
 
@@ -30,7 +30,7 @@ import util.LocalizationUtil;
 public class FileUploadView implements Serializable {
 
     @Inject
-    private CompaniesManage manager;
+    private CompaniesService service;
     private FormatOfData formatOfData = FormatOfData.NEW_LINE_SEPARATED;
 
     public FormatOfData getFormatOfData() {
@@ -79,7 +79,7 @@ public class FileUploadView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(msg1));
         }
 
-        List<Company> DBlist = manager.getList();
+        List<Company> DBlist = service.returnAllCompanies();
         int size = uniqueEqualBasedCompaniesFromFile.size();
         List<Company> fileNewItemsForDB = new ArrayList<>(uniqueEqualBasedCompaniesFromFile);
         fileNewItemsForDB.removeAll(DBlist);
