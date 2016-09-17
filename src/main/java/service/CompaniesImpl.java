@@ -5,16 +5,17 @@ import model.Company;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 @Stateless
 public class CompaniesImpl implements CompaniesService {
 
+    @Inject
+    private Messenger messenger;
     private CompanyDAO companyDAO;
 
     public CompanyDAO getCompanyDAO() {
-
         return companyDAO;
-
     }
 
     @EJB
@@ -35,15 +36,18 @@ public class CompaniesImpl implements CompaniesService {
     @Override
     public void save(Company entity) {
         getCompanyDAO().save(entity);
+        messenger.flushCompanies();
     }
 
     @Override
     public void delete(Company entity) {
         getCompanyDAO().delete(entity);
+        messenger.flushCompanies();
     }
 
     @Override
     public Company update(Company entity) {
+        messenger.flushCompanies();
         return getCompanyDAO().update(entity);
     }
 
