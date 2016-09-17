@@ -23,7 +23,7 @@ li{
 .ui-icon{
     margin-right: 14px;
 }
-table .ui-widget-content{
+.ui-cell-editor-output .ui-widget-content{
     border: none;
     background: none;
 }
