@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <h:form id="addCompanyFormss">
+            <p:panel header="#{msg.header_adding_form_add_company}"  rendered="true" >
+                <p:panelGrid columns="10">
+                    <h:outputLabel for="name" value="#{msg.output_label_company_name}:"/>
+                    <p:inputText id="name" value="#{addCompanyBean.name}"/>
+
+                    <h:outputLabel for="site" value="#{msg.output_label_site}:"/>
+                    <p:inputTextarea id='site' value="#{addCompanyBean.site}"
+                                     style="width: 95%; height:93%"
+                                     placeholder="#{msg.adding_form_placeholder_add_site}:">
+                        <f:converter converterId="ListStringConverter" />
+                    </p:inputTextarea>
+
+                    <h:outputLabel for="email" value="#{msg.output_label_email}:"/>
+                    <p:inputTextarea id="email" value="#{addCompanyBean.email}"
+                                     style="width: 95%; height:93%"
+                                     placeholder="#{msg.adding_form_placeholder_add_email}:">
+                        <f:converter converterId="ListStringConverter" />
+                    </p:inputTextarea>
+
+                    <h:outputLabel for="telephone" value="#{msg.output_label_telephone}:"/>
+                    <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}"
+                                     style="width: 95%; height:93%"
+                                     placeholder="#{msg.adding_form_placeholder_add_telephone}:">
+                        <f:converter converterId="ListStringConverter" />
+                    </p:inputTextarea>
+
+                    <h:outputLabel for="details" value="#{msg.output_label_comments}:"/>
+                    <p:inputTextarea id="details" value="#{addCompanyBean.details}"
+                                     style="width: 95%; height:93%"
+                                     placeholder="#{msg.adding_form_placeholder_add_comment}:">
+                        <f:converter converterId="ListStringConverter" />
+                    </p:inputTextarea>
+                    <f:facet name="footer">
+                        <p:commandButton value="#{msg.button_label_add_new_company}" icon="ui-icon-arrowreturnthick-1-n" 
+                                         action="#{addCompanyBean.addAction()}"
+                                         process="@form" update="@all"/>
+                    </f:facet>
+                </p:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:composition>
+</html>

@@ -17,52 +17,7 @@
         </h:head>
         <h:body>
             <ui:include src="language.xhtml"/>
-            <!-- Start of the adding company form -->
-
-            <h:form id="addCompanyFormss">
-                <p:panel header="#{msg.header_adding_form_add_company}"  rendered="true" >
-                    <p:panelGrid columns="10">
-                        <h:outputLabel for="name" value="#{msg.output_label_company_name}:"/>
-                        <p:inputText id="name" value="#{addCompanyBean.name}"/>
-
-                        <h:outputLabel for="site" value="#{msg.output_label_site}:"/>
-                        <p:inputTextarea id='site' value="#{addCompanyBean.site}"
-                                         style="width: 95%; height:93%"
-                                         placeholder="#{msg.adding_form_placeholder_add_site}:">
-                            <f:converter converterId="ListStringConverter" />
-                        </p:inputTextarea>
-
-                        <h:outputLabel for="email" value="#{msg.output_label_email}:"/>
-                        <p:inputTextarea id="email" value="#{addCompanyBean.email}"
-                                         style="width: 95%; height:93%"
-                                         placeholder="#{msg.adding_form_placeholder_add_email}:">
-                            <f:converter converterId="ListStringConverter" />
-                        </p:inputTextarea>
-
-                        <h:outputLabel for="telephone" value="#{msg.output_label_telephone}:"/>
-                        <p:inputTextarea id="telephone" value="#{addCompanyBean.telephones}"
-                                         style="width: 95%; height:93%"
-                                         placeholder="#{msg.adding_form_placeholder_add_telephone}:">
-                            <f:converter converterId="ListStringConverter" />
-                        </p:inputTextarea>
-
-                        <h:outputLabel for="details" value="#{msg.output_label_comments}:"/>
-                        <p:inputTextarea id="details" value="#{addCompanyBean.details}"
-                                         style="width: 95%; height:93%"
-                                         placeholder="#{msg.adding_form_placeholder_add_comment}:">
-                            <f:converter converterId="ListStringConverter" />
-                        </p:inputTextarea>
-                        <f:facet name="footer">
-                            <p:commandButton value="#{msg.button_label_add_new_company}" icon="ui-icon-arrowreturnthick-1-n" 
-                                             action="#{addCompanyBean.addAction()}"
-                                             process="@form" update="@all"/>
-                        </f:facet>
-                    </p:panelGrid>
-                </p:panel>
-            </h:form>
-            <!-- End of the adding company form -->
-
-            <!-- Start of the data table head -->
+            <ui:include src="add_company.xhtml"/>
             <!--  Start of upload form -->
             <h:form enctype="multipart/form-data" >
                 <p:importEnum type="view.FormatOfData" var="formatsOfData" allSuffix="ALL_ENUM_VALUES" />
