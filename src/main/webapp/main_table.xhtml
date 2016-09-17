@@ -67,8 +67,7 @@
                         <f:facet name="output">
                             <p:dataList value="#{company.site}" var="sitee" rendered="#{not empty company.site}">
                                 <a href="#{urlConverterUtil.normalize(sitee)}"
-                                   target="_blank"
-                                   style="#{urlConverterUtil.isValidScheme(scheme)? '' : 'color: red'}">#{sitee}</a>
+                                   target="_blank">#{sitee}</a>
                             </p:dataList>
                         </f:facet>
                         <f:facet name="input">

@@ -3,7 +3,6 @@ package util;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.validator.routines.UrlValidator;
 
 @Named
 @ApplicationScoped
@@ -27,14 +26,4 @@ public class UrlConverterUtil {
         return url.toString();
     }
 
-    public boolean isValidScheme(String scheme) {
-        String[] schemes = {"http", "https"};
-        UrlValidator urlValidator = new UrlValidator(schemes);
-        if (urlValidator.isValid("ftp://foo.bar.com/")) {
-            System.out.println("url is valid");
-        } else {
-            System.out.println("url is invalid");
-        }
-        return true;
-    }
 }
