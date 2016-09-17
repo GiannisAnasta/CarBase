@@ -9,7 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.Company;
-import service.CompaniesManage;
+import service.CompaniesService;
 import util.LocalizationUtil;
 
 @Named
@@ -17,21 +17,13 @@ import util.LocalizationUtil;
 public class AddCompanyBean implements Serializable {
 
     @Inject
-    private CompaniesManage entity;
+    private CompaniesService service;
 
     private String name;
     private List<String> site = new ArrayList<>();
     private List<String> email = new ArrayList<>();
     private List<String> telephones = new ArrayList<>();
     private List<String> details = new ArrayList<>();
-
-    public CompaniesManage getEntity() {
-        return entity;
-    }
-
-    public void setEntity(CompaniesManage entity) {
-        this.entity = entity;
-    }
 
     public String getName() {
         return name;
@@ -82,13 +74,14 @@ public class AddCompanyBean implements Serializable {
         newCompany.setDetails(details);
 
         try {
-            entity.addCompany(newCompany);
+            service.save(newCompany);
             String message = LocalizationUtil.getMessage("new_company_added");
             FacesContext.getCurrentInstance()
                     .addMessage(
                             null, new FacesMessage(
                                     message + ": " + newCompany.getName()
                             ));
+            flush();
         } catch (javax.ejb.EJBException ex) {
             String message = LocalizationUtil.getMessage("such_company_exist");
             System.out.println("such company exist");
@@ -98,8 +91,6 @@ public class AddCompanyBean implements Serializable {
                                     message + ": " + newCompany.getName()
                             ));
         }
-
-        flush();
     }
 
     private void flush() {
