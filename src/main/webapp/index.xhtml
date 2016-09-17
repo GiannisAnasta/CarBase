@@ -21,6 +21,7 @@
             <ui:include src="upload.xhtml"/>
             <ui:include src="main_table.xhtml"/>
 
+            <p:growl id="msgs" showDetail="false" sticky="true"/>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" draggable="false" closable="false" resizable="false" showHeader="false" position="right top" style=" border-color: lime " >
                 <h:outputText value="#{msg.ajax_inticator_for_loading}"/>
