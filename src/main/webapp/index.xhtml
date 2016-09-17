@@ -18,20 +18,7 @@
         <h:body>
             <ui:include src="language.xhtml"/>
             <ui:include src="add_company.xhtml"/>
-            <!--  Start of upload form -->
-            <h:form enctype="multipart/form-data" >
-                <p:importEnum type="view.FormatOfData" var="formatsOfData" allSuffix="ALL_ENUM_VALUES" />
-                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                    <p:outputLabel for="formatOfData" value="#{msg.formatOfData}:" />
-                    <p:selectOneRadio id="formatOfData" value="#{fileUploadView.formatOfData}">
-                        <f:selectItems value="#{formatsOfData.ALL_ENUM_VALUES}" var="item"  itemLabel="#{msg[localizationKeyConvrtor.toLocalizationKey(item)]}" itemValue="#{item}" />
-                        <p:ajax/>
-                    </p:selectOneRadio>
-                </h:panelGrid>
-                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" skinSimple="true" dragDropSupport="false" auto="true"
-                              update="@all" allowTypes="/(\.|\/)(xlsx|xls)$/" label="#{msg.upload_new_file}"/>
-            </h:form>
-            <!--  End of upload form -->
+            <ui:include src="upload.xhtml"/>
 
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" draggable="false" closable="false" resizable="false" showHeader="false" position="right top" style=" border-color: lime " >
