@@ -17,9 +17,13 @@
         </h:head>
         <h:body>
             <ui:include src="language.xhtml"/>
-            <ui:include src="add_company.xhtml"/>
+            <c:if test="#{empty fileUploadView.preview.data}">
+                <ui:include src="add_company.xhtml"/>
+            </c:if>
             <ui:include src="upload.xhtml"/>
-            <ui:include src="main_table.xhtml"/>
+            <c:if test="#{empty fileUploadView.preview.data}">
+                <ui:include src="main_table.xhtml" />
+            </c:if>
             <ui:include src="feedback.xhtml"/>
 
             <p:growl id="msgs" showDetail="false" sticky="true"/>

@@ -19,4 +19,6 @@ public interface CompaniesService {
 
     Company find(int entityID);
 
+    Company find(String name);
+
 }

@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
         <h:form enctype="multipart/form-data" >
             <p:importEnum type="view.FormatOfData" var="formatsOfData" allSuffix="ALL_ENUM_VALUES" />
@@ -15,8 +16,17 @@
                     <p:ajax/>
                 </p:selectOneRadio>
             </h:panelGrid>
-            <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" skinSimple="true" dragDropSupport="false" auto="true"
-                          update="@all" allowTypes="/(\.|\/)(xlsx|xls)$/" label="#{msg.upload_new_file}"/>
+            <c:if test="#{empty fileUploadView.preview.data}">
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" skinSimple="true" dragDropSupport="false" auto="true"
+                              update="@all" allowTypes="/(\.|\/)(xlsx|xls)$/" label="#{msg.upload_new_file}"/>
+            </c:if>
+            <c:if test="#{not empty fileUploadView.preview.data}">
+                <ui:include src="/parts/table.xhtml">
+                    <ui:param name="bean" value="#{fileUploadView.preview}"/>
+                </ui:include>
+                <p:commandButton value="#{msg.cancel}" actionListener="#{fileUploadView.cancel()}" update="@all"/>
+                <p:commandButton value="#{msg.put_to_db}" actionListener="#{fileUploadView.loadToBD()}" update="@all"/>
+            </c:if>
         </h:form>
     </ui:composition>
 </html>

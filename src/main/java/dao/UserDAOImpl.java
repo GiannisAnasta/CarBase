@@ -4,7 +4,11 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 //import hibernate.Query;
 //import hibernate.Session;
 //import hibernate.Transaction;
@@ -39,6 +43,22 @@ public class UserDAOImpl implements CompanyDAO {
         CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Company.class));
         return entityManager.createQuery(cq).getResultList();
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public Company find(String name) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Company> cq = cb.createQuery(Company.class);
+        Root<Company> postRoot = cq.from(Company.class);
+        cq.select(postRoot);
+        Path<Object> get = postRoot.get("name");
+        cq.where(cb.equal(get, name));
+        List<Company> resultList = entityManager.createQuery(cq).getResultList();
+        if (resultList.isEmpty()) {
+            return null;
+        }
+        return resultList.get(0);
     }
 
     @Override

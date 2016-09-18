@@ -12,12 +12,14 @@ public interface CompanyDAO {
 
     List<Company> findAll();
 
-    void save(Company entity) ;
+    void save(Company entity);
 
     void delete(Company entity);
 
     Company update(Company entity);
 
     Company find(int entityID);
+
+    Company find(String name);
 
 }

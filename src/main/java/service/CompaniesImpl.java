@@ -55,4 +55,10 @@ public class CompaniesImpl implements CompaniesService {
     public Company find(int entityID) {
         return getCompanyDAO().find(entityID);
     }
+
+    @Override
+    public Company find(String name) {
+        return getCompanyDAO().find(name);
+    }
+
 }

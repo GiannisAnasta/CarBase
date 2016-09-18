@@ -1,6 +1,5 @@
-package view;
+package view.fileupload;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import fileupload.CompanyBuilder;
 import fileupload.IndefiniteData;
 import fileupload.UploadedFileDataReader;
@@ -8,8 +7,6 @@ import fileupload.validation.exceptions.UploadedFileReadException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
@@ -23,6 +20,7 @@ import org.primefaces.model.UploadedFile;
 import service.CompaniesService;
 import service.CompaniesUtil;
 import util.LocalizationUtil;
+import view.FormatOfData;
 
 @Named
 @SessionScoped
@@ -32,6 +30,8 @@ public class FileUploadView implements Serializable {
     @Inject
     private CompaniesService service;
     private FormatOfData formatOfData = FormatOfData.NEW_LINE_SEPARATED;
+    @Inject
+    private Preview preview;
 
     public FormatOfData getFormatOfData() {
         return formatOfData;
@@ -39,6 +39,10 @@ public class FileUploadView implements Serializable {
 
     public void setFormatOfData(FormatOfData formatOfData) {
         this.formatOfData = formatOfData;
+    }
+
+    public Preview getPreview() {
+        return preview;
     }
 
     public void handleFileUpload(FileUploadEvent event) {
@@ -78,47 +82,43 @@ public class FileUploadView implements Serializable {
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(msg1));
         }
+        preview.setData(buildedCompanies);
+    }
 
-        List<Company> DBlist = service.returnAllCompanies();
-        int size = uniqueEqualBasedCompaniesFromFile.size();
-        List<Company> fileNewItemsForDB = new ArrayList<>(uniqueEqualBasedCompaniesFromFile);
-        fileNewItemsForDB.removeAll(DBlist);
+    public void cancel() {
+        preview.getData().clear();
+    }
 
-        if (size != fileNewItemsForDB.size()) {
-            String message = LocalizationUtil.getMessage("companies_already_exists_dublicates_removed");
-            FacesMessage msg = new FacesMessage(size - fileNewItemsForDB.size() + " " + message);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void loadToBD() {
 
-            List<Company> fileDBDublicates = new ArrayList<>(uniqueEqualBasedCompaniesFromFile);
-            for (Company c : fileNewItemsForDB) {
-                fileDBDublicates.remove(c);
-            }
-            String msg1 = "";
-            for (Company c : fileDBDublicates) {
-                msg1 = msg1 + c.getName() + "\n";
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(msg1));
-        }
         List<String> names = new ArrayList<>();
-        for (Company company : fileNewItemsForDB) {
+        for (Company company : preview.getData()) {
             try {
-                manager.addCompany(company);
+                service.save(company);
             } catch (javax.ejb.EJBException ex) {
                 names.add(company.getName());
+                Company find = service.find(company.getName());
+                find.getSite().addAll(company.getSite());
+                find.getEmail().addAll(company.getEmail());
+                find.getDetails().addAll(company.getDetails());
+                find.getTelephones().addAll(company.getTelephones());
+                service.update(find);
             }
         }
+        preview.getData().clear();
+
         if (!names.isEmpty()) {
-            String message = LocalizationUtil.getMessage("еrrors_with_those_items");
+            String message = LocalizationUtil.getMessage("merged_items");
             for (String name : names) {
                 message += name + "\n";
             }
-            FacesMessage msg = new FacesMessage(fileNewItemsForDB.size() - names.size() + " " + message);
+            FacesMessage msg = new FacesMessage(names.size() + " " + message);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
 
-        if (!fileNewItemsForDB.isEmpty()) {
+        if (!preview.getData().isEmpty()) {
             String message = LocalizationUtil.getMessage("messages_companies_uploaded");
-            FacesMessage msg = new FacesMessage(fileNewItemsForDB.size() - names.size() + " " + message);
+            FacesMessage msg = new FacesMessage(preview.getData().size() + " " + message);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
