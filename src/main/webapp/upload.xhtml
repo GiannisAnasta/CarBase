@@ -7,22 +7,47 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
-        <h:form enctype="multipart/form-data" >
-            <p:importEnum type="view.FormatOfData" var="formatsOfData" allSuffix="ALL_ENUM_VALUES" />
-            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                <p:outputLabel for="formatOfData" value="#{msg.formatOfData}:" />
-                <p:selectOneRadio id="formatOfData" value="#{fileUploadView.formatOfData}">
-                    <f:selectItems value="#{formatsOfData.ALL_ENUM_VALUES}" var="item"  itemLabel="#{msg[localizationKeyConvrtor.toLocalizationKey(item)]}" itemValue="#{item}" />
-                    <p:ajax/>
-                </p:selectOneRadio>
-            </h:panelGrid>
+        <h:form enctype="multipart/form-data ">
             <c:if test="#{empty fileUploadView.preview.data}">
-                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" skinSimple="true" dragDropSupport="false" auto="true"
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}"
+                              mode="advanced"
+                              skinSimple="true"
+                              dragDropSupport="false"
+                              auto="true"
                               update="@all" allowTypes="/(\.|\/)(xlsx|xls)$/" label="#{msg.upload_new_file}"/>
             </c:if>
+            <p:importEnum type="view.FormatOfData" var="formatsOfData" allSuffix="ALL_ENUM_VALUES" />
+            <p:panelGrid id="panel" columns="4">
+                <f:facet name="header">
+                    <p:row>
+                        <p:outputLabel for="formatOfData" value="#{msg.formatOfData}:" />
+                        <p:column colspan="1" style="text-align: center">
+                        </p:column>
+                    </p:row>
+                </f:facet>
+                <p:row style="text-align: center;align-content: center">
+                    <p style="text-align: center;color: royalblue">#{msg.useful_tip}</p>
+                    <p:column colspan="1" style="text-align: center">
+                        <p:selectOneRadio id="formatOfData" value="#{fileUploadView.formatOfData}">
+                            <f:selectItems value="#{formatsOfData.ALL_ENUM_VALUES}" var="item"  itemLabel="#{msg[localizationKeyConvrtor.toLocalizationKey(item)]}" itemValue="#{item}" />
+                            <p:ajax/>
+                        </p:selectOneRadio>
+                    </p:column>
+                </p:row>
+                <f:facet name="footer">
+                    <p:row>
+                        <p:column>
+                            <p:button href="/resources/examples/EmpyLineFormat.xlsx" value="#{msg.download_example_empty_line_format}" icon="ui-icon-arrowthick-1-s"/>
+                        </p:column>
+                        <p:column>
+                            <p:button href="/resources/examples/NewLineFormat.xls" value="#{msg.download_example_new_line_format}" icon="ui-icon-arrowthick-1-s"/>
+                        </p:column>
+                    </p:row>
+                </f:facet>
+            </p:panelGrid>
             <c:if test="#{not empty fileUploadView.preview.data}">
                 <ui:include src="/parts/table.xhtml">
-                    <ui:param name="bean" value="#{fileUploadView.preview}"/>
+                    <ui:param name="bean" value="#{fileUploadView.preview}" />
                 </ui:include>
                 <p:commandButton value="#{msg.cancel}" actionListener="#{fileUploadView.cancel()}" update="@all"/>
                 <p:commandButton value="#{msg.put_to_db}" actionListener="#{fileUploadView.loadToBD()}" update="@all"/>
