@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 @ApplicationScoped
 public class EmailConverterUtil {
 
-    public String getAsCommaSeparated(List<String> values) {
-        return StringUtils.join(values, ';');
+    public static String getAsCommaSeparated(List<String> values) {
+        return StringUtils.join(values,';');
     }
 }

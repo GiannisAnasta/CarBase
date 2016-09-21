@@ -33,13 +33,13 @@
                 <p:commandButton value="#{msg.button_label_export_selected}"  icon="ui-icon-extlink"
                                  actionListener="#{exportCompanies.setFiltered(true)}"
                                  process="@this" ajax="false">
-                    <p:fileDownload value="#{exportCompanies.exportXlsx(bean.selected)}"/>
+                    <p:fileDownload value="#{exportCompanies.exportXlsxFormats(bean.selected,fileUploadView.formatOfData)}"/>
                 </p:commandButton>
                 <p:spacer height="10"/>
                 <p:commandButton value="#{msg.button_label_export_all}"  icon="ui-icon-extlink"
                                  actionListener="#{exportCompanies.setFiltered(false)}"
                                  process="@this" ajax="false">
-                    <p:fileDownload value="#{exportCompanies.exportXlsx(bean.data)}"/>
+                    <p:fileDownload value="#{exportCompanies.exportXlsxFormats(bean.data,fileUploadView.formatOfData)}"/>
                 </p:commandButton>
 
                 <p:spacer height="10"/>

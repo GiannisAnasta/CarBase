@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.Visibility;
+import util.EmailConverterUtil;
 
 @Named
 @SessionScoped
@@ -50,8 +51,14 @@ public class ExportCompanies implements Serializable {
         }
     }
 
-    public StreamedContent exportXlsx(List<Company> companies) {
-        final Workbook wb = buildWorkbook(companies);
+    public StreamedContent exportXlsxFormats(List<Company> companies, FormatOfData formatOfData) {
+        Workbook wb1;
+        if (FormatOfData.EMPTY_LINE_SEPARATED.equals(formatOfData)) {
+            wb1 = exportEmptyLineFormat(companies);
+        } else {
+            wb1 = exportNewLineFormat(companies);
+        }
+        final Workbook wb = wb1;
         final PipedInputStream in = new PipedInputStream();
         try {
             final PipedOutputStream out = new PipedOutputStream(in);
@@ -77,7 +84,7 @@ public class ExportCompanies implements Serializable {
 
     public static final int ROWS_IN_XLSX_LIMIT = 500000;
 
-    public Workbook buildWorkbook(List<Company> companies) {
+    public Workbook exportEmptyLineFormat(List<Company> companies) {
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Companies");
         int currentRowNumber = 0;
@@ -181,11 +188,63 @@ public class ExportCompanies implements Serializable {
             }
 //new company
             currentRowNumber = currentRowNumber + returnRowsNum;
-            if(returnRowsNum==0){
+            if (returnRowsNum == 0) {
                 currentRowNumber++;
             }
         }
         return wb;
+    }
+
+    public Workbook exportNewLineFormat(List<Company> companies) {
+        Workbook wb = new XSSFWorkbook();
+        Sheet sheet = wb.createSheet("Companies");
+        int currentRowNumber = 0;
+
+        Row row;//= sheet.createRow(currentRowNumber);
+        CellStyle style = wb.createCellStyle();
+        Font font = wb.createFont();
+        font.setColor(HSSFColor.GREY_40_PERCENT.index);
+        style.setFont(font);
+
+        int maxRows = companies.size() > ROWS_IN_XLSX_LIMIT ? ROWS_IN_XLSX_LIMIT : companies.size();
+
+        for (int i = 0; i < maxRows; i++) {
+            Company company = companies.get(i);
+            int currentCellNumber = 0;
+            row = sheet.createRow(currentRowNumber);
+            ///name
+            if (!filtered || list.get(1)) {
+
+                row.createCell(currentCellNumber).setCellValue(company.getName());
+            }
+            currentCellNumber++;
+            //site
+            if (!filtered || list.get(2)) {
+                String formatted = EmailConverterUtil.getAsCommaSeparated(company.getSite());
+                row.createCell(currentCellNumber).setCellValue(formatted);
+            }
+            currentCellNumber++;
+            //emails
+            if (!filtered || list.get(3)) {
+                String formatted = EmailConverterUtil.getAsCommaSeparated(company.getEmail());
+                row.createCell(currentCellNumber).setCellValue(formatted);
+            }
+            currentCellNumber++;
+            //telephones
+            if (!filtered || list.get(4)) {
+                String formatted = EmailConverterUtil.getAsCommaSeparated(company.getTelephones());
+                row.createCell(currentCellNumber).setCellValue(formatted);
+            }
+            currentCellNumber++;
+            //details
+            if (!filtered || list.get(5)) {
+                String formatted = EmailConverterUtil.getAsCommaSeparated(company.getDetails());
+                row.createCell(currentCellNumber).setCellValue(formatted);
+            }
+            currentRowNumber++;
+        }
+        return wb;
+
     }
 
 }
