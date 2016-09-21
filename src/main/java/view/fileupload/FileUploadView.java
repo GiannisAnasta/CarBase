@@ -53,7 +53,6 @@ public class FileUploadView implements Serializable {
         IndefiniteData dataFromUploadedFile = null;
         try {
             dataFromUploadedFile = UploadedFileDataReader.getDataFromUploadedFile(uploadedFile, ';');
-            dataFromUploadedFile.removeFirstLine();
         } catch (UploadedFileReadException ex) {
             Logger.getLogger(FileUploadView.class.getName()).log(Level.SEVERE, null, ex);
         }

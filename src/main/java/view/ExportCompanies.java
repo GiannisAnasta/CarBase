@@ -87,25 +87,10 @@ public class ExportCompanies implements Serializable {
     public Workbook exportEmptyLineFormat(List<Company> companies) {
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Companies");
-        int currentRowNumber = 0;
+        int currentRowNumber = -1;
         int currentCellNumber = 0;
 
-        Row row = sheet.createRow(currentRowNumber);
-        if (!filtered || list.get(1)) {
-            row.createCell(currentCellNumber++).setCellValue("Name");
-        }
-        if (!filtered || list.get(2)) {
-            row.createCell(currentCellNumber++).setCellValue("Site");
-        }
-        if (!filtered || list.get(3)) {
-            row.createCell(currentCellNumber++).setCellValue("Email");
-        }
-        if (!filtered || list.get(4)) {
-            row.createCell(currentCellNumber++).setCellValue("Telephone");
-        }
-        if (!filtered || list.get(5)) {
-            row.createCell(currentCellNumber++).setCellValue("Details");
-        }
+        Row row;
 
         CellStyle style = wb.createCellStyle();
         Font font = wb.createFont();
