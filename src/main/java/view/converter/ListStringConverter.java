@@ -21,7 +21,7 @@ public class ListStringConverter implements Converter {
         List<String> asList = new ArrayList<>();
         for (String item : split) {
             if (!item.trim().isEmpty()) {
-                asList.add(item);
+                asList.add(item.trim());
             }
         }
 
