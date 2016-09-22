@@ -85,7 +85,7 @@
                     <f:facet name="output">
                         <h:outputLink target="_top"
                                       value="mailto:#{emailConverterUtil.getAsCommaSeparated(company.email)}"
-                                      rendered="#{not empty company.email}">
+                                      rendered="#{not empty company.email}" style="margin-left: 50%; color: royalblue" >
                             <h:outputText value="&#x2709;#{msg.mail_to_all}"/>
                         </h:outputLink>
                         <p:dataList value="#{company.email}"
