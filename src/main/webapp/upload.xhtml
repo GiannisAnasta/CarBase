@@ -49,8 +49,16 @@
                 <ui:include src="/parts/table.xhtml">
                     <ui:param name="bean" value="#{fileUploadView.preview}" />
                 </ui:include>
-                <p:commandButton value="#{msg.cancel}" actionListener="#{fileUploadView.cancel()}" update="@all"/>
-                <p:commandButton value="#{msg.put_to_db}" actionListener="#{fileUploadView.loadToBD()}" update="@all"/>
+                <p:commandButton value="#{msg.cancel}" onclick="PF('dialog1').show();"/>
+                <p:dialog header="#{msg.are_you_sure}" widgetVar="dialog1" resizable="false" style="width:90%;" modal="true" height="50" draggable="false">
+                    <p:commandButton value="#{msg.proceed}" actionListener="#{fileUploadView.cancel()}" update="@all" oncomplete="dialog1.hide()"/>
+                    <p:commandButton value="#{msg.go_back}" onclick="PF(dialog1.hide())"/>
+                </p:dialog>
+                <p:commandButton value="#{msg.put_to_db}" onclick="PF('dialog2').show();"/>
+                <p:dialog header="#{msg.confirm}" widgetVar="dialog2" resizable="false" style="width:90%;" modal="true" height="50" draggable="false">
+                    <p:commandButton value="#{msg.put_to_db}" actionListener="#{fileUploadView.loadToBD()}" update="@all" oncomplete="dialog2.hide()"/>
+                    <p:commandButton value="#{msg.decline}" onclick="PF(dialog2.hide())"/>
+                </p:dialog>
             </c:if>
         </h:form>
     </ui:composition>
