@@ -9,20 +9,17 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import model.Company;
 
+import org.apache.poi.ss.usermodel.*;
 import org.primefaces.model.StreamedContent;
 import java.util.List;
 import java.util.concurrent.ThreadFactory;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.Visibility;
 import util.EmailConverterUtil;
+import util.UrlFileLinkerUtil;
 
 @Named
 @SessionScoped
@@ -86,6 +83,7 @@ public class ExportCompanies implements Serializable {
 
     public Workbook exportEmptyLineFormat(List<Company> companies) {
         Workbook wb = new XSSFWorkbook();
+        UrlFileLinkerUtil linker = new UrlFileLinkerUtil(wb);
         Sheet sheet = wb.createSheet("Companies");
         int currentRowNumber = -1;
         int currentCellNumber = 0;
@@ -120,7 +118,9 @@ public class ExportCompanies implements Serializable {
                     if (row == null) {
                         row = sheet.createRow(currentRowNumber);
                     }
-                    row.createCell(currentCellNumber).setCellValue(item);
+                    Cell cell = row.createCell(currentCellNumber);
+                    cell.setCellValue(item);
+                    linker.linkCellToUrl(item, cell);
                     currentRowNumber++;
                 }
                 currentRowNumber = startRowNum;
@@ -182,6 +182,7 @@ public class ExportCompanies implements Serializable {
 
     public Workbook exportNewLineFormat(List<Company> companies) {
         Workbook wb = new XSSFWorkbook();
+        UrlFileLinkerUtil linker = new UrlFileLinkerUtil(wb);
         Sheet sheet = wb.createSheet("Companies");
         int currentRowNumber = 0;
 
@@ -206,7 +207,9 @@ public class ExportCompanies implements Serializable {
             //site
             if (!filtered || list.get(2)) {
                 String formatted = EmailConverterUtil.getAsCommaSeparated(company.getSite());
-                row.createCell(currentCellNumber).setCellValue(formatted);
+                Cell cell = row.createCell(currentCellNumber);
+                cell.setCellValue(formatted);
+                linker.linkCellToUrl(formatted,cell);
             }
             currentCellNumber++;
             //emails
