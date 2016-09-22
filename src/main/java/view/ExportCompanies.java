@@ -12,12 +12,16 @@ import model.Company;
 import org.primefaces.model.StreamedContent;
 import java.util.List;
 import java.util.concurrent.ThreadFactory;
+import org.apache.poi.common.usermodel.Hyperlink;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
+import org.apache.poi.xssf.usermodel.XSSFHyperlink;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -87,6 +91,7 @@ public class ExportCompanies implements Serializable {
     public Workbook exportEmptyLineFormat(List<Company> companies) {
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Companies");
+        XSSFCreationHelper helper = (XSSFCreationHelper) wb.getCreationHelper();
         int currentRowNumber = -1;
         int currentCellNumber = 0;
 
@@ -105,13 +110,13 @@ public class ExportCompanies implements Serializable {
             currentRowNumber++;
             int startRowNum = currentRowNumber;
             currentCellNumber = -1;//TODO start from zero and fix logic according to 0
-///name
+            ///name
             if (!filtered || list.get(1)) {
                 currentCellNumber++;
                 row = sheet.createRow(currentRowNumber);
                 row.createCell(currentCellNumber).setCellValue(company.getName());
             }
-///site
+            ///site
             if (!filtered || list.get(2)) {
                 currentCellNumber++;
                 multiRow = company.getSite();
@@ -120,13 +125,21 @@ public class ExportCompanies implements Serializable {
                     if (row == null) {
                         row = sheet.createRow(currentRowNumber);
                     }
-                    row.createCell(currentCellNumber).setCellValue(item);
+                    Cell cell = row.createCell(currentCellNumber);
+                    cell.setCellValue(item);
+                    try {
+                        XSSFHyperlink url_link1 = helper.createHyperlink(Hyperlink.LINK_URL);
+                        url_link1.setAddress(item.trim());
+                        cell.setHyperlink(url_link1);
+                    } catch (Exception ex) {
+
+                    }
                     currentRowNumber++;
                 }
                 currentRowNumber = startRowNum;
                 returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
-///email
+            ///email
             if (!filtered || list.get(3)) {
                 currentCellNumber++;
                 multiRow = company.getEmail();
@@ -141,7 +154,7 @@ public class ExportCompanies implements Serializable {
                 currentRowNumber = startRowNum;
                 returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
-///telephone
+            ///telephone
             if (!filtered || list.get(4)) {
                 currentCellNumber++;
                 multiRow = company.getTelephones();
@@ -156,7 +169,7 @@ public class ExportCompanies implements Serializable {
                 currentRowNumber = startRowNum;
                 returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
-//details
+            ///details
             if (!filtered || list.get(5)) {
                 currentCellNumber++;
                 multiRow = company.getDetails();
@@ -171,7 +184,7 @@ public class ExportCompanies implements Serializable {
                 currentRowNumber = startRowNum;
                 returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
-//new company
+            ///new company
             currentRowNumber = currentRowNumber + returnRowsNum;
             if (returnRowsNum == 0) {
                 currentRowNumber++;
@@ -182,10 +195,11 @@ public class ExportCompanies implements Serializable {
 
     public Workbook exportNewLineFormat(List<Company> companies) {
         Workbook wb = new XSSFWorkbook();
+        XSSFCreationHelper helper = (XSSFCreationHelper) wb.getCreationHelper();
         Sheet sheet = wb.createSheet("Companies");
         int currentRowNumber = 0;
 
-        Row row;//= sheet.createRow(currentRowNumber);
+        Row row;
         CellStyle style = wb.createCellStyle();
         Font font = wb.createFont();
         font.setColor(HSSFColor.GREY_40_PERCENT.index);
@@ -203,25 +217,36 @@ public class ExportCompanies implements Serializable {
                 row.createCell(currentCellNumber).setCellValue(company.getName());
             }
             currentCellNumber++;
-            //site
+            ///site
             if (!filtered || list.get(2)) {
                 String formatted = EmailConverterUtil.getAsCommaSeparated(company.getSite());
                 row.createCell(currentCellNumber).setCellValue(formatted);
+                Cell cell = row.createCell(currentCellNumber);
+                cell.setCellValue(formatted);
+                try {
+                    XSSFHyperlink url_link1 = helper.createHyperlink(Hyperlink.LINK_URL);
+                    url_link1.setAddress(formatted.trim());
+                    cell.setHyperlink(url_link1);
+                } catch (Exception ex) {
+
+                }
+
             }
+
             currentCellNumber++;
-            //emails
+            ///emails
             if (!filtered || list.get(3)) {
                 String formatted = EmailConverterUtil.getAsCommaSeparated(company.getEmail());
                 row.createCell(currentCellNumber).setCellValue(formatted);
             }
             currentCellNumber++;
-            //telephones
+            ///telephones
             if (!filtered || list.get(4)) {
                 String formatted = EmailConverterUtil.getAsCommaSeparated(company.getTelephones());
                 row.createCell(currentCellNumber).setCellValue(formatted);
             }
             currentCellNumber++;
-            //details
+            ///details
             if (!filtered || list.get(5)) {
                 String formatted = EmailConverterUtil.getAsCommaSeparated(company.getDetails());
                 row.createCell(currentCellNumber).setCellValue(formatted);
