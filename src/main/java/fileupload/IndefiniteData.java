@@ -49,7 +49,11 @@ public class IndefiniteData {
         this.data = new ArrayList<>();
         int number = 1;
         for (List<String> row : data) {
-            this.data.add(new Row(new ArrayList<>(row), number));
+            ArrayList<String> trimmed = new ArrayList<>();
+            for (String item : row) {
+                trimmed.add(item.trim());
+            }
+            this.data.add(new Row(trimmed, number));
             number++;
         }
     }
