@@ -2,6 +2,9 @@ package service;
 
 import java.util.*;
 import model.Company;
+import util.DuplicatesRemoverUtil;
+
+import static util.DuplicatesRemoverUtil.*;
 
 public class CompaniesUtil {
 
@@ -11,6 +14,17 @@ public class CompaniesUtil {
         unique.addAll(companies);
 
         return new ArrayList(unique);
+    }
+
+    public static Company getComapnyWithNoDuplicates(Company entity) {
+        Company result = new Company();
+        result.setId(entity.getId());
+        result.setName(entity.getName());
+        result.setSite(removeDuplicates(entity.getSite(), true));
+        result.setEmail(removeDuplicates(entity.getEmail(), true));
+        result.setTelephones(removeDuplicates(entity.getTelephones(), false));
+        result.setDetails(removeDuplicates(entity.getDetails(), false));
+        return result;
     }
 
 }

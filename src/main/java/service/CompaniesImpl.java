@@ -35,7 +35,7 @@ public class CompaniesImpl implements CompaniesService {
 
     @Override
     public void save(Company entity) {
-        getCompanyDAO().save(entity);
+        getCompanyDAO().save(CompaniesUtil.getComapnyWithNoDuplicates(entity));
         messenger.flushCompanies();
     }
 
@@ -48,7 +48,7 @@ public class CompaniesImpl implements CompaniesService {
     @Override
     public Company update(Company entity) {
         messenger.flushCompanies();
-        return getCompanyDAO().update(entity);
+        return getCompanyDAO().update(CompaniesUtil.getComapnyWithNoDuplicates(entity));
     }
 
     @Override
