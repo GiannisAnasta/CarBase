@@ -21,7 +21,7 @@ public class CompaniesUtil {
         result.setId(entity.getId());
         result.setName(entity.getName());
         result.setSite(removeDuplicates(entity.getSite(), true));
-        result.setEmail(removeDuplicates(entity.getEmail(), true));
+        result.setEmail(removeDuplicates(entity.getEmail(), false));// RFC 5321, section-2.3.11 emails possible case sensitive
         result.setTelephones(removeDuplicates(entity.getTelephones(), false));
         result.setDetails(removeDuplicates(entity.getDetails(), false));
         return result;
