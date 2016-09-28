@@ -275,4 +275,43 @@ public class CompaniesUtilTest {
 
     }
 
+    @Test
+    public void getComapnyWithNoDuplicatesSameSitesIgnorecase() throws Exception {
+        Company first = new Company();
+        Company second = new Company();
+
+        first.setName("Test");
+        second.setName("Test");
+
+        first.setSite(Arrays.asList("www.test.com", "koko.ko", "MnDeqw.Ru"));
+        second.setSite(Arrays.asList("www.test.com", "koko.ko", "KOKO.ko", "Www.Test.com", "MnDeqw.Ru", "koko.ko", "mndeqw.ru"));
+        Company filtered = CompaniesUtil.getComapnyWithNoDuplicates(second);
+
+        assertEquals(first.getSite(), filtered.getSite());
+    }
+
+    @Test
+    public void getComapnyWithNoDuplicatesFull() throws Exception {
+        Company first = new Company();
+        Company second = new Company();
+
+        first.setName("Test");
+        second.setName("Test");
+
+        first.setSite(Arrays.asList("www.test.com", "koko.ko", "MnDeqw.Ru"));
+        second.setSite(Arrays.asList("www.test.com", "koko.ko", "KOKO.ko", "Www.Test.com", "MnDeqw.Ru", "koko.ko", "mndeqw.ru"));
+
+        first.setEmail(Arrays.asList("Meow@cat.ua", "meow@Cat.ua", "dron@Google.com"));
+        second.setEmail(Arrays.asList("Meow@cat.ua", "Meow@cat.ua", "meow@cat.ua", "dron@Google.com", "dron@Google.com"));
+
+        first.setTelephones(Arrays.asList("123123123", "(050) 123-123-123"));
+        second.setTelephones(Arrays.asList("123123123", "123123123", "123123123", "(050) 123-123-123"));
+
+        first.setDetails(Arrays.asList("some usefull information", "lorem Ipsum"));
+        second.setDetails(Arrays.asList("some usefull information", "lorem Ipsum"));
+
+        Company result = CompaniesUtil.getComapnyWithNoDuplicates(second);
+
+        assertEquals(first, result);
+    }
 }

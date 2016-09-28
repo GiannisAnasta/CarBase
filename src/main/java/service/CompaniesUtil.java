@@ -2,7 +2,6 @@ package service;
 
 import java.util.*;
 import model.Company;
-import util.DuplicatesRemoverUtil;
 
 import static util.DuplicatesRemoverUtil.*;
 
@@ -21,10 +20,9 @@ public class CompaniesUtil {
         result.setId(entity.getId());
         result.setName(entity.getName());
         result.setSite(removeDuplicates(entity.getSite(), true));
-        result.setEmail(removeDuplicates(entity.getEmail(), true));
+        result.setEmail(removeDuplicates(entity.getEmail(), false));
         result.setTelephones(removeDuplicates(entity.getTelephones(), false));
-        result.setDetails(removeDuplicates(entity.getDetails(), false));
+        result.setDetails(entity.getDetails());
         return result;
     }
-
 }
