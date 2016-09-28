@@ -148,7 +148,14 @@ public class ExportCompanies implements Serializable {
                     if (row == null) {
                         row = sheet.createRow(currentRowNumber);
                     }
-                    row.createCell(currentCellNumber).setCellValue(item);
+                    Cell cell = row.createCell(currentCellNumber);
+                    cell.setCellValue(item);
+                    try {
+                        XSSFHyperlink emailto = helper.createHyperlink(Hyperlink.LINK_EMAIL);
+                        emailto.setAddress(item.trim());
+                        cell.setHyperlink(emailto);
+                    } catch (Exception ex) {
+                    }
                     currentRowNumber++;
                 }
                 currentRowNumber = startRowNum;
