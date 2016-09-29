@@ -27,6 +27,7 @@ import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.Visibility;
 import util.EmailConverterUtil;
+import util.UrlConverterUtil;
 
 @Named
 @SessionScoped
@@ -129,7 +130,7 @@ public class ExportCompanies implements Serializable {
                     cell.setCellValue(item);
                     try {
                         XSSFHyperlink url_link1 = helper.createHyperlink(Hyperlink.LINK_URL);
-                        url_link1.setAddress(item.trim());
+                        url_link1.setAddress(UrlConverterUtil.normalize(item));
                         cell.setHyperlink(url_link1);
                     } catch (Exception ex) {
 
@@ -232,7 +233,7 @@ public class ExportCompanies implements Serializable {
                 cell.setCellValue(formatted);
                 try {
                     XSSFHyperlink url_link1 = helper.createHyperlink(Hyperlink.LINK_URL);
-                    url_link1.setAddress(formatted.trim());
+                    url_link1.setAddress(UrlConverterUtil.normalize(formatted));
                     cell.setHyperlink(url_link1);
                 } catch (Exception ex) {
 
