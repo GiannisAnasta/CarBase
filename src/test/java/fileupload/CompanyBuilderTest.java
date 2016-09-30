@@ -16,12 +16,16 @@ public class CompanyBuilderTest {
 
         CompanyBuilder cb = new CompanyBuilder();
         List<Company> expected = new ArrayList<>();
+
         Company company = new Company();
         company.setName("name 1");
         company.getSite().add("site 1");
         company.getEmail().add("email 1");
         company.getTelephones().add("telephone 1");
+        company.getDetails().add("detail 1");
+        company.getCategories().add("category 1");
         expected.add(company);
+
         company = new Company();
         company.setName("name 2");
         company.getSite().add("site 2");
@@ -30,6 +34,10 @@ public class CompanyBuilderTest {
         company.getEmail().add("email 2.2");
         company.getTelephones().add("telephone 2");
         company.getTelephones().add("telephone 2.2");
+        company.getDetails().add("detail 2");
+        company.getDetails().add("detail 2.2");
+        company.getCategories().add("category 2");
+        company.getCategories().add("category 2.2");
         expected.add(company);
 
         IndefiniteData indefiniteData = new IndefiniteData(
@@ -37,11 +45,15 @@ public class CompanyBuilderTest {
                         Arrays.asList("name 1",
                                 "site 1",
                                 "email 1",
-                                "telephone 1"),
+                                "telephone 1",
+                                "detail 1",
+                                "category 1"),
                         Arrays.asList("name 2",
                                 "site 2;site 2.2",
                                 "email 2;email 2.2",
-                                "telephone 2;telephone 2.2")
+                                "telephone 2;telephone 2.2",
+                                "detail 2;detail 2.2",
+                                "category 2;category 2.2")
                 )
         );
         List<Company> actual = cb.buildCompaniesNewLinesSeparated(indefiniteData);

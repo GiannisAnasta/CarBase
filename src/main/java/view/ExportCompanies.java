@@ -33,7 +33,7 @@ import util.UrlConverterUtil;
 @SessionScoped
 public class ExportCompanies implements Serializable {
 
-    private final List<Boolean> list = Arrays.asList(true, true, true, true, true, true, true, true);
+    private final List<Boolean> list = Arrays.asList(true, true, true, true, true, true, true, true, true);
     private boolean filtered;
 
     public void setFiltered(boolean filtered) {
@@ -192,6 +192,21 @@ public class ExportCompanies implements Serializable {
                 currentRowNumber = startRowNum;
                 returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
+            ///categories
+            if (!filtered || list.get(6)) {
+                currentCellNumber++;
+                multiRow = company.getCategories();
+                for (String item : multiRow) {
+                    row = sheet.getRow(currentRowNumber);
+                    if (row == null) {
+                        row = sheet.createRow(currentRowNumber);
+                    }
+                    row.createCell(currentCellNumber).setCellValue(item);
+                    currentRowNumber++;
+                }
+                currentRowNumber = startRowNum;
+                returnRowsNum = Math.max(returnRowsNum, multiRow.size());
+            }
             ///new company
             currentRowNumber = currentRowNumber + returnRowsNum;
             if (returnRowsNum == 0) {
@@ -238,9 +253,7 @@ public class ExportCompanies implements Serializable {
                 } catch (Exception ex) {
 
                 }
-
             }
-
             currentCellNumber++;
             ///emails
             if (!filtered || list.get(3)) {
@@ -257,6 +270,12 @@ public class ExportCompanies implements Serializable {
             ///details
             if (!filtered || list.get(5)) {
                 String formatted = CommaSeparatedUtil.getAsCommaSeparated(company.getDetails());
+                row.createCell(currentCellNumber).setCellValue(formatted);
+            }
+            currentCellNumber++;
+            ///categories
+            if (!filtered || list.get(6)) {
+                String formatted = CommaSeparatedUtil.getAsCommaSeparated(company.getCategories());
                 row.createCell(currentCellNumber).setCellValue(formatted);
             }
             currentRowNumber++;

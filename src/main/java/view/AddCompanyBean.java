@@ -24,6 +24,7 @@ public class AddCompanyBean implements Serializable {
     private List<String> email = new ArrayList<>();
     private List<String> telephones = new ArrayList<>();
     private List<String> details = new ArrayList<>();
+    private List<String> categories = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -65,6 +66,14 @@ public class AddCompanyBean implements Serializable {
         this.details = details;
     }
 
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
     public void addAction() {
         Company newCompany = new Company();
         newCompany.setName(name);
@@ -72,6 +81,7 @@ public class AddCompanyBean implements Serializable {
         newCompany.setEmail(email);
         newCompany.setTelephones(telephones);
         newCompany.setDetails(details);
+        newCompany.setCategories(categories);
 
         try {
             service.save(newCompany);
@@ -99,6 +109,7 @@ public class AddCompanyBean implements Serializable {
         email = null;
         telephones = null;
         details = null;
+        categories = null;
 
     }
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import java.util.Arrays;
@@ -160,8 +155,8 @@ public class CompaniesUtilTest {
     public void testGetUniqueCompaniesDiffTelephones() {
         Company first = new Company();
         Company second = new Company();
-        first.setEmail(Arrays.asList("08855588", "0545"));
-        second.setEmail(Arrays.asList("08855554444", "08545"));
+        first.setTelephones(Arrays.asList("08855588", "0545"));
+        second.setTelephones(Arrays.asList("08855554444", "08545"));
         List<Company> notUnique = Arrays.asList(first, second);
         List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
         assertEquals(2, unique.size());
@@ -171,8 +166,8 @@ public class CompaniesUtilTest {
     public void testGetUniqueCompaniesSameTelephones() {
         Company first = new Company();
         Company second = new Company();
-        first.setEmail(Arrays.asList("0888888", "0888888"));
-        second.setEmail(Arrays.asList("0888888", "0888888"));
+        first.setTelephones(Arrays.asList("0888888", "0888888"));
+        second.setTelephones(Arrays.asList("0888888", "0888888"));
         List<Company> notUnique = Arrays.asList(first, second);
         List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
         assertEquals(1, unique.size());
@@ -191,8 +186,8 @@ public class CompaniesUtilTest {
     public void testGetUniqueCompaniesSameTelephonesDiffSize() {
         Company first = new Company();
         Company second = new Company();
-        first.setEmail(Arrays.asList("0111111", "011", "--0888--"));
-        second.setEmail(Arrays.asList("0111111", "011"));
+        first.setTelephones(Arrays.asList("0111111", "011", "--0888--"));
+        second.setTelephones(Arrays.asList("0111111", "011"));
         List<Company> notUnique = Arrays.asList(first, second);
         List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
         assertEquals(2, unique.size());
@@ -203,8 +198,8 @@ public class CompaniesUtilTest {
     public void testGetUniqueCompaniesDiffDetails() {
         Company first = new Company();
         Company second = new Company();
-        first.setEmail(Arrays.asList("022", "0333"));
-        second.setEmail(Arrays.asList("033", "06666"));
+        first.setDetails(Arrays.asList("022", "0333"));
+        second.setDetails(Arrays.asList("033", "06666"));
         List<Company> notUnique = Arrays.asList(first, second);
         List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
         assertEquals(2, unique.size());
@@ -214,8 +209,8 @@ public class CompaniesUtilTest {
     public void testGetUniqueCompaniesSameDetails() {
         Company first = new Company();
         Company second = new Company();
-        first.setEmail(Arrays.asList("0sss", "0sss"));
-        second.setEmail(Arrays.asList("0sss", "0sss"));
+        first.setDetails(Arrays.asList("0sss", "0sss"));
+        second.setDetails(Arrays.asList("0sss", "0sss"));
         List<Company> notUnique = Arrays.asList(first, second);
         List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
         assertEquals(1, unique.size());
@@ -234,8 +229,51 @@ public class CompaniesUtilTest {
     public void testGetUniqueCompaniesSameDetailsDiffSize() {
         Company first = new Company();
         Company second = new Company();
-        first.setEmail(Arrays.asList("111222333", "01122", "--0888ssss2333--"));
-        second.setEmail(Arrays.asList("111222333", "01122"));
+        first.setDetails(Arrays.asList("111222333", "01122", "--0888ssss2333--"));
+        second.setDetails(Arrays.asList("111222333", "01122"));
+        List<Company> notUnique = Arrays.asList(first, second);
+        List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
+        assertEquals(2, unique.size());
+    }
+    ///Categories
+
+    @Test
+    public void testGetUniqueCompaniesDiffCategories() {
+        Company first = new Company();
+        Company second = new Company();
+        first.setCategories(Arrays.asList("0212", "0311133"));
+        second.setCategories(Arrays.asList("03233", "06662336"));
+        List<Company> notUnique = Arrays.asList(first, second);
+        List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
+        assertEquals(2, unique.size());
+    }
+
+    @Test
+    public void testGetUniqueCompaniesSameCategories() {
+        Company first = new Company();
+        Company second = new Company();
+        first.setCategories(Arrays.asList("0sswww2s", "0sswww2s"));
+        second.setCategories(Arrays.asList("0sswww2s", "0sswww2s"));
+        List<Company> notUnique = Arrays.asList(first, second);
+        List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
+        assertEquals(1, unique.size());
+    }
+
+    @Test
+    public void testGetUniqueCompaniesNoCategories() {
+        Company first = new Company();
+        Company second = new Company();
+        List<Company> notUnique = Arrays.asList(first, second);
+        List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
+        assertEquals(1, unique.size());
+    }
+
+    @Test
+    public void testGetUniqueCompaniesSameCategoriesDiffSize() {
+        Company first = new Company();
+        Company second = new Company();
+        first.setCategories(Arrays.asList("11122233333", "0112232", "--0888sv2333--"));
+        second.setCategories(Arrays.asList("11122233333", "0112232"));
         List<Company> notUnique = Arrays.asList(first, second);
         List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
         assertEquals(2, unique.size());
@@ -268,6 +306,11 @@ public class CompaniesUtilTest {
         first.setDetails(Arrays.asList("112", "111"));
         second.setDetails(Arrays.asList("111", "112"));
         third.setDetails(Arrays.asList("2334", "2334"));
+
+        first.setCategories(Arrays.asList("122ww12", "1aa11"));
+        second.setCategories(Arrays.asList("1aa11", "122ww12"));
+        third.setCategories(Arrays.asList("aaas", "aaas"));
+
         List<Company> notUnique = Arrays.asList(first, second, third);
         List<Company> unique = CompaniesUtil.getUniqueCompanies(notUnique);
 

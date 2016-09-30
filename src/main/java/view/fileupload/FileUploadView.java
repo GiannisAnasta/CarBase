@@ -101,6 +101,7 @@ public class FileUploadView implements Serializable {
                 find.getEmail().addAll(company.getEmail());
                 find.getDetails().addAll(company.getDetails());
                 find.getTelephones().addAll(company.getTelephones());
+                find.getCategories().addAll(company.getCategories());
                 service.update(find);
             }
         }

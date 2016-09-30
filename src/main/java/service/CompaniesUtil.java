@@ -24,6 +24,7 @@ public class CompaniesUtil {
         result.setEmail(removeDuplicates(entity.getEmail(), false));// RFC 5321, section-2.3.11 emails possible case sensitive
         result.setTelephones(removeDuplicates(entity.getTelephones(), false));
         result.setDetails(removeDuplicates(entity.getDetails(), false));
+        result.setCategories(removeDuplicates(entity.getCategories(), false));
         return result;
     }
 

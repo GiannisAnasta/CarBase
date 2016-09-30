@@ -55,6 +55,24 @@ public class CompanyBuilder {
             if (StringUtils.isNotBlank(cell)) {
                 company.getTelephones().addAll(Arrays.asList(cell.split(";")));
             }
+            //details
+            index++;
+            if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                continue;
+            }
+            cell = rowData.get(index);
+            if (StringUtils.isNotBlank(cell)) {
+                company.getDetails().addAll(Arrays.asList(cell.split(";")));
+            }
+            //categories
+            index++;
+            if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                continue;
+            }
+            cell = rowData.get(index);
+            if (StringUtils.isNotBlank(cell)) {
+                company.getCategories().addAll(Arrays.asList(cell.split(";")));
+            }
             if (company.equals(new Company())) {
                 continue;
             }
@@ -130,6 +148,16 @@ public class CompanyBuilder {
                 cell = data.get(index);
                 if (StringUtils.isNotBlank(cell)) {
                     company.getDetails().add(cell);
+
+                }
+                ///categories
+                index++;
+                if (data.size() == index) {
+                    continue;
+                }
+                cell = data.get(index);
+                if (StringUtils.isNotBlank(cell)) {
+                    company.getCategories().add(cell);
 
                 }
 

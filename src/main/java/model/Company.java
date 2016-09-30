@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tbl_company2")
+@Table(name = "company1")
 public class Company implements Serializable {
 
     @Id
@@ -18,6 +18,7 @@ public class Company implements Serializable {
     private List<String> email = new ArrayList<>();
     private List<String> telephones = new ArrayList<>();
     private List<String> details = new ArrayList<>();
+    private List<String> categories = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -67,6 +68,14 @@ public class Company implements Serializable {
         this.details = details;
     }
 
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -103,8 +112,8 @@ public class Company implements Serializable {
         }
         if (this.getEmail().size() == other.getEmail().size()) {
 
-            for (String site1 : this.getEmail()) {
-                if (!other.getEmail().contains(site1)) {
+            for (String email1 : this.getEmail()) {
+                if (!other.getEmail().contains(email1)) {
                     return false;
                 }
             }
@@ -114,8 +123,8 @@ public class Company implements Serializable {
         }
         if (this.getTelephones().size() == other.getTelephones().size()) {
 
-            for (String site1 : this.getTelephones()) {
-                if (!other.getTelephones().contains(site1)) {
+            for (String tele1 : this.getTelephones()) {
+                if (!other.getTelephones().contains(tele1)) {
                     return false;
                 }
             }
@@ -125,8 +134,19 @@ public class Company implements Serializable {
         }
         if (this.getDetails().size() == other.getDetails().size()) {
 
-            for (String site1 : this.getDetails()) {
-                if (!other.getDetails().contains(site1)) {
+            for (String detail1 : this.getDetails()) {
+                if (!other.getDetails().contains(detail1)) {
+                    return false;
+                }
+            }
+        }
+        if (this.getCategories().size() != other.getCategories().size()) {
+            return false;
+        }
+        if (this.getCategories().size() == other.getCategories().size()) {
+
+            for (String category1 : this.getCategories()) {
+                if (!other.getCategories().contains(category1)) {
                     return false;
                 }
             }
@@ -144,6 +164,7 @@ public class Company implements Serializable {
         result = key * result + ((email == null) ? 0 : hashCodeList(email));
         result = key * result + ((telephones == null) ? 0 : hashCodeList(telephones));
         result = key * result + ((details == null) ? 0 : hashCodeList(details));
+        result = key * result + ((categories == null) ? 0 : hashCodeList(categories));
         return result;
     }
 

@@ -39,6 +39,13 @@
                                      placeholder="#{msg.adding_form_placeholder_add_comment}:">
                         <f:converter converterId="ListStringConverter" />
                     </p:inputTextarea>
+
+                    <h:outputLabel for="categories" value="#{msg.output_label_categories}:"/>
+                    <p:inputTextarea id="categories" value="#{addCompanyBean.categories}"
+                                     style="width: 95%; height:93%"
+                                     placeholder="#{msg.adding_form_placeholder_add_categories}:">
+                        <f:converter converterId="ListStringConverter" />
+                    </p:inputTextarea>
                     <f:facet name="footer">
                         <p:commandButton value="#{msg.button_label_add_new_company}" icon="ui-icon-arrowreturnthick-1-n" 
                                          action="#{addCompanyBean.addAction()}"
