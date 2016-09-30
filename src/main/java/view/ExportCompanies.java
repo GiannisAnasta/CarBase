@@ -26,7 +26,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.ToggleEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.Visibility;
-import util.EmailConverterUtil;
+import util.CommaSeparatedUtil;
 import util.UrlConverterUtil;
 
 @Named
@@ -227,7 +227,7 @@ public class ExportCompanies implements Serializable {
             currentCellNumber++;
             ///site
             if (!filtered || list.get(2)) {
-                String formatted = EmailConverterUtil.getAsCommaSeparated(company.getSite());
+                String formatted = CommaSeparatedUtil.getAsCommaSeparated(company.getSite());
                 row.createCell(currentCellNumber).setCellValue(formatted);
                 Cell cell = row.createCell(currentCellNumber);
                 cell.setCellValue(formatted);
@@ -244,19 +244,19 @@ public class ExportCompanies implements Serializable {
             currentCellNumber++;
             ///emails
             if (!filtered || list.get(3)) {
-                String formatted = EmailConverterUtil.getAsCommaSeparated(company.getEmail());
+                String formatted = CommaSeparatedUtil.getAsCommaSeparated(company.getEmail());
                 row.createCell(currentCellNumber).setCellValue(formatted);
             }
             currentCellNumber++;
             ///telephones
             if (!filtered || list.get(4)) {
-                String formatted = EmailConverterUtil.getAsCommaSeparated(company.getTelephones());
+                String formatted = CommaSeparatedUtil.getAsCommaSeparated(company.getTelephones());
                 row.createCell(currentCellNumber).setCellValue(formatted);
             }
             currentCellNumber++;
             ///details
             if (!filtered || list.get(5)) {
-                String formatted = EmailConverterUtil.getAsCommaSeparated(company.getDetails());
+                String formatted = CommaSeparatedUtil.getAsCommaSeparated(company.getDetails());
                 row.createCell(currentCellNumber).setCellValue(formatted);
             }
             currentRowNumber++;

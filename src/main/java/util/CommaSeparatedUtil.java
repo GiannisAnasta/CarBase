@@ -7,9 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 
 @Named
 @ApplicationScoped
-public class EmailConverterUtil {
+public class CommaSeparatedUtil {
 
     public static String getAsCommaSeparated(List<String> values) {
-        return StringUtils.join(values,';');
+        return StringUtils.join(values, ';');
     }
 }
