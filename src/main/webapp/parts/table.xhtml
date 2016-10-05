@@ -12,13 +12,12 @@
                      widgetVar="companiesTable" editable="true"
                      emptyMessage="#{msg.filtering_output_message_when_no_criteria}"
                      filteredValue="#{companyTableFilter.filteredCompanies}"
-                     selection="#{bean.selected}"
                      rowKey="#{company}"
                      paginator="true"
                      rows="10"
+                     rowStyleClass="#{bean.isShowOnlySelected() ? (bean.checkSelected(company.id) ? '' : 'ui-helper-hidden') : ''}"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15,50,100">
-            <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
             <p:ajax event="rowEdit" listener="#{bean.onRowEdit}" update="@this msgs"/>
             <p:ajax event="rowEditCancel" listener="#{bean.onRowCancel}" update="@this msgs"/>
 
@@ -44,8 +43,23 @@
 
                 <p:spacer height="10"/>
                 <p:commandButton process="entities" actionListener="#{bean.deleteSelected()}" icon="ui-icon-trash" value="#{msg.button_label_delete_selected}" update="@form"/>
+                <p:spacer height="10"/>
+                <p:selectBooleanButton  icon="ui-icon-trash" value="#{bean.showOnlySelected}"  offLabel="Show only selected" onLabel="Show all">
+                    <p:ajax event="change" update="entities" listener="#{bean.showSelected}"/>
+                </p:selectBooleanButton>
+                #{bean.showOnlySelected}
                 <p:spacer height="30"/>
             </f:facet>
+            <p:column style="width:50px;text-align:center" exportable="false" toggleable="false" headerText="Checkboxes">
+
+                <ui:param name="companyId" value="#{company.id}"/>
+                #{bean.checkSelected(compnayId)}
+                #{companyId}
+                #{company.id}
+                <p:selectBooleanCheckbox value="#{bean.checkSelected(companyId)}" valueChangeListener="#{bean.rowSelect(company.id)}">
+                    <p:ajax event="change" render="@all" update="@this"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
             <p:column filterBy="#{company.name}" headerText="#{msg.output_label_company_name}" footerText="#{msg.output_label_company_name}" filterMatchMode="contains" sortBy="#{company.name}">
                 <f:facet name="filter">
                     <p:inputText  onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="#{msg.main_table_placeholder_enter_name}" onkeypress="return event.keyCode !== 13"/>

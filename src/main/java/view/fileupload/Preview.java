@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+
 import model.Company;
 import org.primefaces.event.RowEditEvent;
 import util.LocalizationUtil;
@@ -91,4 +93,13 @@ public class Preview implements Table {
         return null;
     }
 
+    //@Override
+    public void rowSelect(AjaxBehaviorEvent event) {
+
+    }
+
+    @Override
+    public boolean checkSelected(int id) {
+        return false;
+    }
 }

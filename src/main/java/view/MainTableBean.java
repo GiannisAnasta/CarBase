@@ -1,7 +1,6 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.faces.application.FacesMessage;
@@ -20,9 +19,10 @@ public class MainTableBean implements Table {
 
     @Inject
     private CompaniesService realservice;
-    private List<Company> selected = new ArrayList<>();
+    private List<Company> originData;
+    private List<Company> selectedToShow;
     private List<Company> data;
-
+    private List<Company> selected =  new ArrayList<>();
     @Override
     public List<Company> getData() {
         if (data == null) {
@@ -95,5 +95,75 @@ public class MainTableBean implements Table {
 
     public void flush() {
         data = null;
+    }
+
+    private Set<Integer> selectedIds = new HashSet<>();
+
+    /*
+    @Override
+    public void rowSelect(AjaxBehaviorEvent event) {
+
+
+        //Map<String,String> params =
+        //        FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        //String cId = params.get("myId");
+        Integer id = (Integer) event.getComponent().getAttributes().get("companyId");
+        System.out.println("rowselect" + id);
+        selectedIds.add(id);
+        for (Company company : data) {
+            if (company.getId() == id) {
+                selected.add(company);
+            }
+        }
+    }
+    */
+
+    public void rowSelect(int id) {
+        System.out.println("rowselect2" + id);
+        if (!selectedIds.add(id)) {
+            selectedIds.remove(id);
+            for (Company company : data) {
+                if (company.getId() == id) {
+                    selected.remove(company);
+                }
+            }
+        } else {
+            for (Company company : data) {
+                if (company.getId() == id) {
+                    selected.add(company);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public boolean checkSelected(int id) {
+        System.out.println("check");
+        return selectedIds.contains(id);
+    }
+
+    private boolean showOnlySelected = false;
+
+    public boolean isShowOnlySelected() {
+        return
+                showOnlySelected;
+    }
+
+    public void showSelected() {
+        if (showOnlySelected) {
+            originData = data;
+            data = selected;
+        } else {
+            data = originData;
+        }
+
+
+        //showOnlySelected = !showOnlySelected;
+        System.out.println("qweqwe");
+    }
+
+    public void setShowOnlySelected(boolean showOnlySelected) {
+        this.showOnlySelected = showOnlySelected;
     }
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import model.Company;
 import org.primefaces.event.RowEditEvent;
 
+import javax.faces.event.AjaxBehaviorEvent;
+
 public interface Table extends Serializable {
 
     List<Company> getData();
@@ -20,4 +22,8 @@ public interface Table extends Serializable {
     void onRowCancel(RowEditEvent event);
 
     void remove(Company company);
+
+    //void rowSelect(AjaxBehaviorEvent event);
+
+    boolean checkSelected(int id);
 }
