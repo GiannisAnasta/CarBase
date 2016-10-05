@@ -6,6 +6,7 @@ import fileupload.UploadedFileDataReader;
 import fileupload.validation.exceptions.UploadedFileReadException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,10 +90,11 @@ public class FileUploadView implements Serializable {
     }
 
     public void loadToBD() {
-
+        Date currentTime = new Date();
         List<String> names = new ArrayList<>();
         for (Company company : preview.getData()) {
             try {
+                company.setTime(currentTime);
                 service.save(company);
             } catch (javax.ejb.EJBException ex) {
                 names.add(company.getName());

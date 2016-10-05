@@ -153,6 +153,12 @@
                     </f:facet>
                 </p:cellEditor>
             </p:column>
+            <p:column filterBy="#{company.time}" headerText="#{msg.output_label_time}" footerText="#{msg.output_label_time}" visible="true" filterMatchMode="contains" sortBy="#{company.time}">
+                <h:outputText value="#{company.time}"/>
+                <f:facet name="filter">
+                    <p:inputText onkeyup="PF('companiesTable').filter()" style="width:150px" placeholder="#{msg.main_table_placeholder_enter_comment}" onkeypress="return event.keyCode !== 13"/>
+                </f:facet>
+            </p:column>
             <p:column headerText="#{msg.button_label_editing}" style="width:60px" exportable="false">
                 <p:rowEditor/>
             </p:column>

@@ -2,11 +2,12 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "company1")
+@Table(name = "company3")
 public class Company implements Serializable {
 
     @Id
@@ -19,6 +20,15 @@ public class Company implements Serializable {
     private List<String> telephones = new ArrayList<>();
     private List<String> details = new ArrayList<>();
     private List<String> categories = new ArrayList<>();
+    private Date time =  new Date();
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
     public Integer getId() {
         return id;
