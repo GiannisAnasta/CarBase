@@ -35,11 +35,6 @@ public class Preview implements Table {
     }
 
     @Override
-    public void setSelected(List<Company> selectedCompanies) {
-        this.selected = selectedCompanies;
-    }
-
-    @Override
     public void deleteSelected() {
         for (Company c : selected) {
             loaded.remove(c);

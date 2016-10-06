@@ -19,10 +19,8 @@ public class MainTableBean implements Table {
 
     @Inject
     private CompaniesService realservice;
-    private List<Company> originData;
-    private List<Company> selectedToShow;
     private List<Company> data;
-    private List<Company> selected =  new ArrayList<>();
+
     @Override
     public List<Company> getData() {
         if (data == null) {
@@ -34,17 +32,19 @@ public class MainTableBean implements Table {
 
     @Override
     public List<Company> getSelected() {
+        System.out.println("getSelected");
+        List<Company> selected = new ArrayList<>();
+        for (Company c : data) {
+            if (selectedIds.contains(c.getId())) {
+                selected.add(c);
+            }
+        }
         return selected;
     }
 
     @Override
-    public void setSelected(List<Company> selectedCompanies) {
-        this.selected = selectedCompanies;
-    }
-
-    @Override
     public void deleteSelected() {
-        for (Company c : selected) {
+        for (Company c : getSelected()) {
             realservice.delete(c);
         }
     }
@@ -122,19 +122,7 @@ public class MainTableBean implements Table {
         System.out.println("rowselect2" + id);
         if (!selectedIds.add(id)) {
             selectedIds.remove(id);
-            for (Company company : data) {
-                if (company.getId() == id) {
-                    selected.remove(company);
-                }
-            }
-        } else {
-            for (Company company : data) {
-                if (company.getId() == id) {
-                    selected.add(company);
-                }
-            }
         }
-
     }
 
     @Override
@@ -146,21 +134,7 @@ public class MainTableBean implements Table {
     private boolean showOnlySelected = false;
 
     public boolean isShowOnlySelected() {
-        return
-                showOnlySelected;
-    }
-
-    public void showSelected() {
-        if (showOnlySelected) {
-            originData = data;
-            data = selected;
-        } else {
-            data = originData;
-        }
-
-
-        //showOnlySelected = !showOnlySelected;
-        System.out.println("qweqwe");
+        return showOnlySelected;
     }
 
     public void setShowOnlySelected(boolean showOnlySelected) {

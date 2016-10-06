@@ -13,8 +13,6 @@ public interface Table extends Serializable {
 
     List<Company> getSelected();
 
-    void setSelected(List<Company> selectedCompanies);
-
     void deleteSelected();
 
     void onRowEdit(RowEditEvent event);

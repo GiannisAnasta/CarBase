@@ -45,7 +45,7 @@
                 <p:commandButton process="entities" actionListener="#{bean.deleteSelected()}" icon="ui-icon-trash" value="#{msg.button_label_delete_selected}" update="@form"/>
                 <p:spacer height="10"/>
                 <p:selectBooleanButton  icon="ui-icon-trash" value="#{bean.showOnlySelected}"  offLabel="Show only selected" onLabel="Show all">
-                    <p:ajax event="change" update="entities" listener="#{bean.showSelected}"/>
+                    <p:ajax event="change" update="entities"/>
                 </p:selectBooleanButton>
                 #{bean.showOnlySelected}
                 <p:spacer height="30"/>
@@ -56,8 +56,8 @@
                 #{bean.checkSelected(compnayId)}
                 #{companyId}
                 #{company.id}
-                <p:selectBooleanCheckbox value="#{bean.checkSelected(companyId)}" valueChangeListener="#{bean.rowSelect(company.id)}">
-                    <p:ajax event="change" render="@all" update="@this"/>
+                <p:selectBooleanCheckbox styleClass="#{bean.checkSelected(company.id) ? 'psevdoChecked' : ''}">
+                    <p:ajax event="change" process="@this" update="entities" listener="#{bean.rowSelect(company.id)}"/>
                 </p:selectBooleanCheckbox>
             </p:column>
             <p:column filterBy="#{company.name}" headerText="#{msg.output_label_company_name}" footerText="#{msg.output_label_company_name}" filterMatchMode="contains" sortBy="#{company.name}">
