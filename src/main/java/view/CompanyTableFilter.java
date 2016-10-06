@@ -6,6 +6,7 @@ import java.util.Locale;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import model.Company;
+import view.converter.DateConverter;
 
 @Named
 @RequestScoped
@@ -21,7 +22,7 @@ public class CompanyTableFilter implements Serializable {
         this.filteredCompanies = filteredCompanies;
     }
 
-    public boolean filterExact(Object value, Object filter, Locale locale) {
+    public boolean filterDate(Object value, Object filter, Locale locale) {
         String filterText = (filter == null) ? null : filter.toString();
         if (filterText == null || filterText.equals("")) {
             return true;
@@ -31,7 +32,7 @@ public class CompanyTableFilter implements Serializable {
             return false;
         }
 
-        return value.toString().equalsIgnoreCase(filterText);
+        return DateConverter.format.format(value).contains(filterText);
     }
 
 }
