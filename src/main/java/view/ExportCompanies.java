@@ -28,12 +28,13 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.Visibility;
 import util.CommaSeparatedUtil;
 import util.UrlConverterUtil;
+import view.converter.DateConverter;
 
 @Named
 @SessionScoped
 public class ExportCompanies implements Serializable {
 
-    private final List<Boolean> list = Arrays.asList(true, true, true, true, true, true, true, true, true);
+    private final List<Boolean> list = Arrays.asList(true, true, true, true, true, true, true, true, true, true);
     private boolean filtered;
 
     public void setFiltered(boolean filtered) {
@@ -207,6 +208,17 @@ public class ExportCompanies implements Serializable {
                 currentRowNumber = startRowNum;
                 returnRowsNum = Math.max(returnRowsNum, multiRow.size());
             }
+            ///time
+            if (!filtered || list.get(7)) {
+                currentCellNumber++;
+                row = sheet.getRow(currentRowNumber);
+                if (row == null) {
+                    row = sheet.createRow(currentRowNumber);
+                }
+                row.createCell(currentCellNumber).setCellValue(DateConverter.format.format(company.getTime()));
+                currentRowNumber++;
+            }
+            currentRowNumber = startRowNum;
             ///new company
             currentRowNumber = currentRowNumber + returnRowsNum;
             if (returnRowsNum == 0) {
@@ -236,7 +248,6 @@ public class ExportCompanies implements Serializable {
             row = sheet.createRow(currentRowNumber);
             ///name
             if (!filtered || list.get(1)) {
-
                 row.createCell(currentCellNumber).setCellValue(company.getName());
             }
             currentCellNumber++;
@@ -279,6 +290,11 @@ public class ExportCompanies implements Serializable {
                 row.createCell(currentCellNumber).setCellValue(formatted);
             }
             currentRowNumber++;
+            ///time
+            if (!filtered || list.get(7)) {
+                row.createCell(currentCellNumber).setCellValue(DateConverter.format.format(company.getTime()));
+            }
+            currentCellNumber++;
         }
         return wb;
 
