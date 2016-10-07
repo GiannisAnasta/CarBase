@@ -22,10 +22,11 @@ public class Language implements Serializable {
 
     static {
         countries = new LinkedHashMap<String, Object>();
-        Locale eng = Locale.ENGLISH;
-        countries.put(eng.getLanguage(), eng);
+
         Locale russ = new Locale("ru");
         countries.put(russ.getLanguage(), russ);
+        Locale eng = Locale.ENGLISH;
+        countries.put(eng.getLanguage(), eng);
         Locale bul = new Locale("bg");
         countries.put(bul.getLanguage(), bul);
     }

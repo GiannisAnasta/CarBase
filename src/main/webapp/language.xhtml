@@ -7,12 +7,11 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
         <h:form id="languageForm">
-            <h:panelGrid columns="2">
-                <p:outputLabel for="lan" value="#{msg.localization_for_language} :" style="font-style: italic; font-weight: bold;"/>
-                <p:selectOneMenu id="lan" value="#{language.localeCode}" >
-                    <f:selectItems value="#{language.countriesInMap}" />
+            <h:panelGrid columns="1">
+                <p:selectOneButton id="lan" value="#{language.localeCode}">
+                    <f:selectItems itemLabel="" value="#{language.countriesInMap}"/>
                     <p:ajax process="@this" update="@all" listener="#{language.countryLocaleCodeChanged()}"/>
-                </p:selectOneMenu>
+                </p:selectOneButton>
             </h:panelGrid>
         </h:form>
     </ui:composition>

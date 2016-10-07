@@ -30,3 +30,22 @@ li{
     margin-right: 180px;
     padding: 5px;
 }
+#languageForm\:lan .ui-button {
+    width: 55px;
+    height: 45px;
+}
+#languageForm\:lan .ui-button span {
+    display: none;
+}
+#languageForm\:lan .ui-button:nth-child(1) {
+    background: url(./flags/ru.png) no-repeat;
+    background-size: cover;
+}
+#languageForm\:lan .ui-button:nth-child(2) {
+    background: url(./flags/gb.png) no-repeat;
+    background-size: cover;
+}
+#languageForm\:lan .ui-button:nth-child(3) {
+    background: url(./flags/bg.png) no-repeat;
+    background-size: cover;
+}
