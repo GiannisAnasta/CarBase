@@ -22,6 +22,9 @@ public class CompanyBuilder {
             int index = 0;
             /// name
             if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                if (!company.equals(new Company())) {
+                    companies.add(company);
+                }
                 continue;
             }
             cell = rowData.get(index);
@@ -31,6 +34,9 @@ public class CompanyBuilder {
             //// site
             index++;
             if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                if (!company.equals(new Company())) {
+                    companies.add(company);
+                }
                 continue;
             }
             cell = rowData.get(index);
@@ -40,6 +46,9 @@ public class CompanyBuilder {
             ////email
             index++;
             if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                if (!company.equals(new Company())) {
+                    companies.add(company);
+                }
                 continue;
             }
             cell = rowData.get(index);
@@ -49,6 +58,9 @@ public class CompanyBuilder {
             //telephones
             index++;
             if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                if (!company.equals(new Company())) {
+                    companies.add(company);
+                }
                 continue;
             }
             cell = rowData.get(index);
@@ -58,6 +70,9 @@ public class CompanyBuilder {
             //details
             index++;
             if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                if (!company.equals(new Company())) {
+                    companies.add(company);
+                }
                 continue;
             }
             cell = rowData.get(index);
@@ -67,16 +82,19 @@ public class CompanyBuilder {
             //categories
             index++;
             if (rowData.size() == index) {//To prevend index of bound if the lenghts of rows are different.
+                if (!company.equals(new Company())) {
+                    companies.add(company);
+                }
                 continue;
             }
             cell = rowData.get(index);
             if (StringUtils.isNotBlank(cell)) {
                 company.getCategories().addAll(Arrays.asList(cell.split(";")));
             }
-            if (company.equals(new Company())) {
-                continue;
+
+            if (!company.equals(new Company())) {
+                companies.add(company);
             }
-            companies.add(company);
         }
 
         return companies;
