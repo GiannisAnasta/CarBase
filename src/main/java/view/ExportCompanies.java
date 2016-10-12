@@ -289,12 +289,12 @@ public class ExportCompanies implements Serializable {
                 String formatted = CommaSeparatedUtil.getAsCommaSeparated(company.getCategories());
                 row.createCell(currentCellNumber).setCellValue(formatted);
             }
-            currentRowNumber++;
+            currentCellNumber++;
             ///time
             if (!filtered || list.get(7)) {
                 row.createCell(currentCellNumber).setCellValue(DateConverter.format.format(company.getTime()));
             }
-            currentCellNumber++;
+            currentRowNumber++;
         }
         return wb;
 

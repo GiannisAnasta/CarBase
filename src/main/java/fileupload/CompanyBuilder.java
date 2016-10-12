@@ -96,7 +96,6 @@ public class CompanyBuilder {
                 companies.add(company);
             }
         }
-
         return companies;
     }
 

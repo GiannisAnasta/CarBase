@@ -6,7 +6,7 @@ import view.FormatOfData;
 
 @Named
 @ApplicationScoped
-public class LocalizationKeyConvrtor {
+public class LocalizationKeyConvertor {
 
     public String toLocalizationKey(FormatOfData fd) {
         switch (fd) {

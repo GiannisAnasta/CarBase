@@ -29,7 +29,7 @@
                     <p style="text-align: center;color: royalblue">#{msg.useful_tip}</p>
                     <p:column colspan="1" style="text-align: center">
                         <p:selectOneRadio id="formatOfData" value="#{fileUploadView.formatOfData}">
-                            <f:selectItems value="#{formatsOfData.ALL_ENUM_VALUES}" var="item"  itemLabel="#{msg[localizationKeyConvrtor.toLocalizationKey(item)]}" itemValue="#{item}" />
+                            <f:selectItems value="#{formatsOfData.ALL_ENUM_VALUES}" var="item"  itemLabel="#{msg[localizationKeyConvertor.toLocalizationKey(item)]}" itemValue="#{item}" />
                             <p:ajax/>
                         </p:selectOneRadio>
                     </p:column>
