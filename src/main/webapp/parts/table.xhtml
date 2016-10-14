@@ -15,9 +15,9 @@
                      selection="#{bean.selected}"
                      rowKey="#{company}"
                      paginator="true"
-                     rows="30"
+                     rows="50"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="15,30,50,100,200">
+                     rowsPerPageTemplate="30,50,200,500,1000">
             <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
             <p:ajax event="rowEdit" listener="#{bean.onRowEdit}" update="@this msgs"/>
             <p:ajax event="rowEditCancel" listener="#{bean.onRowCancel}" update="@this msgs"/>
@@ -27,7 +27,7 @@
                 <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="#{msg.filtering_placeholder_enterKey}" onkeypress="return event.keyCode !== 13"/>
                 <p:spacer height="10"/>
                 <p:commandButton id="toggler" type="button" value="#{msg.button_label_columns}" icon="ui-icon-calculator" update="@this" style="float:right;" />
-                <p:columnToggler class="dropDownMenu" datasource="entities" trigger="toggler">
+                <p:columnToggler id="dropDownMenu" datasource="entities" trigger="toggler">
                     <p:ajax event="toggle" listener="#{exportCompanies.onToggle}"/>
                 </p:columnToggler>
                 <p:commandButton value="#{msg.button_label_export_selected}"  icon="ui-icon-extlink"

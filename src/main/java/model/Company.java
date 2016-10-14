@@ -8,7 +8,7 @@ import javax.persistence.*;
 import view.converter.DateConverter;
 
 @Entity
-@Table(name = "company3")
+@Table(name = "company5")
 public class Company implements Serializable {
 
     @Id
@@ -21,6 +21,7 @@ public class Company implements Serializable {
     private List<String> telephones = new ArrayList<>();
     private List<String> details = new ArrayList<>();
     private List<String> categories = new ArrayList<>();
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date time = new Date();
 
     public Date getTime() {

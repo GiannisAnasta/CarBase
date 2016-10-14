@@ -13,7 +13,7 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(forClass = Date.class)
 public class DateConverter implements Converter {
 
-    public static final SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+    public static final SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     @Override
     public Date getAsObject(FacesContext context, UIComponent component, String value) {
