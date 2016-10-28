@@ -49,3 +49,6 @@ li{
     background: url(./flags/bg.png) no-repeat;
     background-size: cover;
 }
+#companiesTableForm\:entities_head textarea {
+    resize: none;
+}

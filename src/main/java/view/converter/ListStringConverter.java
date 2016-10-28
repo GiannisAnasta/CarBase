@@ -11,30 +11,26 @@ import javax.faces.convert.FacesConverter;
 public class ListStringConverter implements Converter {
 
     @Override
-    public Object getAsObject(FacesContext context, UIComponent component,
+    public Object getAsObject(
+            FacesContext context,
+            UIComponent component,
             String value) {
 
         String[] split = value.split("\n");
         List<String> asList = new ArrayList<>();
         for (String item : split) {
             if (!item.trim().isEmpty()) {
-                asList.add(item);
+                asList.add(item.trim());
             }
         }
-
-//            if (!urlValidator.isValid(url.toString())) {
-//
-//                FacesMessage msg
-//                        = new FacesMessage("URL Conversion error.",
-//                                "Invalid URL format.");
-//                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-//                throw new ConverterException(msg);
-//            }
+//        System.out.println("getAsObject");
         return asList;
     }
 
     @Override
-    public String getAsString(FacesContext context, UIComponent component,
+    public String getAsString(
+            FacesContext context,
+            UIComponent component,
             Object value) {
         String toStringValue = "";
 
@@ -43,7 +39,7 @@ public class ListStringConverter implements Converter {
             toStringValue += item;
             toStringValue += '\n';
         }
-
+//        System.out.println("getAsString");
         return toStringValue;
 
     }

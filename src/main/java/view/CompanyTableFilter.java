@@ -1,6 +1,7 @@
 package view;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import javax.enterprise.context.RequestScoped;
@@ -23,16 +24,47 @@ public class CompanyTableFilter implements Serializable {
     }
 
     public boolean filterDate(Object value, Object filter, Locale locale) {
-        String filterText = (filter == null) ? null : filter.toString();
-        if (filterText == null || filterText.equals("")) {
+        if (filter == null) {
+            return true;
+        }
+        List<String> filters = (List<String>) filter;
+        if (filters.isEmpty()) {
             return true;
         }
 
         if (value == null) {
             return false;
         }
+        String formatedValue = DateConverter.format.format(value);
+        for (String f : filters) {
+            if (formatedValue.contains(f)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        return DateConverter.format.format(value).contains(filterText);
+    public boolean multiFilter(Object value, Object filter, Locale locale) {
+
+        if (filter == null) {
+            return true;
+        }
+        List<String> filters = (List<String>) filter;
+        if (filters.isEmpty()) {
+            return true;
+        }
+
+        if (value == null) {
+            return false;
+        }
+        String formatedValue = value.toString();
+        for (String f : filters) {
+            if (formatedValue.toLowerCase().contains(f.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
 }
