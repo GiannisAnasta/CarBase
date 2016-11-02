@@ -7,9 +7,11 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <!--bean javaBean for table-->
     <ui:composition>
-        <p:dataTable id="entities" var="company"
+        <p:dataTable id="entities"
+                     var="company"
                      value="#{bean.data}"
-                     widgetVar="companiesTable" editable="true"
+                     widgetVar="companiesTable"
+                     editable="true"
                      emptyMessage="#{msg.filtering_output_message_when_no_criteria}"
                      filteredValue="#{companyTableFilter.filteredCompanies}"
                      selection="#{bean.selected}"
@@ -21,7 +23,8 @@
             <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
             <p:ajax event="rowEdit" listener="#{bean.onRowEdit}" update="@this msgs"/>
             <p:ajax event="rowEditCancel" listener="#{bean.onRowCancel}" update="@this msgs"/>
-
+            <p:ajax event="sort" oncomplete="PF('companiesTable').filter()" />
+            <p:ajax event="page" oncomplete="PF('companiesTable').filter()" />
             <f:facet name="header">
                 <h:outputText value="#{msg.main_table_output_label_search_all_fields} "/>
                 <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="#{msg.filtering_placeholder_enterKey}" onkeypress="return event.keyCode !== 13"/>

@@ -52,3 +52,14 @@ li{
 #companiesTableForm\:entities_head textarea {
     resize: none;
 }
+.ajax{
+    background: url("#{resource['ajaxLoadingIcon/ajaxLoader.gif']}")no-repeat;
+    display: block;
+    padding: 11px 7px 5px 34px;
+}
+.ajaxDialog{
+    top: 0 !important;
+    background: none;
+    box-shadow: none !important;
+    border: none;
+}

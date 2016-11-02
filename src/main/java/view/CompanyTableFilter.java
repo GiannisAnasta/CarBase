@@ -1,7 +1,6 @@
 package view;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import javax.enterprise.context.RequestScoped;
@@ -66,5 +65,4 @@ public class CompanyTableFilter implements Serializable {
         return false;
 
     }
-
 }

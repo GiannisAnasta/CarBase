@@ -27,11 +27,11 @@
             <ui:include src="feedback.xhtml"/>
 
             <p:growl id="msgs" showDetail="false" sticky="true"/>
-            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog" draggable="false" closable="false" resizable="false" showHeader="false" position="right top" style=" border-color: lime " >
-                <h:outputText value="#{msg.ajax_inticator_for_loading}"/>
-            </p:dialog>
 
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <p:dialog styleClass="ajaxDialog" widgetVar="statusDialog" draggable="false" closable="false" resizable="false" showHeader="false" position="right">
+                <h:outputText styleClass="ajax" value="#{msg.ajax_inticator_for_loading}"/>
+            </p:dialog>
         </h:body>
     </f:view>
 </html>
