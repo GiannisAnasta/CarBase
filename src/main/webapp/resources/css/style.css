@@ -1,32 +1,25 @@
-ul
-{
+ul {
     list-style-type: none;
     padding-left: 2px;
 }
 ol {
     list-style-type: none;
 }
-li{
+li {
     position:static;
-}
-::-moz-placeholder {
-    font-size: 14px;
-    color: royalblue;
-    text-align: center;
-    font-weight: bold;
 }
 .ui-widget {
     font-family: Arial,sans-serif;
     font-size: 1em;
 }
-.ui-icon{
+.ui-icon {
     margin-right: 14px;
 }
-.ui-cell-editor-output .ui-widget-content{
+.ui-cell-editor-output .ui-widget-content {
     border: none;
     background: none;
 }
-.ui-selectoneradio label{
+.ui-selectoneradio label {
     margin-right: 180px;
     padding: 5px;
 }
@@ -52,12 +45,12 @@ li{
 #companiesTableForm\:entities_head textarea {
     resize: none;
 }
-.ajax{
+.ajax {
     background: url("#{resource['ajaxLoadingIcon/ajaxLoader.gif']}")no-repeat;
     display: block;
     padding: 11px 7px 5px 34px;
 }
-.ajaxDialog{
+.ajaxDialog {
     top: 0 !important;
     background: none;
     box-shadow: none !important;

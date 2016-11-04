@@ -12,6 +12,7 @@
                      value="#{bean.data}"
                      widgetVar="companiesTable"
                      editable="true"
+                     editMode="row"
                      emptyMessage="#{msg.filtering_output_message_when_no_criteria}"
                      filteredValue="#{companyTableFilter.filteredCompanies}"
                      selection="#{bean.selected}"
@@ -27,7 +28,7 @@
             <p:ajax event="page" oncomplete="PF('companiesTable').filter()" />
             <f:facet name="header">
                 <h:outputText value="#{msg.main_table_output_label_search_all_fields} "/>
-                <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="#{msg.filtering_placeholder_enterKey}" onkeypress="return event.keyCode !== 13"/>
+                <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="#{msg.filtering_placeholder_enterKey}" />
                 <p:spacer height="10"/>
                 <p:commandButton id="toggler" type="button" value="#{msg.button_label_columns}" icon="ui-icon-calculator" update="@this" style="float:right;" />
                 <p:columnToggler id="dropDownMenu" datasource="entities" trigger="toggler">
@@ -52,16 +53,16 @@
             <!--NAME-->
             <p:column filterBy="#{company.name}" headerText="#{msg.output_label_company_name}" footerText="#{msg.output_label_company_name}" sortBy="#{company.name}" filterFunction="#{companyTableFilter.multiFilter}">
                 <f:facet name="filter">
-                    <p:inputTextarea id="filterForName" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_name}" onkeypress="return event.keyCode !== 13">
+                    <p:inputTextarea id="filterForName" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_name}" >
                         <f:converter converterId="ListStringConverter" />
                     </p:inputTextarea>
                 </f:facet>
-                <p:cellEditor>
+                <p:cellEditor id="EditName" class="EditName" >
                     <f:facet name="output">
                         <h:outputText value="#{company.name}"/>
                     </f:facet>
                     <f:facet name="input">
-                        <p:inputText value="#{company.name}" style="width:97%" placeholder="#{msg.main_table_placeholder_enter_name}"/>
+                        <p:inputText value="#{company.name}" placeholder="#{msg.main_table_placeholder_enter_name}"/>
                     </f:facet>
                 </p:cellEditor>
             </p:column>
@@ -69,7 +70,7 @@
             <!--SITE-->
             <p:column filterBy="#{company.site}" headerText="#{msg.output_label_site}" footerText="#{msg.output_label_site}" filterFunction="#{companyTableFilter.multiFilter}">
                 <f:facet name="filter">
-                    <p:inputTextarea id="filterForSite" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_site}" onkeypress="return event.keyCode !== 13">
+                    <p:inputTextarea id="filterForSite" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_site}">
                         <f:converter converterId="ListStringConverter" />
                     </p:inputTextarea>
                 </f:facet>
@@ -81,7 +82,7 @@
                         </p:dataList>
                     </f:facet>
                     <f:facet name="input">
-                        <p:inputTextarea value="#{company.site}" style="width: 97%; height:97%" placeholder="#{msg.main_table_placeholder_enter_site}">
+                        <p:inputTextarea autoResize="true" value="#{company.site}" placeholder="#{msg.main_table_placeholder_enter_site}">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
                     </f:facet>
@@ -91,7 +92,7 @@
             <!--EMAIL-->
             <p:column filterBy="#{company.email}" headerText="#{msg.output_label_email}" footerText="#{msg.output_label_email}" filterFunction="#{companyTableFilter.multiFilter}" >
                 <f:facet name="filter">
-                    <p:inputTextarea id="filterForEmail" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_email}" onkeypress="return event.keyCode !== 13">
+                    <p:inputTextarea id="filterForEmail" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_email}">
                         <f:converter converterId="ListStringConverter" />
                     </p:inputTextarea>
                 </f:facet>
@@ -120,7 +121,7 @@
             <!--TELEPHONE-->
             <p:column filterBy="#{company.telephones}" headerText="#{msg.output_label_telephone}" footerText="#{msg.output_label_telephone}" filterFunction="#{companyTableFilter.multiFilter}">
                 <f:facet name="filter">
-                    <p:inputTextarea id="filterForTelephone" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_telephone}" onkeypress="return event.keyCode !== 13">
+                    <p:inputTextarea id="filterForTelephone" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_telephone}">
                         <f:converter converterId="ListStringConverter" />
                     </p:inputTextarea>
                 </f:facet>
@@ -141,7 +142,7 @@
             <!--DETAILS-->
             <p:column filterBy="#{company.details}" headerText="#{msg.output_label_comments}" footerText="#{msg.output_label_comments}" filterFunction="#{companyTableFilter.multiFilter}">
                 <f:facet name="filter">
-                    <p:inputTextarea id="filterForDetails" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_comment}" onkeypress="return event.keyCode !== 13">
+                    <p:inputTextarea id="filterForDetails" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_comment}">
                         <f:converter converterId="ListStringConverter" />
                     </p:inputTextarea>
                 </f:facet>
@@ -162,7 +163,7 @@
             <!--CATEGORIES-->
             <p:column filterBy="#{company.categories}" headerText="#{msg.output_label_categories}" footerText="#{msg.output_label_categories}" filterFunction="#{companyTableFilter.multiFilter}">
                 <f:facet name="filter">
-                    <p:inputTextarea id="filterForCategories" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_categories}" onkeypress="return event.keyCode !== 13">
+                    <p:inputTextarea id="filterForCategories" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_categories}">
                         <f:converter converterId="ListStringConverter" />
                     </p:inputTextarea>
                 </f:facet>
@@ -183,7 +184,7 @@
             <!--TIME-->
             <p:column filterBy="#{company.time}" headerText="#{msg.output_label_date}" footerText="#{msg.output_label_date}" filterFunction="#{companyTableFilter.filterDate}" sortBy="#{company.time}">
                 <f:facet name="filter">
-                    <p:inputTextarea id="filterForTime" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_date}" onkeypress="return event.keyCode !== 13">
+                    <p:inputTextarea id="filterForTime" autoResize="false" onkeyup="PF('companiesTable').filter()" style="width:150px;height:50px;" placeholder="#{msg.main_table_placeholder_enter_date}">
                         <f:converter converterId="ListStringConverter" />
                     </p:inputTextarea>
                 </f:facet>
