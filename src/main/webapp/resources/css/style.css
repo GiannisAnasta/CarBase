@@ -43,7 +43,8 @@ li {
     background-size: cover;
 }
 #companiesTableForm\:entities_head textarea {
-    resize: none;
+    resize: vertical;
+    white-space: normal
 }
 .ajax {
     background: url("#{resource['ajaxLoadingIcon/ajaxLoader.gif']}")no-repeat;

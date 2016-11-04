@@ -57,7 +57,7 @@
                         <f:converter converterId="ListStringConverter" />
                     </p:inputTextarea>
                 </f:facet>
-                <p:cellEditor id="EditName" class="EditName" >
+                <p:cellEditor>
                     <f:facet name="output">
                         <h:outputText value="#{company.name}"/>
                     </f:facet>
@@ -82,7 +82,7 @@
                         </p:dataList>
                     </f:facet>
                     <f:facet name="input">
-                        <p:inputTextarea autoResize="true" value="#{company.site}" placeholder="#{msg.main_table_placeholder_enter_site}">
+                        <p:inputTextarea style="resize: vertical; overflow-y: auto" value="#{company.site}" placeholder="#{msg.main_table_placeholder_enter_site}">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
                     </f:facet>
@@ -111,7 +111,7 @@
                         </p:dataList>
                     </f:facet>
                     <f:facet name="input">
-                        <p:inputTextarea value="#{company.email}" style="width: 97%; height:97%" placeholder="#{msg.main_table_placeholder_enter_email}">
+                        <p:inputTextarea style="resize: vertical; overflow-y: auto" value="#{company.email}" placeholder="#{msg.main_table_placeholder_enter_email}">
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
                     </f:facet>
@@ -132,7 +132,7 @@
                         </p:dataList>
                     </f:facet>
                     <f:facet name="input">
-                        <p:inputTextarea value="#{company.telephones}" style="width: 97%; height:97%" placeholder="#{msg.main_table_placeholder_enter_telephone}" >
+                        <p:inputTextarea style="resize: vertical; overflow-y: auto" value="#{company.telephones}" placeholder="#{msg.main_table_placeholder_enter_telephone}" >
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
                     </f:facet>
@@ -153,7 +153,7 @@
                         </p:dataList>
                     </f:facet>
                     <f:facet name="input">
-                        <p:inputTextarea value="#{company.details}" style="width: 97%; height:97%" placeholder="#{msg.main_table_placeholder_enter_comment}" >
+                        <p:inputTextarea style="resize: vertical; overflow-y: auto" value="#{company.details}" placeholder="#{msg.main_table_placeholder_enter_comment}" >
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
                     </f:facet>
@@ -174,7 +174,7 @@
                         </p:dataList>
                     </f:facet>
                     <f:facet name="input">
-                        <p:inputTextarea value="#{company.categories}" style="width: 97%; height:97%" placeholder="#{msg.main_table_placeholder_enter_categories}" >
+                        <p:inputTextarea style="resize: vertical; overflow-y: auto" value="#{company.categories}" placeholder="#{msg.main_table_placeholder_enter_categories}" >
                             <f:converter converterId="ListStringConverter" />
                         </p:inputTextarea>
                     </f:facet>
