@@ -7,6 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <!--bean javaBean for table-->
     <ui:composition>
+
         <p:dataTable id="entities"
                      var="company"
                      value="#{bean.data}"
@@ -19,13 +20,14 @@
                      rowKey="#{company}"
                      paginator="true"
                      rows="50"
+                     first="#{mainTableBean.first}"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="30,50,200,500,1000">
+                     rowsPerPageTemplate="30,50,100,300,1000">
             <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
             <p:ajax event="rowEdit" listener="#{bean.onRowEdit}" update="@this msgs"/>
             <p:ajax event="rowEditCancel" listener="#{bean.onRowCancel}" update="@this msgs"/>
-            <p:ajax event="sort" oncomplete="PF('companiesTable').filter()" />
-            <p:ajax event="page" oncomplete="PF('companiesTable').filter()" />
+            <p:ajax event="sort" oncomplete="PF('companiesTable').filter()" process="entities"/>
+            <p:ajax event="page" listener="#{mainTableBean.onPageChange}" oncomplete="PF('companiesTable').filter()" update="@this"/>
             <f:facet name="header">
                 <h:outputText value="#{msg.main_table_output_label_search_all_fields} "/>
                 <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="#{msg.filtering_placeholder_enterKey}" />
@@ -45,7 +47,6 @@
                                  process="@this" ajax="false">
                     <p:fileDownload value="#{exportCompanies.exportXlsxFormats(bean.data,fileUploadView.formatOfData)}"/>
                 </p:commandButton>
-
                 <p:spacer height="10"/>
                 <p:commandButton process="entities" actionListener="#{bean.deleteSelected()}" icon="ui-icon-trash" value="#{msg.button_label_delete_selected}" update="@form"/>
                 <p:spacer height="30"/>

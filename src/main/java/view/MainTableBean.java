@@ -9,7 +9,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.Company;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.data.PageEvent;
 import service.CompaniesService;
 import service.Messenger;
 import util.LocalizationUtil;
@@ -96,4 +98,15 @@ public class MainTableBean implements Table {
     public void flush() {
         data = null;
     }
+    protected int first;
+
+    public int getFirst() {
+        System.out.println("get first " + first);
+        return first;
+    }
+
+    public void onPageChange(PageEvent event) {
+        first = ((DataTable) event.getSource()).getFirst();
+    }
+
 }

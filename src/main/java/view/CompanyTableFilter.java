@@ -15,10 +15,13 @@ public class CompanyTableFilter implements Serializable {
     private List<Company> filteredCompanies;
 
     public List<Company> getFilteredCompanies() {
+        System.out.println("getfiltered " + filteredCompanies.size());
+
         return filteredCompanies;
     }
 
     public void setFilteredCompanies(List<Company> filteredCompanies) {
+        System.out.println("SЕТfiltered " + filteredCompanies.size());
         this.filteredCompanies = filteredCompanies;
     }
 
