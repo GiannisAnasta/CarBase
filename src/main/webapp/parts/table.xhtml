@@ -100,9 +100,7 @@
                 <p:cellEditor>
                     <f:facet name="output">
                         <h:outputLink target="_top"
-                                      value="mailto:#{commaSeparatedUtil.getAsCommaSeparated(company.email)}"
-                                      rendered="#{not empty company.email}" style="margin-left: 35%; color: royalblue" >
-                            <h:outputText value="&#x2709;#{msg.mail_to_all}"/>
+                                      value="mailto:#{commaSeparatedUtil.getAsCommaSeparated(company.email)}">
                         </h:outputLink>
                         <p:dataList value="#{company.email}"
                                     var="emaill" rendered="#{not empty company.email}">
@@ -119,6 +117,15 @@
                 </p:cellEditor>
             </p:column>
             <!--EMAIL-->
+            <!--SENDTOALL-->
+            <p:column headerText="#{msg.mail_to_all}" footerText="#{msg.mail_to_all}" filterable="false" exportable="false" toggleable="true" visible="false">
+                <h:outputLink target="_top"
+                              value="mailto:#{commaSeparatedUtil.getAsCommaSeparated(company.email)}"
+                              rendered="#{not empty company.email}">
+                    <h:outputText value="&#x2709;#{msg.mail_to_all}" style="margin-left: 5%; color: royalblue"/>
+                </h:outputLink>
+            </p:column>
+            <!--SENDTOALL-->
             <!--TELEPHONE-->
             <p:column filterBy="#{company.telephones}" headerText="#{msg.output_label_telephone}" footerText="#{msg.output_label_telephone}" filterFunction="#{companyTableFilter.multiFilter}">
                 <f:facet name="filter">
