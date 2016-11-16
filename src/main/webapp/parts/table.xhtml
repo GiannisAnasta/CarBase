@@ -18,21 +18,25 @@
                      filteredValue="#{companyTableFilter.filteredCompanies}"
                      selection="#{bean.selected}"
                      rowKey="#{company}"
+                     currentPageReportTemplate="(Displaying {startRecord} - {endRecord} of
+                     {totalRecords}, Page: {currentPage}/{totalPages} selected rows: #{mainTableBean.selected.size()})"
                      paginator="true"
                      rows="50"
                      first="#{mainTableBean.first}"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="30,50,100,300,1000">
-            <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" toggleable="false"/>
             <p:ajax event="rowEdit" listener="#{bean.onRowEdit}" update="@this msgs"/>
             <p:ajax event="rowEditCancel" listener="#{bean.onRowCancel}" update="@this msgs"/>
-            <p:ajax event="sort" oncomplete="PF('companiesTable').filter()" process="entities"/>
-            <p:ajax event="page" listener="#{mainTableBean.onPageChange}" oncomplete="PF('companiesTable').filter()" update="@this"/>
+            <p:ajax event="sort" oncomplete="PF('companiesTable').filter()"/>
+            <p:ajax event="page" oncomplete="PF('companiesTable').refresh()"/>
+            <p:ajax event="rowSelect" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
+            <p:ajax event="rowSelectCheckbox" process="@this" update="@form" listener="#{mainTableBean.selected.size()}" />
+            <p:ajax event="rowUnselectCheckbox" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
             <f:facet name="header">
                 <h:outputText value="#{msg.main_table_output_label_search_all_fields} "/>
                 <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="#{msg.filtering_placeholder_enterKey}" />
                 <p:spacer height="10"/>
-                <p:commandButton id="toggler" type="button" value="#{msg.button_label_columns}" icon="ui-icon-calculator" update="@this" style="float:right;" />
+                <p:commandButton id="toggler" type="button" value="#{msg.button_label_columns}" icon="ui-icon-calculator" update="@this :koko" style="float:right;" />
                 <p:columnToggler id="dropDownMenu" datasource="entities" trigger="toggler">
                     <p:ajax event="toggle" listener="#{exportCompanies.onToggle}"/>
                 </p:columnToggler>
@@ -51,6 +55,7 @@
                 <p:commandButton process="entities" actionListener="#{bean.deleteSelected()}" icon="ui-icon-trash" value="#{msg.button_label_delete_selected}" update="@form"/>
                 <p:spacer height="30"/>
             </f:facet>
+            <p:column selectionMode="multiple" style="width:16px;text-align:center" styleClass="selectionCheckBox" exportable="false" toggleable="false"/> <!--SELECTION-->
             <!--NAME-->
             <p:column filterBy="#{company.name}" headerText="#{msg.output_label_company_name}" footerText="#{msg.output_label_company_name}" sortBy="#{company.name}" filterFunction="#{companyTableFilter.multiFilter}">
                 <f:facet name="filter">
