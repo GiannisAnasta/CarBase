@@ -39,7 +39,7 @@ PrimeFaces.widget.DataTable = PrimeFaces.widget.DeferredWidget.extend({
         this.renderDeferred()
     },
     _render: function() {
-        console.log("KOKOKOOKOKOKOKOKOKOKKOKOKOKOO");
+        console.log("JS hack");
         if (this.cfg.scrollable) {
             this.setupScrolling()
         }
