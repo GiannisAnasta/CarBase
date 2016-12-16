@@ -28,15 +28,16 @@
             <p:ajax event="rowEdit" listener="#{bean.onRowEdit}" update="@this msgs"/>
             <p:ajax event="rowEditCancel" listener="#{bean.onRowCancel}" update="@this msgs"/>
             <p:ajax event="sort" oncomplete="PF('companiesTable').filter()"/>
-            <p:ajax event="page" oncomplete="PF('companiesTable').refresh()"/>
+            <p:ajax event="page" update="entities"/>
             <p:ajax event="rowSelect" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
-            <p:ajax event="rowSelectCheckbox" process="@this" update="@form" listener="#{mainTableBean.selected.size()}" />
+            <p:ajax event="rowSelectCheckbox" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
             <p:ajax event="rowUnselectCheckbox" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
+            <p:ajax event="toggleSelect" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
             <f:facet name="header">
                 <h:outputText value="#{msg.main_table_output_label_search_all_fields} "/>
-                <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="#{msg.filtering_placeholder_enterKey}" />
+                <p:inputText id="globalFilter" onkeyup="PF('companiesTable').filter()" style="width:200px" placeholder="#{msg.filtering_placeholder_enterKey}"/>
                 <p:spacer height="10"/>
-                <p:commandButton id="toggler" type="button" value="#{msg.button_label_columns}" icon="ui-icon-calculator" update="@this :koko" style="float:right;" />
+                <p:commandButton id="toggler" type="button" value="#{msg.button_label_columns}" icon="ui-icon-calculator" update="@this :koko" style="float:right;"/>
                 <p:columnToggler id="dropDownMenu" datasource="entities" trigger="toggler">
                     <p:ajax event="toggle" listener="#{exportCompanies.onToggle}"/>
                 </p:columnToggler>

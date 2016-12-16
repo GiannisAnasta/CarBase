@@ -3,13 +3,13 @@ package view;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import model.Company;
 import view.converter.DateConverter;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class CompanyTableFilter implements Serializable {
 
     private List<Company> filteredCompanies;

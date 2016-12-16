@@ -7,14 +7,15 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
-        <h:form enctype="multipart/form-data ">
+        <h:form id="uploadForm" enctype="multipart/form-data ">
             <c:if test="#{empty fileUploadView.preview.data}">
-                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}"
+                <p:fileUpload id="fileUpload" fileUploadListener="#{fileUploadView.handleFileUpload}"
                               mode="advanced"
                               skinSimple="true"
                               dragDropSupport="false"
                               auto="true"
-                              update="@all" allowTypes="/(\.|\/)(xlsx|xls)$/" label="#{msg.upload_new_file}"/>
+                              update="@all" allowTypes="/(\.|\/)(xlsx|xls)$/"
+                              label="#{msg.upload_new_file}"/>
             </c:if>
             <p:importEnum type="view.FormatOfData" var="formatsOfData" allSuffix="ALL_ENUM_VALUES" />
             <p:panelGrid id="panel" columns="4">
