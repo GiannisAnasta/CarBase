@@ -24,11 +24,12 @@
                      first="#{mainTableBean.first}"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="30,50,100,300,1000">
-            <p:ajax event="rowEdit" listener="#{bean.onRowEdit}" update="@this msgs"/>
+            <p:ajax event="rowEdit" listener="#{bean.onRowEdit}" update="@this msgs" />
             <p:ajax event="rowEditCancel" listener="#{bean.onRowCancel}" update="@this msgs"/>
             <p:ajax event="sort" oncomplete="PF('companiesTable').filter()"/>
             <p:ajax event="page" update="entities"/>
-            <p:ajax event="rowSelect" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
+            <p:ajax event="rowSelect" process="@this" listener="#{mainTableBean.selected.size()}" />
+            <p:ajax event="rowUnselect" process="@this" listener="#{mainTableBean.selected.size()}" />
             <p:ajax event="rowSelectCheckbox" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
             <p:ajax event="rowUnselectCheckbox" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
             <p:ajax event="toggleSelect" process="@this" update="@form" listener="#{mainTableBean.selected.size()}"/>
